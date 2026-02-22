@@ -1,0 +1,16 @@
+.auth-minimal-wrapper {
+    background: url(../images/banner/1.jpg) no-repeat center center/cover;
+    min-height: 100vh;
+    position: relative;
+}
+
+.auth-minimal-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+
+
