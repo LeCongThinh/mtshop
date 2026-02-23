@@ -662,12 +662,8 @@
                     </div>
                 </div>
             </div>
-
         </section>
     </main>
-
-
-
 
     <!-- Footer-->
     <footer class="py-5 bg-dark">
