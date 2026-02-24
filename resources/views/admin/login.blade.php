@@ -36,22 +36,28 @@
                         <img src="{{ asset("assets/images/icon-laptopshop.png") }}" alt="" class="img-fluid">
                     </div>
                     <div class="card-body p-sm-5">
-                        <h2 class="fs-22 fw-bolder mb-3">ĐĂNG NHẬP</h2>
-                        <form action="index.html" class="w-100 mt-4 pt-2">
+                        <h2 class="fs-22 fw-bolder mb-3">ĐĂNG NHẬP - MTSHOP.COM</h2>
+
+                        <!-- Trả ra thông báo lỗi nếu đăng nhập sai -->
+                        <!-- Lỗi validate -->
+                        @if($errors->any())
+                            <div class="alert alert-danger">{{ $errors->first() }}</div>
+                        @endif
+                        <!-- Lỗi thông tin đăng nhập -->
+                        @if(session("error"))
+                            <div class="alert alert-danger">{{ session("error") }}</div>
+                        @endif
+
+                        <form action="{{ route("admin.handleLogin") }}" method="post" class="w-100 pt-2">
+                            @csrf
                             <div class="mb-4">
-                                <input type="email" class="form-control" placeholder="Nhập email" required>
+                                <input type="email" name="txtEmail" class="form-control" placeholder="Nhập email">
                             </div>
                             <div class="mb-3">
-                                <input type="password" class="form-control" placeholder="Nhập mật khẩu" required>
+                                <input type="password" name="txtPass" class="form-control" placeholder="Nhập mật khẩu">
                             </div>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="rememberMe">
-                                        <label class="custom-control-label c-pointer" for="rememberMe">Remember
-                                            Me</label>
-                                    </div>
-                                </div>
+                            <div class="d-flex justify-content-end">
+
                                 <div>
                                     <a href="auth-reset-minimal.html" class="fs-11 text-primary">Quên mật khẩu?</a>
                                 </div>
@@ -60,7 +66,9 @@
                                 <button type="submit" class="btn btn-lg btn-primary w-100">Đăng nhập</button>
                             </div>
                         </form>
-                        <div class="w-100 mt-4 text-center mx-auto">
+
+                        <!-- Đăng nhập bằng tk google -->
+                        <!-- <div class="w-100 mt-4 text-center mx-auto">
                             <div class="mb-4 border-bottom position-relative"><span
                                     class="small py-1 px-3 text-uppercase text-muted bg-white position-absolute translate-middle">Hoặc</span>
                             </div>
@@ -71,11 +79,12 @@
                                     với Google
                                 </a>
                             </div>
-                        </div>
-                        <div class="mt-5 text-muted">
+                        </div> -->
+                        <!-- Đăng ký tài khoản -->
+                        <!-- <div class="mt-5 text-muted">
                             <span> Bạn chưa có tài khoản?</span>
                             <a href="auth-register-minimal.html" class="fw-bold">Tạo tài khoản</a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
