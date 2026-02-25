@@ -35,14 +35,14 @@ Route::prefix("admin")->group(function () {
     Route::get("/login", [AdminAuthController::class, "showLogin"])->name("admin.login");
     //Xu ly dang nhap
     Route::post("/login", [AdminAuthController::class, "handleLogin"])->name("admin.handleLogin");
-
+    Route::get("/dashboard", [DashboardController::class, "index"])->name("admin.dashboard");
     //User bắt buộc phải đăng nhập
-    Route::middleware(["auth", "checkAdmin"])->group(function () {
+    // Route::middleware(["auth", "checkAdmin"])->group(function () {
 
-        //Trang dashboard
-        Route::get("/dashboard", [DashboardController::class, "index"])->name("admin.dashboard");
+    //     //Trang dashboard
+    //     Route::get("/dashboard", [DashboardController::class, "index"])->name("admin.dashboard");
 
-        //Trang quản lý sản phẩm
+    //     //Trang quản lý sản phẩm
 
-    });
+    // });
 });
