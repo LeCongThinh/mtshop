@@ -6,7 +6,7 @@
                 class="b-brand w-100 d-flex align-items-center justify-content-center gap-2">
                 <!-- ========  LOGO  ============ -->
                 <div class="logo logo-lg">
-                    <h3 class="mb-0" style="line-height: 1;">MTSHOP.COM</h3>
+                    <h3 class="mb-0">MTSHOP.COM</h3>
                 </div>
                 <img src="{{ asset("assets/images/icon-laptopshop.png") }}" alt="" class="logo logo-sm" />
             </a>
@@ -14,13 +14,14 @@
         <div class="navbar-content">
             <ul class="nxl-navbar">
                 <!-- Thống kê đơn hàng -->
-                <li class="nxl-item nxl-hasmenu">
-                    <a href="javascript:void(0);" class="nxl-link">
+                <li
+                    class="nxl-item nxl-hasmenu {{ request()->routeIs("admin.dashboard") ? "active nxl-trigger" : "" }}">
+                    <a href="{{ route("admin.dashboard") }}" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-airplay"></i></span>
-                        <span class="nxl-mtext">Thống kê đơn hàng</span><span class="nxl-arrow"><i
-                                class="feather-chevron-right"></i></span>
+                        <span class="nxl-mtext">Thống kê đơn hàng</span>
                     </a>
                 </li>
+
                 <!-- Quản lý nhà cung cấp -->
                 <li class="nxl-item nxl-hasmenu">
                     <a href="javascript:void(0);" class="nxl-link">
@@ -35,19 +36,29 @@
                         </li>
                     </ul>
                 </li>
+
                 <!-- Quản lý tài khoản -->
-                <li class="nxl-item nxl-hasmenu">
-                    <a href="javascript:void(0);" class="nxl-link">
+                <li class="nxl-item nxl-hasmenu {{ request()->routeIs("admin.accounts") ? "active nxl-trigger" : "" }}">
+                    <a href="{{ route("admin.accounts") }}" class="nxl-link">
+
                         <span class="nxl-micon"><i class="feather-users"></i></span>
                         <span class="nxl-mtext">Quản lý tài khoản</span><span class="nxl-arrow"><i
                                 class="feather-chevron-right"></i></span>
+
                     </a>
                     <ul class="nxl-submenu">
-                        <li class="nxl-item"><a class="nxl-link" href="customers.html">Danh sách tài khoản</a></li>
-                        <li class="nxl-item"><a class="nxl-link" href="customers-create.html">Thêm mới tài khoản</a>
+
+                        <li class="nxl-item"><a
+                                class="nxl-link {{ request()->routeIs("admin.accounts") ? "active" : "" }}"
+                                href="{{ route("admin.accounts") }}">Danh sách tài khoản</a></li>
+
+                        <li class="nxl-item"><a
+                                class="nxl-link {{ request()->routeIs("admin.accounts.create") ? "active" : "" }}"
+                                href="{{ route("admin.accounts.create") }}">Thêm mới tài khoản</a>
                         </li>
                     </ul>
                 </li>
+
                 <!-- Quản lý sản phẩm -->
                 <li class="nxl-item nxl-hasmenu">
                     <a href="javascript:void(0);" class="nxl-link">

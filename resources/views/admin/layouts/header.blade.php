@@ -22,14 +22,6 @@
                     <i class="feather-align-left"></i>
                 </a>
             </div>
-            <div class="nxl-drp-link nxl-lavel-mega-menu">
-                <div class="nxl-lavel-mega-menu-toggle d-flex d-lg-none">
-                    <a href="javascript:void(0)" id="nxl-lavel-mega-menu-hide">
-                        <i class="feather-arrow-left me-2"></i>
-                        <span>Back</span>
-                    </a>
-                </div>
-            </div>
         </div>
 
         <!-- Nút tùy chỉnh giao diện sáng-tối -->

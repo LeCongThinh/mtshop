@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
@@ -35,7 +36,15 @@ Route::prefix("admin")->group(function () {
     Route::get("/login", [AdminAuthController::class, "showLogin"])->name("admin.login");
     //Xu ly dang nhap
     Route::post("/login", [AdminAuthController::class, "handleLogin"])->name("admin.handleLogin");
+
     Route::get("/dashboard", [DashboardController::class, "index"])->name("admin.dashboard");
+
+    //Danh sách tài khoản
+    Route::get("/accounts", [AccountController::class, "index"])->name("admin.accounts");
+    //Thêm mới tài khoản
+    Route::get("accounts/create", [AccountController::class, "create"])->name("admin.accounts.create");
+
+
     //User bắt buộc phải đăng nhập
     // Route::middleware(["auth", "checkAdmin"])->group(function () {
 

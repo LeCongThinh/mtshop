@@ -13,7 +13,14 @@
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/bootstrap.min.css") }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/vendors/css/vendors.min.css") }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/vendors/css/daterangepicker.min.css") }}" />
+
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/vendors/css/dataTables.bs5.min.css") }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/vendors/css/select2.min.css") }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/vendors/css/select2-theme.min.css") }}" />
+
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/theme.min.css") }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/app.css") }}" />
+
 </head>
 
 <body>
@@ -24,8 +31,8 @@
     @include("admin.layouts.header")
 
     <!-- Nội dung trang Admin, dùng làm partial -->
-    <main class="nxl-container">
-        <div class="nxl-content">
+    <main class="nxl-container d-flex flex-column min-vh-100">
+        <div class="nxl-content flex-grow-1">
             <!-- Header trang nội dung -->
             <div class="page-header">
                 <div class="page-header-left d-flex align-items-center">
@@ -36,21 +43,6 @@
                         <li class="breadcrumb-item"><a href="{{ route("admin.dashboard") }}">Trang chủ</a></li>
                         <li class="breadcrumb-item">@yield('header-title')</li>
                     </ul>
-                </div>
-                <div class="page-header-right ms-auto">
-                    <div class="page-header-right-items">
-                        <div class="d-flex d-md-none">
-                            <a href="javascript:void(0)" class="page-header-right-close-toggle">
-                                <i class="feather-arrow-left me-2"></i>
-                                <span>Quay lại</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="d-md-none d-flex align-items-center">
-                        <a href="javascript:void(0)" class="page-header-right-open-toggle">
-                            <i class="feather-align-right fs-20"></i>
-                        </a>
-                    </div>
                 </div>
             </div>
 
@@ -68,6 +60,14 @@
 
     <script src="{{ asset("assets/vendors/js/vendors.min.js")}}"></script>
 
+    <script src="{{ asset("assets/vendors/js/dataTables.min.js")}}"></script>
+
+    <script src="{{ asset("assets/vendors/js/dataTables.bs5.min.js")}}"></script>
+
+    <script src="{{ asset("assets/vendors/js/select2.min.js")}}"></script>
+
+    <script src="{{ asset("assets/vendors/js/select2-active.min.js")}}"></script>
+
     <script src="{{ asset("assets/vendors/js/daterangepicker.min.js")}}"></script>
 
     <script src="{{ asset("assets/vendors/js/apexcharts.min.js")}}"></script>
@@ -75,6 +75,8 @@
     <script src="{{ asset("assets/vendors/js/circle-progress.min.js")}}"></script>
 
     <script src="{{ asset("assets/js/common-init.min.js")}}"></script>
+
+    <script src="{{ asset("assets/js/customers-init.min.js")}}"></script>
 
     <script src="{{ asset("assets/js/dashboard-init.min.js")}}"></script>
 
