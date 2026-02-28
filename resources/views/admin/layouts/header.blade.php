@@ -1,3 +1,6 @@
+<?php
+$auth = Auth::user();
+?>
 <header class="nxl-header">
     <div class="header-wrapper">
         <!-- Nút danh mục -->
@@ -105,17 +108,23 @@
                     <a href="javascript:void(0);" class="d-flex align-items-center" data-bs-toggle="dropdown"
                         role="button" data-bs-auto-close="outside">
 
-                        <img src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('assets/images/avatar/1.png') }}"
+                        <img src="{{ $auth->avatar ? asset('storage/' . $auth->avatar) : asset('assets/images/avatar/1.png') }}"
                             class="img-fluid user-avtar" width="35" height="35"
                             style="border-radius:50%; object-fit:cover;" />
 
                         <span class="fw-semibold">
-                            {{ Auth::user()->name }}
+                            {{ $auth->name }}
                         </span>
 
                     </a>
                     <div class="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-user-dropdown">
-                        <a href="javascript:void(0);" class="dropdown-item">
+                        <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="offcanvas"
+                            data-bs-target="#viewUserCanvas"
+                            data-avatar="{{ $auth->avatar ? asset('storage/' . $auth->avatar) : asset('assets/images/avatar/1.png') }}"
+                            data-name="{{ $auth->name }}" data-email="{{ $auth->email }}"
+                            data-phone="{{ $auth->phone }}" data-address="{{ $auth->address }}"
+                            data-created="{{ $auth->created_at->format('d/m/Y') }}"
+                            data-role="{{ $auth->role_label['text'] }}" data-status="{{ $auth->status_label['text'] }}">
                             <i class="feather-user"></i>
                             <span>Thông tin cá nhân</span>
                         </a>
@@ -137,6 +146,7 @@
         </div>
     </div>
     <script>
+        // Click avt hiển thị menu dropdown
         document.querySelectorAll('.nxl-h-item').forEach(function (dropdown) {
             dropdown.addEventListener('mouseenter', function () {
                 let menu = this.querySelector('.dropdown-menu');
@@ -149,3 +159,5 @@
         });
     </script>
 </header>
+<!-- Hiển thị thông tin tài khoản đăng nhập -->
+@include("admin.accounts.info-account")

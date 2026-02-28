@@ -9,12 +9,15 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\StoreUserRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class AccountController extends Controller
 {
     public function index()
     {
-        $users = User::withTrashed()->get();
+        // Không hiển thị tài khoản đang đăng nhập
+        $users = User::where('id', '!=', Auth::id())->withTrashed()->get();
         return view("admin.accounts.view-account", compact("users"));
     }
     public function create()
