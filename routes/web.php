@@ -37,12 +37,22 @@ Route::prefix("admin")->group(function () {
     //Xu ly dang nhap
     Route::post("/login", [AdminAuthController::class, "handleLogin"])->name("admin.handleLogin");
 
+    //View dashboard
     Route::get("/dashboard", [DashboardController::class, "index"])->name("admin.dashboard");
 
     //Danh sách tài khoản
     Route::get("/accounts", [AccountController::class, "index"])->name("admin.accounts");
-    //Thêm mới tài khoản
+    //View thêm mới tài khoản
     Route::get("accounts/create", [AccountController::class, "create"])->name("admin.accounts.create");
+    //Lưu tài khoản mới
+    Route::post("accounts/store", [AccountController::class, "store"])->name("admin.accounts.store");
+    //Cập nhật thông tin tài khoản
+    Route::get("accounts/{id}/edit",[AccountController::class,"edit"])->name("admin.accounts.edit");
+    Route::put("accounts/{id}", [AccountController::class, "update"])->name("admin.accounts.update");
+    //Xóa tài khoản
+    Route::delete("accounts/{user}", [AccountController::class, "destroy"])->name("admin.accounts.destroy");
+    //Khôi phục tài khoản đã xóa
+    Route::patch("accounts/{id}/restore",[AccountController::class,"restore"])->name("admin.accounts.restore");
 
 
     //User bắt buộc phải đăng nhập
