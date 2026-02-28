@@ -102,9 +102,17 @@
 
                 <!-- Avata người dùng đăng nhập -->
                 <div class="dropdown nxl-h-item">
-                    <a href="javascript:void(0);" data-bs-toggle="dropdown" role="button" data-bs-auto-close="outside">
-                        <img src="{{ asset("assets/images/avatar/1.png") }}" alt="user-image"
-                            class="img-fluid user-avtar me-0" />
+                    <a href="javascript:void(0);" class="d-flex align-items-center" data-bs-toggle="dropdown"
+                        role="button" data-bs-auto-close="outside">
+
+                        <img src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('assets/images/avatar/1.png') }}"
+                            class="img-fluid user-avtar" width="35" height="35"
+                            style="border-radius:50%; object-fit:cover;" />
+
+                        <span class="fw-semibold">
+                            {{ Auth::user()->name }}
+                        </span>
+
                     </a>
                     <div class="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-user-dropdown">
                         <a href="javascript:void(0);" class="dropdown-item">
@@ -116,13 +124,28 @@
                             <span>Đổi mật khẩu</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="./auth-login-minimal.html" class="dropdown-item">
-                            <i class="feather-log-out"></i>
-                            <span>Đăng xuất</span>
-                        </a>
+                        <form action="{{ route("admin.logout") }}" method="post">
+                            @csrf
+                            <button type="submit" class="dropdown-item w-80 text-start">
+                                <i class="feather-log-out"></i>
+                                <span>Đăng xuất</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        document.querySelectorAll('.nxl-h-item').forEach(function (dropdown) {
+            dropdown.addEventListener('mouseenter', function () {
+                let menu = this.querySelector('.dropdown-menu');
+                menu.classList.add('show');
+            });
+            dropdown.addEventListener('mouseleave', function () {
+                let menu = this.querySelector('.dropdown-menu');
+                menu.classList.remove('show');
+            });
+        });
+    </script>
 </header>

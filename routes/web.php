@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AccountController;
+use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
@@ -32,36 +33,36 @@ Route::middleware(["auth"])->group(function () {
 
 ### Admin ###
 Route::prefix("admin")->group(function () {
-    //Hien thi form dang nhap
+    //View đăng nhập
     Route::get("/login", [AdminAuthController::class, "showLogin"])->name("admin.login");
-    //Xu ly dang nhap
+    //Xử lý đăng nhập
     Route::post("/login", [AdminAuthController::class, "handleLogin"])->name("admin.handleLogin");
+    //Đăng xuất
+    Route::post("/logout", [AuthController::class, "logout"])->name("admin.logout");
 
     //View dashboard
-    Route::get("/dashboard", [DashboardController::class, "index"])->name("admin.dashboard");
-
-    //Danh sách tài khoản
-    Route::get("/accounts", [AccountController::class, "index"])->name("admin.accounts");
-    //View thêm mới tài khoản
-    Route::get("accounts/create", [AccountController::class, "create"])->name("admin.accounts.create");
-    //Lưu tài khoản mới
-    Route::post("accounts/store", [AccountController::class, "store"])->name("admin.accounts.store");
-    //Cập nhật thông tin tài khoản
-    Route::get("accounts/{id}/edit",[AccountController::class,"edit"])->name("admin.accounts.edit");
-    Route::put("accounts/{id}", [AccountController::class, "update"])->name("admin.accounts.update");
-    //Xóa tài khoản
-    Route::delete("accounts/{user}", [AccountController::class, "destroy"])->name("admin.accounts.destroy");
-    //Khôi phục tài khoản đã xóa
-    Route::patch("accounts/{id}/restore",[AccountController::class,"restore"])->name("admin.accounts.restore");
-
+    // Route::get("/dashboard", [DashboardController::class, "index"])->name("admin.dashboard");
 
     //User bắt buộc phải đăng nhập
-    // Route::middleware(["auth", "checkAdmin"])->group(function () {
+    Route::middleware(["auth", "checkAdmin"])->group(function () {
 
-    //     //Trang dashboard
-    //     Route::get("/dashboard", [DashboardController::class, "index"])->name("admin.dashboard");
+        # Trang dashboard
+        Route::get("/dashboard", [DashboardController::class, "index"])->name("admin.dashboard");
 
-    //     //Trang quản lý sản phẩm
-
-    // });
+        # Trang quản lý tài khoản
+        //Danh sách tài khoản
+        Route::get("/accounts", [AccountController::class, "index"])->name("admin.accounts");
+        //View thêm mới tài khoản
+        Route::get("accounts/create", [AccountController::class, "create"])->name("admin.accounts.create");
+        //Lưu tài khoản mới
+        Route::post("accounts/store", [AccountController::class, "store"])->name("admin.accounts.store");
+        //View edit tài khoản
+        Route::get("accounts/{id}/edit", [AccountController::class, "edit"])->name("admin.accounts.edit");
+        // Câp nhật thông tin tài khoản
+        Route::put("accounts/{id}", [AccountController::class, "update"])->name("admin.accounts.update");
+        //Xóa tài khoản
+        Route::delete("accounts/{user}", [AccountController::class, "destroy"])->name("admin.accounts.destroy");
+        //Khôi phục tài khoản đã xóa
+        Route::patch("accounts/{id}/restore", [AccountController::class, "restore"])->name("admin.accounts.restore");
+    });
 });

@@ -83,7 +83,8 @@
                                                             </form>
                                                         @else
                                                             <li>
-                                                                <a class="dropdown-item" href="{{ route('admin.accounts.edit', $user->id) }}">
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('admin.accounts.edit', $user->id) }}">
                                                                     <i class="feather feather-edit-3 me-3"></i>
                                                                     <span>Cập nhật</span>
                                                                 </a>
@@ -122,6 +123,7 @@
             <h5 class="offcanvas-title fw-bold text-primary">
                 <i class="feather feather-user me-2"></i>Chi tiết tài khoản
             </h5>
+            <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
             <div class="text-center mb-4 py-3">
@@ -191,10 +193,7 @@
                 </div>
             </div>
         </div>
-
-        <div class="offcanvas-footer p-3 border-top bg-light text-center">
-            <button type="button" class="btn btn-outline-secondary btn-sm w-100" data-bs-dismiss="offcanvas">Đóng</button>
-        </div>
+        <button type="button" class="btn btn-outline-secondary btn-sm w-100" data-bs-dismiss="offcanvas">Đóng</button>
     </div>
     <script>
         // Tự động ẩn thông báo sau 5 giây
