@@ -40,6 +40,7 @@ Route::prefix("admin")->group(function () {
     //Đăng xuất
     Route::post("/logout", [AuthController::class, "logout"])->name("admin.logout");
 
+
     //View dashboard
     // Route::get("/dashboard", [DashboardController::class, "index"])->name("admin.dashboard");
 
@@ -48,6 +49,9 @@ Route::prefix("admin")->group(function () {
 
         # Trang dashboard
         Route::get("/dashboard", [DashboardController::class, "index"])->name("admin.dashboard");
+
+        //Đổi mật khẩu tk đang đăng nhập
+        Route::put("accounts/change-password", [AccountController::class, "changePassword"])->name("admin.accounts.changePassword");
 
         # Trang quản lý tài khoản
         //Danh sách tài khoản
@@ -64,5 +68,6 @@ Route::prefix("admin")->group(function () {
         Route::delete("accounts/{user}", [AccountController::class, "destroy"])->name("admin.accounts.destroy");
         //Khôi phục tài khoản đã xóa
         Route::patch("accounts/{id}/restore", [AccountController::class, "restore"])->name("admin.accounts.restore");
+        
     });
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -103,5 +104,19 @@ class AccountController extends Controller
         $user->restore();
         $user->update(['status' => 'active']);
         return redirect()->back()->with('success', 'Khôi phục tài khoản thành công');
+    }
+
+    //Đổi mật khẩu tài khoản đã đăng nhập
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        $user = auth()->user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json(['errors' => ['current_password' => ['Mật khẩu hiện tại không đúng']]], 422);
+        }
+
+        $user->update(['password' => Hash::make($request->new_password)]);
+
+        return response()->json(['success' => 'Đổi mật khẩu thành công']);
     }
 }

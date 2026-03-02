@@ -30,6 +30,7 @@ $auth = Auth::user();
         <!-- Nút tùy chỉnh giao diện sáng-tối -->
         <div class="header-right ms-auto">
             <div class="d-flex align-items-center">
+                <!-- Giao diện sáng tối -->
                 <div class="nxl-h-item dark-light-theme">
                     <a href="javascript:void(0);" class="nxl-head-link me-0 dark-button">
                         <i class="feather-moon"></i>
@@ -38,7 +39,7 @@ $auth = Auth::user();
                         <i class="feather-sun"></i>
                     </a>
                 </div>
-                <!-- Thông báo -->
+                <!-- Thông báo tin nhắn -->
                 <div class="dropdown nxl-h-item">
                     <a class="nxl-head-link me-3" data-bs-toggle="dropdown" href="#" role="button"
                         data-bs-auto-close="outside">
@@ -128,10 +129,13 @@ $auth = Auth::user();
                             <i class="feather-user"></i>
                             <span>Thông tin cá nhân</span>
                         </a>
-                        <a href="javascript:void(0);" class="dropdown-item">
+
+                        <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal"
+                            data-bs-target="#changePasswordModal">
                             <i class="feather-settings"></i>
                             <span>Đổi mật khẩu</span>
                         </a>
+
                         <div class="dropdown-divider"></div>
                         <form action="{{ route("admin.logout") }}" method="post">
                             @csrf
@@ -161,3 +165,6 @@ $auth = Auth::user();
 </header>
 <!-- Hiển thị thông tin tài khoản đăng nhập -->
 @include("admin.accounts.info-account")
+
+<!-- Hiển thị view đổi mật khẩu -->
+@include("admin.accounts.change-password")

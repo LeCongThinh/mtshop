@@ -82,7 +82,6 @@
 
     <script src="{{ asset("assets/js/theme-customizer-init.min.js")}}"></script>
 
-    
 </body>
 
 </html>
