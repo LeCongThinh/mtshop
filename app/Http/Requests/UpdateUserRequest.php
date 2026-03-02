@@ -24,7 +24,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
             'username' => ['nullable', 'string', 'max:255'],
-            'email' => ['nullable', 'email', 'unique:users,email'],
+            'email' => ['nullable', 'email'],
             'password' => ['nullable', 'min:6', 'regex:/[!@#$%^&*(),.?":{}|<>]/'],
             'phone' => ['nullable', 'digits:10'],
             'role' => ['nullable', 'in:admin,staff,customer'],
@@ -55,7 +55,6 @@ class UpdateUserRequest extends FormRequest
             'username.max' => ':attribute không được vượt quá 255 ký tự.',
 
             'email.email' => ':attribute không hợp lệ.',
-            'email.unique' => ':attribute đã tồn tại trong hệ thống.',
 
             'password.min' => ':attribute phải có ít nhất 6 ký tự.',
             'password.regex' => ':attribute phải chứa ít nhất 1 ký tự đặc biệt.',
