@@ -2,10 +2,14 @@
 
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\User\HomeController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\CategoryController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +72,31 @@ Route::prefix("admin")->group(function () {
         Route::delete("accounts/{user}", [AccountController::class, "destroy"])->name("admin.accounts.destroy");
         //Khôi phục tài khoản đã xóa
         Route::patch("accounts/{id}/restore", [AccountController::class, "restore"])->name("admin.accounts.restore");
-        
+
+        #Trang quản lý danh mục
+        //Danh sách danh mục và hãng sản xuất
+        Route::get("/categories", [CategoryController::class, "index"])->name("admin.categories");
+        //View thêm mới danh mục và hãng sản xuất
+        Route::get("/categories/create", [CategoryController::class, "create"])->name("admin.categories.create");
+        //Lưu danh mục và hãng sx
+        Route::post("/categories/store", [CategoryController::class, "store"])->name("admin.categories.store");
+        Route::post("/brands/store", [BrandController::class, "store"])->name("admin.brands.store");
+        //View edit category
+        Route::get("categories/{id}/edit", [CategoryController::class, "edit"])->name("admin.categories.edit");
+        //Cập nhật category
+        Route::put("categories/{id}", [CategoryController::class, "update"])->name("admin.categories.update");
+        //Xóa category
+        Route::delete("categories/{id}", [CategoryController::class, "destroy"])->name("admin.categories.destroy");
+        //Restore category
+        Route::patch("categories/{id}", [CategoryController::class, "restore"])->name("admin.categories.restore");
+        //View edit brand
+        Route::get("brands/{id}/edit", [BrandController::class, "edit"])->name("admin.brands.edit");
+        //Cập nhật brand
+        Route::put("brands/{id}", [BrandController::class, "update"])->name("admin.brands.update");
+        //Xóa brand
+        Route::delete("brands/{id}", [BrandController::class, "destroy"])->name("admin.brands.destroy");
+        //Restore brand
+        Route::patch("brands/{id}", [BrandController::class, "restore"])->name("admin.brands.restore");
+
     });
 });

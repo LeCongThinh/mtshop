@@ -29,14 +29,14 @@
                                 @foreach ($users as $user)
                                     <tr class="single-item {{ $user->trashed() ? 'row-disabled' : '' }}">
                                         <td>
-                                            <a href="customers-view.html" class="hstack gap-3">
+                                            <a href="javascript:void(0)" class="hstack gap-3">
                                                 <div>
                                                     <span class="text-truncate-1-line">{{ $user->name }}</span>
                                                 </div>
                                             </a>
                                         </td>
-                                        <td><a href="apps-email.html">{{ $user->email }}</a></td>
-                                        <td><a href="tel:"> {{ $user->phone }}</a></td>
+                                        <td><a href="javascript:void(0)">{{ $user->email }}</a></td>
+                                        <td><a href="javascript:void(0)"> {{ $user->phone }}</a></td>
                                         <td>{{ $user->created_at->format('d/m/Y') }}</td>
                                         <td>
                                             <div class="{{ $user->role_label['class'] }} fs-status">

@@ -22,32 +22,33 @@
                     </a>
                 </li>
 
-                <!-- Quản lý nhà cung cấp -->
-                <li class="nxl-item nxl-hasmenu">
+                <!-- Quản lý danh mục -->
+                <li class="nxl-item nxl-hasmenu" {{ request()->routeIs("admin.categories") ? "active nxl-trigger" : "" }}">
                     <a href="javascript:void(0);" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-send"></i></span>
-                        <span class="nxl-mtext">Nhà cung cấp</span><span class="nxl-arrow"><i
+                        <span class="nxl-mtext">Quản lý danh mục & hãng</span><span class="nxl-arrow"><i
                                 class="feather-chevron-right"></i></span>
                     </a>
                     <ul class="nxl-submenu">
-                        <li class="nxl-item"><a class="nxl-link" href="apps-chat.html">Danh sách nhà cung cấp</a>
+                        <li class="nxl-item"><a
+                                class="nxl-link {{ request()->routeIs("admin.categories") ? "active" : "" }}"
+                                href="{{ route("admin.categories") }}">Danh sách danh mục & hãng</a>
                         </li>
-                        <li class="nxl-item"><a class="nxl-link" href="apps-email.html">Thêm mới nhà cung cấp</a>
+                        <li class="nxl-item"><a
+                                class="nxl-link {{ request()->routeIs("admin.categories.create") ? "active" : "" }}"
+                                href="{{ route("admin.categories.create") }}">Thêm mới danh mục & hãng</a>
                         </li>
                     </ul>
                 </li>
 
                 <!-- Quản lý tài khoản -->
                 <li class="nxl-item nxl-hasmenu {{ request()->routeIs("admin.accounts") ? "active nxl-trigger" : "" }}">
-                    <a href="{{ route("admin.accounts") }}" class="nxl-link">
-
+                    <a href="javascript:void(0);" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-users"></i></span>
                         <span class="nxl-mtext">Quản lý tài khoản</span><span class="nxl-arrow"><i
                                 class="feather-chevron-right"></i></span>
-
                     </a>
                     <ul class="nxl-submenu">
-
                         <li class="nxl-item"><a
                                 class="nxl-link {{ request()->routeIs("admin.accounts") ? "active" : "" }}"
                                 href="{{ route("admin.accounts") }}">Danh sách tài khoản</a></li>

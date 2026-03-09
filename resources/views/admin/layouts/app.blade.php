@@ -48,6 +48,10 @@
 
             <!-- Nội dung trang chính -->
             <div class="main-content">
+                <div id="mainAlert" class="alert d-none alert-dismissible fade show" role="alert">
+                    <span class="alert-text"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
                 @yield('content')
             </div>
 
@@ -78,9 +82,14 @@
 
     <script src="{{ asset("assets/js/customers-init.min.js")}}"></script>
 
+    <script src="{{ asset("assets/js/payment-init.min.js") }}"></script>
+
     <script src="{{ asset("assets/js/dashboard-init.min.js")}}"></script>
 
     <script src="{{ asset("assets/js/theme-customizer-init.min.js")}}"></script>
+
+    <!-- Thông báo -->
+    <script src="{{ asset("assets/js/admin/admin-alert.js") }}"></script>
 
 </body>
 

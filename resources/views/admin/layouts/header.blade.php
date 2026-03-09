@@ -149,19 +149,7 @@ $auth = Auth::user();
             </div>
         </div>
     </div>
-    <script>
-        // Click avt hiển thị menu dropdown
-        document.querySelectorAll('.nxl-h-item').forEach(function (dropdown) {
-            dropdown.addEventListener('mouseenter', function () {
-                let menu = this.querySelector('.dropdown-menu');
-                menu.classList.add('show');
-            });
-            dropdown.addEventListener('mouseleave', function () {
-                let menu = this.querySelector('.dropdown-menu');
-                menu.classList.remove('show');
-            });
-        });
-    </script>
+    
 </header>
 <!-- Hiển thị thông tin tài khoản đăng nhập -->
 @include("admin.accounts.info-account")
