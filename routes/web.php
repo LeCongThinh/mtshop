@@ -44,10 +44,6 @@ Route::prefix("admin")->group(function () {
     //Đăng xuất
     Route::post("/logout", [AuthController::class, "logout"])->name("admin.logout");
 
-
-    //View dashboard
-    // Route::get("/dashboard", [DashboardController::class, "index"])->name("admin.dashboard");
-
     //User bắt buộc phải đăng nhập
     Route::middleware(["auth", "checkAdmin"])->group(function () {
 
