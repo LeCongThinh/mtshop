@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\User\HomeController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
@@ -95,6 +96,10 @@ Route::prefix("admin")->group(function () {
         Route::patch("brands/{id}", [BrandController::class, "restore"])->name("admin.brands.restore");
 
         #Trang quản lý sản phẩm
+        //Danh sách sản phẩm
+        Route::get("products", [ProductController::class, "index"])->name("admin.products");
+        //View thêm mới sản phẩm
+        Route::get("products/create", [ProductController::class, "create"])->name("admin.products.create");
 
     });
 });

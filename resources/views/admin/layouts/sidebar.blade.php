@@ -61,18 +61,23 @@
                 </li>
 
                 <!-- Quản lý sản phẩm -->
-                <li class="nxl-item nxl-hasmenu">
+                <li class="nxl-item nxl-hasmenu {{ request()->routeIs("admin.products") ? "active nxl-trigger" : "" }}">
                     <a href="javascript:void(0);" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-briefcase"></i></span>
                         <span class="nxl-mtext">Quản lý sản phẩm</span><span class="nxl-arrow"><i
                                 class="feather-chevron-right"></i></span>
                     </a>
                     <ul class="nxl-submenu">
-                        <li class="nxl-item"><a class="nxl-link" href="projects.html">Danh sách sản phẩm</a></li>
-                        <li class="nxl-item"><a class="nxl-link" href="projects-create.html">Thêm mới sản phẩm</a>
+                        <li class="nxl-item"><a
+                                class="nxl-link {{ request()->routeIs("admin.products") ? "active" : "" }}"
+                                href="{{ route("admin.products") }}">Danh sách sản phẩm</a></li>
+                        <li class="nxl-item"><a
+                                class="nxl-link {{ request()->routeIs("admin.products.create") ? "active" : "" }}"
+                                href="{{ route("admin.products.create") }}">Thêm mới sản phẩm</a>
                         </li>
                     </ul>
                 </li>
+
                 <!-- Quản lý đơn hàng -->
                 <li class="nxl-item nxl-hasmenu">
                     <a href="javascript:void(0);" class="nxl-link">

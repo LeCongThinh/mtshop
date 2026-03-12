@@ -103,33 +103,14 @@
                             <button type="submit" class="btn btn-primary mt-2">
                                 Thêm mới tài khoản
                             </button>
-
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script src="{{ asset("assets/js/admin/preview-account-image.js") }}"></script>
     <script>
-        const avatarInput = document.getElementById('avatar');
-        const avatarPreview = document.getElementById('avatarPreview');
-
-        // Click vào ảnh → mở chọn file
-        avatarPreview.addEventListener('click', function () {
-            avatarInput.click();
-        });
-
-        // Preview ảnh
-        avatarInput.addEventListener('change', function (event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    avatarPreview.src = e.target.result;
-                }
-                reader.readAsDataURL(file);
-            }
-        });
-
         // Tự động ẩn alert sau 5 giây
         setTimeout(function () {
             const alert = document.getElementById('autoDismiss');

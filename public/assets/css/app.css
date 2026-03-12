@@ -1,3 +1,4 @@
+/* CSS web admin */
 /* css login admin */
 .auth-minimal-wrapper {
     background: url(../images/banner/1.jpg) no-repeat center center/cover;
@@ -35,10 +36,12 @@ body:not(.app-skin-dark) .logo h3 {
 .bg-soft-primary {
     background-color: rgba(13, 110, 253, 0.1);
 }
+
 /* Hiệu ứng shadow cho Offcanvas */
 #viewUserCanvas {
     transition: transform 0.3s ease-in-out;
 }
+
 /* Style cho các icon info */
 .avatar-text {
     width: 38px;
@@ -47,7 +50,143 @@ body:not(.app-skin-dark) .logo h3 {
     align-items: center;
     justify-content: center;
 }
+
 /* Đảm bảo nội dung không bị tràn */
 .offcanvas-body {
     scrollbar-width: thin;
+}
+
+/* Ảnh sp hiển thị trong bảng view-product */
+.table-img-thumb {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #e9ebec;
+}
+
+.ck-editor__editable_inline {
+    min-height: 150px;
+    max-height: 250px;
+}
+
+/*========================================================*/
+/* Khung bao Thumbnail */
+.thumbnail-upload-wrapper {
+    border: 2px dashed #dee2e6 !important;
+    transition: all 0.3s ease;
+}
+
+.thumbnail-upload-wrapper:hover {
+    background-color: #f8f9fa;
+    border-color: #3452e1 !important;
+}
+
+/* Khung Gallery */
+.upload-gallery-container {
+    border: 2px dashed #dee2e6 !important;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ảnh trong Gallery Preview */
+.gallery-item {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+/* Hiệu ứng cho input file mặc định của Bootstrap */
+.form-control::file-selector-button {
+    background-color: #3452e1;
+    color: white;
+    border: none;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.remove-btn {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff4d4d;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.remove-btn:hover {
+    background: #cc0000;
+    transform: scale(1.1);
+}
+
+.dashed {
+    border: 2px dashed #ccc !important;
+}
+
+.btn-upload-custom {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    border-width: 2px;
+}
+
+.btn-upload-custom i {
+    font-size: 20px;
+}
+
+.btn-upload-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.2);
+    background-color: #0d6efd;
+    color: white;
+}
+
+.btn-upload-custom:active {
+    transform: translateY(0);
+}
+
+
+/*Cuộn danh sách thông số kỹ thuật (khi nhiều hơn 5 dòng)*/
+/* Khung chứa danh sách có thể cuộn */
+#specs-list {
+    max-height: 320px;    /* Chiều cao tối đa cho khoảng 5 dòng */
+    overflow-y: auto;     /* Hiện thanh cuộn dọc khi vượt quá chiều cao */
+    overflow-x: hidden;   /* Chặn cuộn ngang */
+    padding-right: 10px;  /* Tạo khoảng trống để thanh cuộn không đè lên nút xóa */
+}
+
+/* Tùy chỉnh thanh cuộn (scrollbar) nhìn cho mượt và hiện đại hơn */
+#specs-list::-webkit-scrollbar {
+    width: 6px;
+}
+#specs-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+#specs-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+#specs-list::-webkit-scrollbar-thumb:hover {
+    background: #888;
 }
