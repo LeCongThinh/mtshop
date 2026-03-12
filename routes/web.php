@@ -94,5 +94,7 @@ Route::prefix("admin")->group(function () {
         //Restore brand
         Route::patch("brands/{id}", [BrandController::class, "restore"])->name("admin.brands.restore");
 
+        #Trang quản lý sản phẩm
+
     });
 });

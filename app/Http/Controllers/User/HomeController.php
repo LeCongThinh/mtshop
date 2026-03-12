@@ -18,6 +18,6 @@ class HomeController extends Controller
                     $query->where('status', 'active');
                 }
             ])->get();
-        return view("user.home", compact("categories"));
+        return view("user.layouts.home", compact("categories"));
     }
 }
