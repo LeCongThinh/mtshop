@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductSpec extends Model
 {
     use HasFactory;
-    protected $fillabled = ['product_id', 'spec_key', 'spec_value'];
+    protected $fillable = ['product_id', 'spec_key', 'spec_value'];
 
     // SP có nhều thông số kỹ thuật
     public function product()

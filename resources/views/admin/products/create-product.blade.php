@@ -11,7 +11,8 @@
                     });
                 </script>
             @endif
-            <form action="#" method="POST" class="p-3" enctype="multipart/form-data" novalidate>
+            <form action="{{ route("admin.products.store") }}" method="POST" class="p-3" enctype="multipart/form-data"
+                novalidate>
                 @csrf
                 <div class="card stretch stretch-full mb-4">
                     <div class="card-header">
@@ -21,7 +22,7 @@
 
                         <div class="row g-4">
                             <div class="col-md-4">
-                                <label class="form-label fw-bold">Ảnh sản phẩm</label>
+                                <label class="form-label fw-bold">Ảnh sản phẩm <span class="text-danger">*</span></label>
                                 <div class="thumbnail-upload-wrapper border rounded p-3 text-center bg-light">
                                     <div class="position-relative d-inline-block">
                                         <img id="thumbPreview" src="{{ asset('assets/images/avatar/undefined.png') }}"
@@ -31,10 +32,15 @@
                                     </div>
                                     <div class="mt-2 text-muted small">Click vào ảnh để tải lên (Tỷ lệ 1:1)</div>
                                 </div>
+                                @error('thumbnail')
+                                    <div class="text-danger small mt-2 d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
 
                             <div class="col-md-8">
-                                <label class="form-label fw-bold">Danh sách ảnh sản phẩm (Gallery)</label>
+                                <label class="form-label fw-bold">Danh sách ảnh sản phẩm</label>
                                 <div class="upload-gallery-container border rounded p-3 bg-light"
                                     style="min-height: 315px;">
                                     <button type="button" class="btn btn-outline-primary mb-3 btn-upload-custom"
@@ -42,7 +48,8 @@
                                         <i class="bi bi-plus-circle "></i> Thêm ảnh mới
                                     </button>
 
-                                    <input type="file" id="galleryInput" accept="image/*" multiple class="d-none">
+                                    <input type="file" name="gallery[]" id="galleryInput" accept="image/*" multiple
+                                        class="d-none">
 
                                     <div id="galleryPreview" class="d-flex flex-wrap gap-3">
                                         <div id="emptyMessage" class="w-100 text-center py-5 border dashed rounded">
@@ -56,12 +63,14 @@
                                 <label for="name" class="form-label">
                                     Tên sản phẩm <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                                    name="name" value="{{ old('name') }}" placeholder="Nhập tên sản phẩm">
+                                <input type="text"
+                                    class="form-control @if($errors->has('name') || $errors->has('slug')) is-invalid @endif"
+                                    id="name" name="name" value="{{ old('name') }}" placeholder="Nhập tên sản phẩm">
                                 @error('name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                                @error('slug')
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -72,8 +81,11 @@
                                 <select class="form-select @error('category_id') is-invalid @enderror" id="category_id"
                                     name="category_id" data-select2-selector="default">
                                     <option value="">Chọn danh mục</option>
-                                    <option value="">Laptop gamming</option>
-                                    <option value="">Laptop văn phòng</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 @error('category_id')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -87,8 +99,11 @@
                                 <select class="form-select @error('brand_id') is-invalid @enderror" id="brand_id"
                                     name="brand_id" data-select2-selector="default">
                                     <option value="">Chọn hãng sản xuất</option>
-                                    <option value="">Dell</option>
-                                    <option value="">Acer</option>
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
+                                            {{ $brand->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 @error('brand_id')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -110,7 +125,7 @@
 
                             <div class="col-md-6">
                                 <label for="sale_price" class="form-label">
-                                    Giá khuyến mãi <span class="text-danger">*</span>
+                                    Giá khuyến mãi
                                 </label>
                                 <input type="number" class="form-control @error('sale_price') is-invalid @enderror"
                                     name="sale_price" value="{{ old('sale_price') }}" placeholder="Nhập giá khuyến mãi"
@@ -157,11 +172,12 @@
                         <div id="specs-list">
                             <div class="row g-3 mb-3 spec-item">
                                 <div class="col-md-4">
-                                    <input type="text" name="spec_name[]" class="form-control" placeholder="Ví dụ: CPU">
+                                    <input type="text" name="spec_name[]" class="form-control"
+                                        placeholder="Tên: CPU, RAM, Pin...">
                                 </div>
                                 <div class="col-md-7">
                                     <input type="text" name="spec_value[]" class="form-control"
-                                        placeholder="Ví dụ: Apple M3">
+                                        placeholder="Giá trị: Core i7, 16GB...">
                                 </div>
                                 <div class="col-md-1">
                                     <button type="button" class="btn btn-outline-danger w-100 remove-spec">
@@ -175,7 +191,7 @@
 
                 <div class="d-flex justify-content-end gap-2 mb-5">
                     <button type="submit" class="btn btn-primary px-5">Thêm mới sản phẩm</button>
-                    <button href="#" class="btn btn-md bg-soft-danger text-danger">Hủy bỏ</button>
+                    <a href="{{ route("admin.products") }}" class="btn btn-md bg-soft-danger text-danger">Hủy bỏ</a>
                 </div>
             </form>
         </div>

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // --- 1. XỬ LÝ PREVIEW THUMBNAIL (1 ẢNH) ---
+    // --- XỬ LÝ PREVIEW THUMBNAIL (1 ẢNH) ---
     const thumbInput = document.getElementById('thumbInput');
     const thumbPreview = document.getElementById('thumbPreview');
 
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // --- 2. XỬ LÝ PREVIEW GALLERY (NHIỀU ẢNH) ---
+    // --- XỬ LÝ PREVIEW GALLERY (NHIỀU ẢNH) ---
     const galleryInput = document.getElementById('galleryInput');
     const galleryPreview = document.getElementById('galleryPreview');
     const emptyMessage = document.getElementById('emptyMessage');
@@ -36,23 +36,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
         files.forEach(file => {
             if (!file.type.startsWith('image/')) return;
-
             // Thêm file vào mảng quản lý
             allFiles.push(file);
-
-            // Tạo ID duy nhất để dễ xóa
-            const fileId = Date.now() + Math.random();
-            file.uniqueId = fileId;
-
             // Tạo giao diện Preview
             renderPreview(file);
         });
-
+        //Đồng bộ mảng ảnh trên trình duyệt vào form trước khi gửi
+        syncInput();
         checkEmpty();
-        // Reset input để có thể chọn lại cùng 1 file nếu đã xóa
-        galleryInput.value = "";
     });
-
+    // Hàm đồng bộ mảng allFiles vào thẻ input galleryInput
+    function syncInput() {
+        const dataTransfer = new DataTransfer();
+        allFiles.forEach(file => {
+            dataTransfer.items.add(file);
+        });
+        galleryInput.files = dataTransfer.files; // Ép file vào input thực tế
+        console.log("Input files hiện tại:", galleryInput.files);
+    }
     function renderPreview(file) {
         const reader = new FileReader();
         reader.onload = function (e) {
@@ -73,10 +74,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 allFiles = allFiles.filter(f => f.uniqueId !== file.uniqueId);
                 // Xóa khỏi giao diện
                 wrapper.remove();
+                syncInput();
                 checkEmpty();
                 console.log("Files còn lại:", allFiles);
             };
-
             galleryPreview.appendChild(wrapper);
         };
         reader.readAsDataURL(file);

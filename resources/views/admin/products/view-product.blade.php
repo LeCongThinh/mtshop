@@ -36,59 +36,69 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="single-item">
-                                    <td class="align-middle text-center">
-                                        <img src="{{ asset("assets/images/avatar/1.png") }}" alt="" class="table-img-thumb">
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0)" class="hstack gap-3">
-                                            <div>
-                                                <span class="text-truncate-1-line">Laptop Acer Aspire Lite AL15 72P
-                                                    7232</span>
-                                            </div>
-                                        </a>
-                                    </td>
-                                    <td><a href="javascript:void(0)">Acer</a></td>
-                                    <td><a href="javascript:void(0)"> 18.990.000 đ</a></td>
-                                    <td><a href="javascript:void(0)"> 15.990.000 đ</a></td>
-
-                                    <td><b>10</b></td>
-                                    <td>
-                                        <div class="badge bg-soft-success text-success fs-status">
-                                            Còn hàng
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="hstack gap-2 justify-content-end">
-                                            <a href="#" class="avatar-text avatar-md">
-                                                <i class="feather feather-eye"></i>
+                                @foreach ($products as $product)
+                                    <tr class="single-item">
+                                        <td class="align-middle text-center">
+                                            <img src="{{ asset("storage/" . $product->thumbnail) }}" alt=""
+                                                class="table-img-thumb">
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)" class="hstack gap-3">
+                                                <div>
+                                                    <span class="text-truncate-1-line">{{ $product->name }}</span>
+                                                </div>
                                             </a>
+                                        </td>
+                                        <td><a href="javascript:void(0)">{{ $product->category->name }}</a></td>
+                                        <td><a href="javascript:void(0)">{{ number_format($product->price, 0, ',', '.') }} đ</a>
+                                        </td>
+                                        <td><a href="javascript:void(0)">
+                                                @if($product->sale_price)
+                                                    {{ number_format($product->sale_price, 0, ',', '.') }} đ
+                                                @else
+                                                    <span class="badge bg-soft-muted text-muted fs-status">Không khuyến mãi</span>
+                                                @endif
+                                            </a>
+                                        </td>
 
-                                            <div class="dropdown">
-                                                <a href="javascript:void(0)" class="avatar-text avatar-md"
-                                                    data-bs-toggle="dropdown" data-bs-offset="0,21">
-                                                    <i class="feather feather-more-horizontal"></i>
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">
-                                                            <i class="feather feather-edit-3 me-3"></i>
-                                                            <span>Cập nhật</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="dropdown-divider"></li>
-                                                    <li>
-                                                        <button type="submit"
-                                                            class="dropdown-item text-danger border-0 bg-transparent">
-                                                            <i class="feather feather-trash-2 me-3"></i>
-                                                            <span>Xóa</span>
-                                                        </button>
-                                                    </li>
-                                                </ul>
+                                        <td><b>{{ $product->stock }}</b></td>
+                                        <td>
+                                            <div class="{{ $product->status_label['class'] }} fs-status">
+                                                {{ $product->status_label['text'] }}
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            <div class="hstack gap-2 justify-content-end">
+                                                <a href="#" class="avatar-text avatar-md">
+                                                    <i class="feather feather-eye"></i>
+                                                </a>
+
+                                                <div class="dropdown">
+                                                    <a href="javascript:void(0)" class="avatar-text avatar-md"
+                                                        data-bs-toggle="dropdown" data-bs-offset="0,21">
+                                                        <i class="feather feather-more-horizontal"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">
+                                                                <i class="feather feather-edit-3 me-3"></i>
+                                                                <span>Cập nhật</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="dropdown-divider"></li>
+                                                        <li>
+                                                            <button type="submit"
+                                                                class="dropdown-item text-danger border-0 bg-transparent">
+                                                                <i class="feather feather-trash-2 me-3"></i>
+                                                                <span>Xóa</span>
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

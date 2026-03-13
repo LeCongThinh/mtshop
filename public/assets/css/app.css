@@ -169,24 +169,28 @@ body:not(.app-skin-dark) .logo h3 {
 /*Cuộn danh sách thông số kỹ thuật (khi nhiều hơn 5 dòng)*/
 /* Khung chứa danh sách có thể cuộn */
 #specs-list {
-    max-height: 320px;    /* Chiều cao tối đa cho khoảng 5 dòng */
-    overflow-y: auto;     /* Hiện thanh cuộn dọc khi vượt quá chiều cao */
-    overflow-x: hidden;   /* Chặn cuộn ngang */
-    padding-right: 10px;  /* Tạo khoảng trống để thanh cuộn không đè lên nút xóa */
+    /* Chiều cao tối đa cho khoảng 5 dòng */
+    max-height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 10px;
 }
 
 /* Tùy chỉnh thanh cuộn (scrollbar) nhìn cho mượt và hiện đại hơn */
 #specs-list::-webkit-scrollbar {
     width: 6px;
 }
+
 #specs-list::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 10px;
 }
+
 #specs-list::-webkit-scrollbar-thumb {
     background: #ccc;
     border-radius: 10px;
 }
+
 #specs-list::-webkit-scrollbar-thumb:hover {
     background: #888;
 }
