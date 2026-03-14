@@ -113,7 +113,6 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         try {
-
             DB::beginTransaction();
             $data = $request->validated();
 
@@ -150,7 +149,6 @@ class ProductController extends Controller
 
             // Xóa hết specs cũ của sản phẩm
             $product->specs()->delete();
-
             // Lưu lại mảng specs mới nếu có dữ liệu
             if ($request->has('spec_name')) {
                 foreach ($request->spec_name as $key => $name) {
@@ -161,22 +159,33 @@ class ProductController extends Controller
                         ]);
                     }
                 }
-
-                DB::commit();
-
-                return redirect()->route('admin.products')->with('success', 'Sản phẩm đã được cập nhật thành công!');
             }
+
+            DB::commit();
+            return redirect()->route('admin.products')->with('success', 'Sản phẩm đã được cập nhật thành công!');
+
         } catch (\Exception $e) {
+            
             DB::rollBack();
             return back()->with("error", "Lỗi: " . $e->getMessage())->withInput();
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    //Xóa sản phẩm
+    public function destroy($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->update(["status", "inactive"]);
+        $product->delete();
+        return redirect()->back()->with("success", "Xóa sản phẩm thành công");
+    }
+
+    //Restore sản phẩm
+    public function restore($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->update(["status", "active"]);
+        $product->restore();
+        return redirect()->back()->with("")->with("success", "Khôi phục sản phẩm thành công");
     }
 }

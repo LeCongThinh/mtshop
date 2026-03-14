@@ -106,6 +106,9 @@ Route::prefix("admin")->group(function () {
         Route::get("products/{id}/edit", [ProductController::class, "edit"])->name("admin.products.edit");
         //Cập nhật sản phẩm
         Route::put("products/{id}", [ProductController::class, "update"])->name("admin.products.update");
-
+        //Xóa sản phẩm
+        Route::delete("products/{id}", [ProductController::class, "destroy"])->name("admin.products.destroy");
+        //Restore sản phẩm
+        Route::patch("products/{id}", [ProductController::class, "restore"])->name("admin.products.restore");
     });
 });

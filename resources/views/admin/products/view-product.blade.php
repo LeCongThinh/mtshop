@@ -79,20 +79,39 @@
                                                         <i class="feather feather-more-horizontal"></i>
                                                     </a>
                                                     <ul class="dropdown-menu">
-                                                        <li>
-                                                            <a class="dropdown-item" href="{{ route("admin.products.edit", $product->id) }}">
-                                                                <i class="feather feather-edit-3 me-3"></i>
-                                                                <span>Cập nhật</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="dropdown-divider"></li>
-                                                        <li>
-                                                            <button type="submit"
-                                                                class="dropdown-item text-danger border-0 bg-transparent">
-                                                                <i class="feather feather-trash-2 me-3"></i>
-                                                                <span>Xóa</span>
-                                                            </button>
-                                                        </li>
+                                                        @if($product->trashed())
+                                                            <form action="{{ route("admin.products.restore", $product->id) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method("PATCH")
+                                                                <button type="submit"
+                                                                    class="dropdown-item text-success border-0 bg-transparent">
+                                                                    <i class="feather feather-rotate-ccw me-3"></i>
+                                                                    <span>Khôi phục</span>
+                                                                </button>
+                                                            </form>
+                                                        @else
+                                                            <li>
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route("admin.products.edit", $product->id) }}">
+                                                                    <i class="feather feather-edit-3 me-3"></i>
+                                                                    <span>Cập nhật</span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="dropdown-divider"></li>
+                                                            <li>
+                                                                <form action="{{ route("admin.products.destroy", $product->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method("DELETE")
+                                                                    <button type="submit"
+                                                                        class="dropdown-item text-danger border-0 bg-transparent">
+                                                                        <i class="feather feather-trash-2 me-3"></i>
+                                                                        <span>Xóa</span>
+                                                                    </button>
+                                                                </form>
+                                                            </li>
+                                                        @endif
                                                     </ul>
                                                 </div>
                                             </div>
