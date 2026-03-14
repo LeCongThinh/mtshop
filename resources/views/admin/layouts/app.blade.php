@@ -20,6 +20,9 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/theme.min.css") }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/app.css") }}" />
+    <!-- CSS thư viện hiển thị alert dialog thông tin sản phẩm -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+
 
 </head>
 
@@ -90,7 +93,8 @@
 
     <!-- Thông báo -->
     <script src="{{ asset("assets/js/admin/admin-alert.js") }}"></script>
-
+    <!-- Js thư viện hiển thị alert dialog thông tin sản phẩm -->
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </body>
 
 </html>

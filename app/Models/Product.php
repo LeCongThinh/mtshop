@@ -29,10 +29,12 @@ class Product extends Model
     {
         //Trạng thái danh mục bị soft delete
         if ($this->trashed()) {
+            return ['class' => 'badge bg-soft-danger text-danger', 'text' => 'Ngừng kinh doanh'];
+        } elseif ($this->stock <= 0) {
             return ['class' => 'badge bg-soft-danger text-danger', 'text' => 'Hết hàng'];
         }
         return match ($this->status) {
-            default => ['class' => 'badge bg-soft-success text-success', 'text' => 'Còn hàng'],
+            default => ['class' => 'badge bg-soft-success text-success', 'text' => 'Đang kinh doanh'],
         };
     }
 

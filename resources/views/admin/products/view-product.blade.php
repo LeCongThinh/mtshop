@@ -60,7 +60,6 @@
                                                 @endif
                                             </a>
                                         </td>
-
                                         <td><b>{{ $product->stock }}</b></td>
                                         <td>
                                             <div class="{{ $product->status_label['class'] }} fs-status">
@@ -69,7 +68,8 @@
                                         </td>
                                         <td>
                                             <div class="hstack gap-2 justify-content-end">
-                                                <a href="#" class="avatar-text avatar-md">
+                                                <a href="javascript:void(0)" class="avatar-text avatar-md btn-show-product"
+                                                    data-id="{{ $product->id }}">
                                                     <i class="feather feather-eye"></i>
                                                 </a>
 
@@ -125,4 +125,5 @@
             </div>
         </div>
     </div>
+    @include("admin.products.show-product")
 @endsection

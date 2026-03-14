@@ -92,9 +92,10 @@ class ProductController extends Controller
     }
 
     //Xem thông tin sản phẩm
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $product = Product::withTrashed()->with(['category', 'brand', 'images', 'specs'])->findOrFail($id);
+        return response()->json($product);
     }
 
     //View edit sản phẩm
