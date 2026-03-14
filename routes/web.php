@@ -102,6 +102,10 @@ Route::prefix("admin")->group(function () {
         Route::get("products/create", [ProductController::class, "create"])->name("admin.products.create");
         //Lưu sản phẩm
         Route::post("products/store", [ProductController::class, "store"])->name("admin.products.store");
+        //View edit sản phẩm
+        Route::get("products/{id}/edit", [ProductController::class, "edit"])->name("admin.products.edit");
+        //Cập nhật sản phẩm
+        Route::put("products/{id}", [ProductController::class, "update"])->name("admin.products.update");
 
     });
 });

@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const specsList = document.getElementById('specs-list');
     const addBtn = document.getElementById('add-spec');
 
-    // 1. Xử lý khi nhấn nút "Thêm dòng mới"
+    // Xử lý khi nhấn nút "Thêm dòng mới"
     addBtn.addEventListener('click', function () {
         // Tạo một thẻ div bọc ngoài cho hàng mới
         const newRow = document.createElement('div');
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // 2. Xử lý khi nhấn nút "Xóa"
+    // Xử lý khi nhấn nút "Xóa"
     // Sử dụng event delegation để bắt được các nút mới được thêm vào sau này
     specsList.addEventListener('click', function (e) {
         // Kiểm tra nếu phần tử được click là nút xóa hoặc icon bên trong nút xóa

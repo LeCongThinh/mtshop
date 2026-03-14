@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ProductImage;
 use App\Models\ProductSpec;
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Brand;
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
@@ -97,20 +99,77 @@ class ProductController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    //View edit sản phẩm
+    public function edit($id)
     {
-        //
+        $product = Product::with(["images", "specs"])->findOrFail($id);
+        $categories = Category::where("status", "active")->whereNotNull("parent_id")->get();
+        $brands = Brand::where("status", "active")->get();
+        return view("admin.products.update-product", compact("product", "categories", "brands"));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    //Cập nhật sản phẩm
+    public function update(UpdateProductRequest $request, $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        try {
+
+            DB::beginTransaction();
+            $data = $request->validated();
+
+            if ($request->hasFile('thumbnail')) {
+                // Xóa ảnh cũ trong storage và lưu ảnh mới
+                if ($product->thumbnail) {
+                    Storage::disk('public')->delete($product->thumbnail);
+                }
+                $data['thumbnail'] = $request->file('thumbnail')->store('products', 'public');
+            } else {
+                unset($data['thumbnail']);
+            }
+
+            $product->update($data);
+
+            // Xóa ảnh cũ nếu người dùng nhấn nút X (nhận ID từ checkbox delete_images)
+            if ($request->has('delete_images')) {
+
+                $imagesToDelete = ProductImage::whereIn('id', $request->delete_images)->where('product_id', $id)->get();
+
+                foreach ($imagesToDelete as $oldImg) {
+                    Storage::disk('public')->delete($oldImg->image);
+                    $oldImg->delete();
+                }
+            }
+
+            // Thêm ảnh mới vào danh sách
+            if ($request->hasFile('gallery')) {
+                foreach ($request->file('gallery') as $file) {
+                    $path = $file->store('products/gallery', 'public');
+                    $product->images()->create(['image' => $path]);
+                }
+            }
+
+            // Xóa hết specs cũ của sản phẩm
+            $product->specs()->delete();
+
+            // Lưu lại mảng specs mới nếu có dữ liệu
+            if ($request->has('spec_name')) {
+                foreach ($request->spec_name as $key => $name) {
+                    if (!empty($name) && !empty($request->spec_value[$key])) {
+                        $product->specs()->create([
+                            'spec_key' => $name,
+                            'spec_value' => $request->spec_value[$key]
+                        ]);
+                    }
+                }
+
+                DB::commit();
+
+                return redirect()->route('admin.products')->with('success', 'Sản phẩm đã được cập nhật thành công!');
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with("error", "Lỗi: " . $e->getMessage())->withInput();
+        }
     }
 
     /**

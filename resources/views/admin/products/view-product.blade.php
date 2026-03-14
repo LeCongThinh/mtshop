@@ -80,7 +80,7 @@
                                                     </a>
                                                     <ul class="dropdown-menu">
                                                         <li>
-                                                            <a class="dropdown-item" href="#">
+                                                            <a class="dropdown-item" href="{{ route("admin.products.edit", $product->id) }}">
                                                                 <i class="feather feather-edit-3 me-3"></i>
                                                                 <span>Cập nhật</span>
                                                             </a>
