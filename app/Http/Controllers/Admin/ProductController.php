@@ -91,9 +91,7 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+    //Xem thông tin sản phẩm
     public function show(string $id)
     {
         //
@@ -165,7 +163,7 @@ class ProductController extends Controller
             return redirect()->route('admin.products')->with('success', 'Sản phẩm đã được cập nhật thành công!');
 
         } catch (\Exception $e) {
-            
+
             DB::rollBack();
             return back()->with("error", "Lỗi: " . $e->getMessage())->withInput();
         }
@@ -183,9 +181,9 @@ class ProductController extends Controller
     //Restore sản phẩm
     public function restore($id)
     {
-        $product = Product::findOrFail($id);
-        $product->update(["status", "active"]);
+        $product = Product::withTrashed()->findOrFail($id);
         $product->restore();
+        $product->update(["status", "active"]);
         return redirect()->back()->with("")->with("success", "Khôi phục sản phẩm thành công");
     }
 }
