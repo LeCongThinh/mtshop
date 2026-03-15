@@ -44,3 +44,16 @@
 .dropdown-submenu:hover .dropdown-menu {
     display: block;
 }
+
+/* Hiệu ứng hover cho ảnh sản phẩm */
+.product-img-container {
+    overflow: hidden;
+}
+
+.product-img-hover {
+    transition: transform 0.4s ease;
+}
+
+.product-img-hover:hover {
+    transform: scale(1.1);
+}

@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\CategoryController;
 ### User ###
 Route::get("/", [HomeController::class, "home"])->name("home.index");
 
+
 //Đăng nhập
 // Route::get('/login', [UserController::class, 'showLogin'])->name('login');
 

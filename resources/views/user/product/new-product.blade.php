@@ -4,205 +4,47 @@
         <a href="#" class="text-primary fst-italic text-decoration-none">Xem tất cả →</a>
     </div>
     <div class="product-scroll d-flex">
-        <div class="product-item">
-            <div class="card product-card border">
-                <div class="position-relative">
-                    <img class="card-img-top p-2" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                        style="height:180px; object-fit:cover;" alt="">
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">
-                        -10%
-                    </span>
-                </div>
-                <div class="card-body p-3 text-center">
-                    <h6 class="fw-bold mb-2">Fancy Product</h6>
-                    <div class="text-danger fw-bold">
-                        $40.00
+        @foreach ($products as $product)
+            <div class="product-item">
+                <div class="card product-card border">
+                    <div class="position-relative product-img-container overflow-hidden">
+                        <!-- Thumbnail sản phẩm -->
+                        <img class="card-img-top p-2 product-img-hover"
+                            src="{{ $product->thumbnail ? asset("storage/" . $product->thumbnail) : asset("assets/images/avatar/undefined.png") }}"
+                            style="height:200px; object-fit:cover;" alt="">
                     </div>
-                    <div class="text-muted small text-decoration-line-through">
-                        $50.00
+                    <div class="card-body p-3 text-start">
+                        <!-- Tên sản phẩm -->
+                        <h6 class="fw-bold mb-2">{{ $product->name }}</h6>
+                        <!-- Giá khuyến mãi -->
+                        <div class="text-danger fw-bold">
+                            {{ number_format($product->sale_price, 0, ',', '.') }} đ
+                        </div>
+                        <!-- Giá bán -->
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="text-muted small text-decoration-line-through">
+                                {{ number_format($product->price, 0, ',', '.') }} đ
+
+                            </div>
+                            <div class="badge border border-danger text-danger fw-bold">
+                                -{{ round((($product->price - $product->sale_price) / $product->price) * 100) }}%
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="card-footer p-2 border-0 bg-transparent text-center">
-                    <a class="btn btn-outline-danger btn-sm w-100">
-                        Add to cart
-                    </a>
+                    <div class="card-footer p-2 border-0 bg-transparent text-center">
+                        <a class="btn btn-outline-primary btn-sm w-100">
+                            Thêm vào giỏ hàng
+                        </a>
+                        <div class="d-flex align-items-center mt-2 mb-1">
+                            <span class="text-warning me-2">
+                                <span class="fw-semibold small">0.0</span>
+                                <i class="bi bi-star-fill"></i>
+                            </span>
+                            <span class="text-muted small">(0 đánh giá)</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="product-item">
-            <div class="card product-card border">
-                <div class="position-relative">
-                    <img class="card-img-top p-2" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                        style="height:180px; object-fit:cover;" alt="">
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">
-                        -10%
-                    </span>
-                </div>
-                <div class="card-body p-3 text-center">
-                    <h6 class="fw-bold mb-2">Fancy Product</h6>
-                    <div class="text-danger fw-bold">
-                        $40.00
-                    </div>
-                    <div class="text-muted small text-decoration-line-through">
-                        $50.00
-                    </div>
-                </div>
-                <div class="card-footer p-2 border-0 bg-transparent text-center">
-                    <a class="btn btn-outline-danger btn-sm w-100">
-                        Add to cart
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="product-item">
-            <div class="card product-card border">
-                <div class="position-relative">
-                    <img class="card-img-top p-2" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                        style="height:180px; object-fit:cover;" alt="">
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">
-                        -10%
-                    </span>
-                </div>
-                <div class="card-body p-3 text-center">
-                    <h6 class="fw-bold mb-2">Fancy Product</h6>
-                    <div class="text-danger fw-bold">
-                        $40.00
-                    </div>
-                    <div class="text-muted small text-decoration-line-through">
-                        $50.00
-                    </div>
-                </div>
-                <div class="card-footer p-2 border-0 bg-transparent text-center">
-                    <a class="btn btn-outline-danger btn-sm w-100">
-                        Add to cart
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="product-item">
-            <div class="card product-card border">
-                <div class="position-relative">
-                    <img class="card-img-top p-2" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                        style="height:180px; object-fit:cover;" alt="">
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">
-                        -10%
-                    </span>
-                </div>
-                <div class="card-body p-3 text-center">
-                    <h6 class="fw-bold mb-2">Fancy Product</h6>
-                    <div class="text-danger fw-bold">
-                        $40.00
-                    </div>
-                    <div class="text-muted small text-decoration-line-through">
-                        $50.00
-                    </div>
-                </div>
-                <div class="card-footer p-2 border-0 bg-transparent text-center">
-                    <a class="btn btn-outline-danger btn-sm w-100">
-                        Add to cart
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="product-item">
-            <div class="card product-card border">
-                <div class="position-relative">
-                    <img class="card-img-top p-2" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                        style="height:180px; object-fit:cover;" alt="">
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">
-                        -10%
-                    </span>
-                </div>
-                <div class="card-body p-3 text-center">
-                    <h6 class="fw-bold mb-2">Fancy Product</h6>
-                    <div class="text-danger fw-bold">
-                        $40.00
-                    </div>
-                    <div class="text-muted small text-decoration-line-through">
-                        $50.00
-                    </div>
-                </div>
-                <div class="card-footer p-2 border-0 bg-transparent text-center">
-                    <a class="btn btn-outline-danger btn-sm w-100">
-                        Add to cart
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="product-item">
-            <div class="card product-card border">
-                <div class="position-relative">
-                    <img class="card-img-top p-2" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                        style="height:180px; object-fit:cover;" alt="">
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">
-                        -10%
-                    </span>
-                </div>
-                <div class="card-body p-3 text-center">
-                    <h6 class="fw-bold mb-2">Fancy Product</h6>
-                    <div class="text-danger fw-bold">
-                        $40.00
-                    </div>
-                    <div class="text-muted small text-decoration-line-through">
-                        $50.00
-                    </div>
-                </div>
-                <div class="card-footer p-2 border-0 bg-transparent text-center">
-                    <a class="btn btn-outline-danger btn-sm w-100">
-                        Add to cart
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="product-item">
-            <div class="card product-card border">
-                <div class="position-relative">
-                    <img class="card-img-top p-2" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                        style="height:180px; object-fit:cover;" alt="">
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">
-                        -10%
-                    </span>
-                </div>
-                <div class="card-body p-3 text-center">
-                    <h6 class="fw-bold mb-2">Fancy Product</h6>
-                    <div class="text-danger fw-bold">
-                        $40.00
-                    </div>
-                    <div class="text-muted small text-decoration-line-through">
-                        $50.00
-                    </div>
-                </div>
-                <div class="card-footer p-2 border-0 bg-transparent text-center">
-                    <a class="btn btn-outline-danger btn-sm w-100">
-                        Add to cart
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="product-item">
-            <div class="card product-card border">
-                <div class="position-relative">
-                    <img class="card-img-top p-2" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                        style="height:180px; object-fit:cover;" alt="">
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">
-                        -10%
-                    </span>
-                </div>
-                <div class="card-body p-3 text-center">
-                    <h6 class="fw-bold mb-2">Fancy Product</h6>
-                    <div class="text-danger fw-bold">
-                        $40.00
-                    </div>
-                    <div class="text-muted small text-decoration-line-through">
-                        $50.00
-                    </div>
-                </div>
-                <div class="card-footer p-2 border-0 bg-transparent text-center">
-                    <a class="btn btn-outline-danger btn-sm w-100">
-                        Add to cart
-                    </a>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
 </div>

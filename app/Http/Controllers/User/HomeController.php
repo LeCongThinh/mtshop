@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
 
@@ -18,6 +19,8 @@ class HomeController extends Controller
                     $query->where('status', 'active');
                 }
             ])->get();
-        return view("user.layouts.home", compact("categories"));
+        //Lấy danh sách sản phẩm mới
+        $products = Product::get();
+        return view("user.layouts.home", compact("categories", "products"));
     }
 }
