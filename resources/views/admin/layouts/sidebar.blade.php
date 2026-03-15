@@ -92,15 +92,20 @@
                     </ul>
                 </li>
                 <!-- Quản lý bài viết -->
-                <li class="nxl-item nxl-hasmenu">
+                <li class="nxl-item nxl-hasmenu {{ request()->routeIs("admin.posts") ? "active nxl-trigger" : "" }}">
                     <a href="javascript:void(0);" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-alert-circle"></i></span>
                         <span class="nxl-mtext">Quản lý bài viết</span><span class="nxl-arrow"><i
                                 class="feather-chevron-right"></i></span>
                     </a>
                     <ul class="nxl-submenu">
-                        <li class="nxl-item"><a class="nxl-link" href="leads.html">Danh sách bài viết</a></li>
-                        <li class="nxl-item"><a class="nxl-link" href="leads-create.html">Thêm mới bài viết</a></li>
+                        <li class="nxl-item"><a class="nxl-link {{ request()->routeIs("admin.posts") ? "active" : "" }}"
+                                href="{{ route("admin.posts") }}">Danh sách bài viết</a>
+                        </li>
+                        <li class="nxl-item"><a
+                                class="nxl-link {{ request()->routeIs("admin.posts.create") ? "active" : "" }}"
+                                href="{{ route("admin.posts.create") }}">Thêm mới bài viết</a>
+                        </li>
                     </ul>
                 </li>
             </ul>

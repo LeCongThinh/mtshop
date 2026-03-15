@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\User\HomeController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
@@ -113,5 +114,14 @@ Route::prefix("admin")->group(function () {
         Route::delete("products/{id}", [ProductController::class, "destroy"])->name("admin.products.destroy");
         //Restore sản phẩm
         Route::patch("products/{id}", [ProductController::class, "restore"])->name("admin.products.restore");
+
+        #Trang quản lý bài viết
+        //Danh sách bài viết
+        Route::get("posts", [PostController::class, "index"])->name("admin.posts");
+        //View thêm mới bài viết
+        Route::get("posts/create", [PostController::class, "create"])->name("admin.posts.create");
+        //Lưu bài viết
+        Route::post("posts/store", [PostController::class, "store"])->name("admin.posts.store");
+
     });
 });
