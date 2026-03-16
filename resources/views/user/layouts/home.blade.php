@@ -28,7 +28,7 @@
         <section class="py-4" style="background-color:#e9ecef;">
             <div class="container">
                 <!-- Sản phẩm mới -->
-                @include("user.product.new-product")
+                @include("user.products.new-product")
                 <!-- PC bán chạy -->
                 <!-- <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3"> -->
                 <div class="bg-white p-4 rounded shadow-sm mb-3">
@@ -488,51 +488,7 @@
                     </div>
                 </div>
                 <!-- Tin tức công nghệ -->
-                <div class="bg-white p-4 rounded shadow-sm mb-3">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4>Tin công nghệ</h4><a href="#" class="text-primary fst-italic text-decoration-none">Xem tất
-                            cả
-                            →</a>
-                    </div>
-                    <div class="product-scroll d-flex">
-                        <div class="product-item">
-                            <div class="card product-card border">
-                                <div class="position-relative">
-                                    <img class="card-img-top p-2" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                                        style="height:180px; object-fit:cover;" alt="">
-                                </div>
-                                <div class="card-body p-3 text-center">
-                                    <a href="#" class="mb-2 text-decoration-none">Fancy Product</a>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="product-item">
-                            <div class="card product-card border">
-                                <div class="position-relative">
-                                    <img class="card-img-top p-2" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                                        style="height:180px; object-fit:cover;" alt="">
-                                </div>
-                                <div class="card-body p-3 text-center">
-                                    <a href="#" class="mb-2 text-decoration-none">Fancy Product</a>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="product-item">
-                            <div class="card product-card border">
-                                <div class="position-relative">
-                                    <img class="card-img-top p-2" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                                        style="height:180px; object-fit:cover;" alt="">
-                                </div>
-                                <div class="card-body p-3 text-center">
-                                    <a href="#" class="mb-2 text-decoration-none">Fancy Product</a>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+                @include("user.news.list-news")
             </div>
         </section>
     </main>
