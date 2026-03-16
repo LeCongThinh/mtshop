@@ -96,7 +96,8 @@
                                                             </form>
                                                         @else
                                                             <li>
-                                                                <a class="dropdown-item" href="#">
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route("admin.posts.edit", $post->id) }}">
                                                                     <i class="feather feather-edit-3 me-3"></i>
                                                                     <span>Cập nhật</span>
                                                                 </a>
