@@ -122,6 +122,8 @@ Route::prefix("admin")->group(function () {
         Route::get("posts/create", [PostController::class, "create"])->name("admin.posts.create");
         //Lưu bài viết
         Route::post("posts/store", [PostController::class, "store"])->name("admin.posts.store");
+        //View xem trước bài viết
+        Route::get("posts/{id}/show", [PostController::class, "show"])->name("admin.posts.show");
         //View edit bài viết
         Route::get("posts/{id}/edit", [PostController::class, "edit"])->name("admin.posts.edit");
         //Cập nhật bài viết

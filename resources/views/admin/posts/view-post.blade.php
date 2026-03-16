@@ -74,7 +74,8 @@
 
                                         <td>
                                             <div class="hstack gap-2 justify-content-end">
-                                                <a href="javascript:void(0)" class="avatar-text avatar-md btn-show-product">
+                                                <a href="javascript:void(0)" class="avatar-text avatar-md btn-show-post"
+                                                    data-url="{{ route('admin.posts.show', $post->id) }}">
                                                     <i class="feather feather-eye"></i>
                                                 </a>
 
@@ -130,4 +131,5 @@
             </div>
         </div>
     </div>
+    @include("admin.posts.show-post")
 @endsection

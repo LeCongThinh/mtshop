@@ -47,12 +47,11 @@ class PostController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // xem trước bài viết
+    public function show($id)
     {
-        //
+        $post = Post::withTrashed()->findOrFail($id);
+        return response()->json($post);
     }
 
     ///View edit bài viết
