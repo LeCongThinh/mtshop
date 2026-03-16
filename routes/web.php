@@ -126,5 +126,9 @@ Route::prefix("admin")->group(function () {
         Route::get("posts/{id}/edit", [PostController::class, "edit"])->name("admin.posts.edit");
         //Cập nhật bài viết
         Route::put("posts/{id}", [PostController::class, "update"])->name("admin.posts.update");
+        //Xóa bài viết
+        Route::delete("posts/{id}", [PostController::class, "destroy"])->name("admin.posts.destroy");
+        //Khôi phục bài viết
+        Route::patch("posts/{id}", [PostController::class, "restore"])->name("admin.posts.restore");
     });
 });

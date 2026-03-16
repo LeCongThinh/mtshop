@@ -88,11 +88,21 @@ class PostController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // Xóa bài viết
+    public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->update(['status', 'inactive']);
+        $post->delete();
+        return redirect()->back()->with("success", "Xóa bài viết thành công");
+    }
+
+    // Khôi phục bài viết
+    public function restore($id)
+    {
+        $post = Post::withTrashed()->findOrFail($id);
+        $post->restore();
+        $post->update(['status', 'active']);
+        return redirect()->back()->with("succcess", "Khôi phục bài viết thành công");
     }
 }

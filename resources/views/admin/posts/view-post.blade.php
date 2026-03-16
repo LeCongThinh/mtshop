@@ -85,7 +85,8 @@
                                                     </a>
                                                     <ul class="dropdown-menu">
                                                         @if($post->trashed())
-                                                            <form action="#" method="post">
+                                                            <form action="{{ route("admin.posts.restore", $post->id) }}"
+                                                                method="post">
                                                                 @csrf
                                                                 @method("PATCH")
                                                                 <button type="submit"
@@ -104,7 +105,8 @@
                                                             </li>
                                                             <li class="dropdown-divider"></li>
                                                             <li>
-                                                                <form action="#" method="post">
+                                                                <form action="{{ route("admin.posts.destroy", $post->id) }}"
+                                                                    method="post">
                                                                     @csrf
                                                                     @method("DELETE")
                                                                     <button type="submit"
