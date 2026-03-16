@@ -69,7 +69,7 @@
                                         <td>
                                             <div class="hstack gap-2 justify-content-end">
                                                 <a href="javascript:void(0)" class="avatar-text avatar-md btn-show-product"
-                                                    data-id="{{ $product->id }}">
+                                                    data-url="{{ route("admin.products.show", $product->id) }}">
                                                     <i class="feather feather-eye"></i>
                                                 </a>
 

@@ -55,7 +55,4 @@
 
 <!-- link css và js -->
 <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/alert-product-info.css") }}">
-<script>
-    var SHOW_PRODUCT_ROUTE = "{{ route('admin.products.show', ':id') }}";
-</script>
 <script src="{{ asset("assets/js/admin/show-product-info.js") }}"></script>

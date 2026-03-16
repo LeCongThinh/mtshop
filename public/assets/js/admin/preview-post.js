@@ -5,7 +5,6 @@ document.addEventListener('click', function (e) {
     e.preventDefault();
     // Lấy trực tiếp URL từ attribute data-url
     let url = btn.dataset.url;
-    btn.style.opacity = '0.5';
 
     fetch(url, {
         headers: { "X-Requested-With": "XMLHttpRequest" }
@@ -13,7 +12,6 @@ document.addEventListener('click', function (e) {
         if (!res.ok) throw new Error("Không thể tải dữ liệu");
         return res.json();
     }).then(data => {
-        btn.style.opacity = '1';
         // Đổ dữ liệu cơ bản
         document.getElementById('post-title').innerText = data.title;
         document.getElementById('post-excerpt').innerText = data.excerpt || '';

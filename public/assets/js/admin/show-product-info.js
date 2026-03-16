@@ -3,14 +3,18 @@ document.addEventListener('click', function (e) {
     if (!btn) return;
 
     e.preventDefault();
-    let url = SHOW_PRODUCT_ROUTE.replace(':id', btn.dataset.id);
+    // Lấy trực tiếp URL từ attribute data-url
+    let url = btn.dataset.url;
 
     fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) throw new Error("Không thể tải dữ liệu");
+            return res.json();
+        })
         .then(data => {
             document.getElementById('p-title').innerText = data.name;
 
-            // Price vs Sale Price
+            // Price và Sale Price
             const mainPriceEl = document.getElementById('p-main-price');
             const oldPriceEl = document.getElementById('p-old-price');
 
