@@ -24,6 +24,6 @@ class HomeController extends Controller
         $products = Product::get();
         // Lấy danh sách tin tức công nghệ
         $posts = Post::get();
-        return view("user.layouts.home", compact("categories", "products", "posts"));
+        return view("user.home-page", compact("categories", "products", "posts"));
     }
 }

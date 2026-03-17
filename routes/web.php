@@ -3,9 +3,10 @@
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BrandController;
-use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\ProductControler as UserProductController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
@@ -25,7 +26,11 @@ use App\Http\Controllers\Admin\CategoryController;
 */
 
 ### User ###
+// Trang chủ
 Route::get("/", [HomeController::class, "home"])->name("home.index");
+// Trang chi tiết sản phẩm
+Route::get("/products/{slug}", [UserProductController::class, "showProductDetail"])->name("home.product-detail");
+
 
 
 //Đăng nhập
@@ -99,21 +104,21 @@ Route::prefix("admin")->group(function () {
 
         #Trang quản lý sản phẩm
         //Danh sách sản phẩm
-        Route::get("products", [ProductController::class, "index"])->name("admin.products");
+        Route::get("products", [AdminProductController::class, "index"])->name("admin.products");
         //View thêm mới sản phẩm
-        Route::get("products/create", [ProductController::class, "create"])->name("admin.products.create");
+        Route::get("products/create", [AdminProductController::class, "create"])->name("admin.products.create");
         //Lưu sản phẩm
-        Route::post("products/store", [ProductController::class, "store"])->name("admin.products.store");
+        Route::post("products/store", [AdminProductController::class, "store"])->name("admin.products.store");
         //View xem thong tin sản phẩm
-        Route::get("products/{id}/show", [ProductController::class, "show"])->name("admin.products.show");
+        Route::get("products/{id}/show", [AdminProductController::class, "show"])->name("admin.products.show");
         //View edit sản phẩm
-        Route::get("products/{id}/edit", [ProductController::class, "edit"])->name("admin.products.edit");
+        Route::get("products/{id}/edit", [AdminProductController::class, "edit"])->name("admin.products.edit");
         //Cập nhật sản phẩm
-        Route::put("products/{id}", [ProductController::class, "update"])->name("admin.products.update");
+        Route::put("products/{id}", [AdminProductController::class, "update"])->name("admin.products.update");
         //Xóa sản phẩm
-        Route::delete("products/{id}", [ProductController::class, "destroy"])->name("admin.products.destroy");
+        Route::delete("products/{id}", [AdminProductController::class, "destroy"])->name("admin.products.destroy");
         //Restore sản phẩm
-        Route::patch("products/{id}", [ProductController::class, "restore"])->name("admin.products.restore");
+        Route::patch("products/{id}", [AdminProductController::class, "restore"])->name("admin.products.restore");
 
         #Trang quản lý bài viết
         //Danh sách bài viết
