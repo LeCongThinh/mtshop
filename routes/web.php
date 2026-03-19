@@ -4,7 +4,8 @@ use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
-use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\PostController as AdminPostController;
+use App\Http\Controllers\User\PostController as UserPostController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\ProductControler as UserProductController;
 use App\Models\Category;
@@ -29,7 +30,9 @@ use App\Http\Controllers\Admin\CategoryController;
 // Trang chủ
 Route::get("/", [HomeController::class, "home"])->name("home.index");
 // Trang chi tiết sản phẩm
-Route::get("/products/{slug}", [UserProductController::class, "showProductDetail"])->name("home.product-detail");
+Route::get("products/{slug}", [UserProductController::class, "showProductDetail"])->name("home.product-detail");
+//Trang chi tiết bài viết
+Route::get("blogs/{slug}", [UserPostController::class, "showPostDetail"])->name("home.news-detail");
 
 
 
@@ -122,20 +125,20 @@ Route::prefix("admin")->group(function () {
 
         #Trang quản lý bài viết
         //Danh sách bài viết
-        Route::get("posts", [PostController::class, "index"])->name("admin.posts");
+        Route::get("posts", [AdminPostController::class, "index"])->name("admin.posts");
         //View thêm mới bài viết
-        Route::get("posts/create", [PostController::class, "create"])->name("admin.posts.create");
+        Route::get("posts/create", [AdminPostController::class, "create"])->name("admin.posts.create");
         //Lưu bài viết
-        Route::post("posts/store", [PostController::class, "store"])->name("admin.posts.store");
+        Route::post("posts/store", [AdminPostController::class, "store"])->name("admin.posts.store");
         //View xem trước bài viết
-        Route::get("posts/{id}/show", [PostController::class, "show"])->name("admin.posts.show");
+        Route::get("posts/{id}/show", [AdminPostController::class, "show"])->name("admin.posts.show");
         //View edit bài viết
-        Route::get("posts/{id}/edit", [PostController::class, "edit"])->name("admin.posts.edit");
+        Route::get("posts/{id}/edit", [AdminPostController::class, "edit"])->name("admin.posts.edit");
         //Cập nhật bài viết
-        Route::put("posts/{id}", [PostController::class, "update"])->name("admin.posts.update");
+        Route::put("posts/{id}", [AdminPostController::class, "update"])->name("admin.posts.update");
         //Xóa bài viết
-        Route::delete("posts/{id}", [PostController::class, "destroy"])->name("admin.posts.destroy");
+        Route::delete("posts/{id}", [AdminPostController::class, "destroy"])->name("admin.posts.destroy");
         //Khôi phục bài viết
-        Route::patch("posts/{id}", [PostController::class, "restore"])->name("admin.posts.restore");
+        Route::patch("posts/{id}", [AdminPostController::class, "restore"])->name("admin.posts.restore");
     });
 });

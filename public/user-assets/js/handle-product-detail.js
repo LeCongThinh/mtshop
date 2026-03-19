@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (isExpanded) {
             // Đang mở -> Thu gọn lại
             wrapper.classList.remove('expanded');
-            wrapper.style.maxHeight = "500px";
+            wrapper.style.maxHeight = "400px";
             btn.innerHTML = 'Đọc tiếp bài viết <i class="bi bi-chevron-down ms-1"></i>';
             // Cuộn mượt lên đầu phần mô tả
             wrapper.scrollIntoView({ behavior: 'smooth' });

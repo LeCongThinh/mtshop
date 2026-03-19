@@ -22,7 +22,6 @@
                                         <img src="{{ asset('storage/' . $product->thumbnail) }}" id="mainImage"
                                             class="img-fluid" style="max-height: 100%; object-fit: contain;" alt="Sản phẩm">
                                     </div>
-
                                     <button
                                         class="btn nav-btn shadow-sm position-absolute top-50 start-0 translate-middle-y rounded-circle"
                                         onclick="prevImage()" style="width: 40px; height: 40px; z-index: 10;">
@@ -113,12 +112,12 @@
                                     <li class="d-flex justify-content-between mb-2 pb-2 border-bottom">
                                         <span class="text-secondary"><i class="bi bi-tag me-2"></i>Thương hiệu</span>
                                         <span
-                                            class="fw-bold text-dark">{{ $product->brand->name ?? 'Đang cập nhật' }}</span>
+                                            class="fw-bold text-secondary">{{ $product->brand->name ?? 'Đang cập nhật' }}</span>
                                     </li>
                                     <li class="d-flex justify-content-between mb-2 pb-2 border-bottom">
                                         <span class="text-secondary"><i class="bi bi-grid me-2"></i>Danh mục</span>
                                         <span
-                                            class="fw-bold text-dark text-uppercase small">{{ $product->category->name ?? 'Laptop' }}</span>
+                                            class="fw-bold text-secondary text-uppercase small">{{ $product->category->name ?? 'Đang cập nhật' }}</span>
                                     </li>
                                     <li class="d-flex justify-content-between align-items-center">
                                         <span class="text-secondary"><i class="bi bi-box-seam me-2"></i>Tình trạng sản phẩm</span>
