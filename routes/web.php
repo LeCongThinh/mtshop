@@ -31,8 +31,11 @@ use App\Http\Controllers\Admin\CategoryController;
 Route::get("/", [HomeController::class, "home"])->name("home.index");
 // Trang chi tiết sản phẩm
 Route::get("products/{slug}", [UserProductController::class, "showProductDetail"])->name("home.product-detail");
+// Xem tất cả bài viết
+Route::get("blogs/all", [UserPostController::class, "showAllPosts"])->name("all-news");
 //Trang chi tiết bài viết
 Route::get("blogs/{slug}", [UserPostController::class, "showPostDetail"])->name("home.news-detail");
+
 
 
 

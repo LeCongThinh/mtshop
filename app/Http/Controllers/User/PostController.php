@@ -8,6 +8,11 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
+    public function showAllPosts()
+    {
+        $posts = Post::where('status', 'active')->latest()->paginate(9);
+        return view("user.news.all-news", compact('posts'));
+    }
     public function showPostDetail($slug)
     {
         $post = Post::where('slug', $slug)->where('status', 'active')->firstOrFail();
@@ -19,4 +24,6 @@ class PostController extends Controller
 
         return view("user.news.news-detail", compact('post', 'dayName'));
     }
+
+
 }

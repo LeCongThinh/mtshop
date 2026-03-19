@@ -8,7 +8,8 @@
                 <li class="breadcrumb-item"><a href="{{ route('home.index') }}" class="text-decoration-none fw-semibold">
                         <i class="bi bi-house-door-fill me-1"></i>Trang chủ</a>
                 </li>
-                <li class="breadcrumb-item ">Tin công nghệ</li>
+                <li class="breadcrumb-item "> <a href="{{ route('all-news') }}"
+                        class="text-decoration-none fw-semibold">Tin công nghệ</a></li>
                 <li class="breadcrumb-item active">{{$post->title}}</li>
             </ul>
             <div class="row justify-content-center">

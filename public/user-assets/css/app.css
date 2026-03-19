@@ -180,3 +180,38 @@
     height: auto;
     border-radius: 4px;
 }
+
+/* Custom giao diện phân trang */
+.pagination {
+    gap: 8px;
+}
+
+.pagination .page-item .page-link {
+    border: none;
+    border-radius: 8px !important;
+    color: #444;
+    font-weight: 600;
+    padding: 8px 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #0d6efd;
+    color: white;
+    box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+}
+
+/* Hiệu ứng khi di chuột vào nút */
+.pagination .page-item .page-link:hover {
+    background-color: #e9ecef;
+    color: #0d6efd;
+    transform: translateY(-2px);
+}
+
+/* Ẩn các nút rườm rà trên mobile nếu cần */
+@media (max-width: 576px) {
+    .pagination .page-item:not(.active):not(:first-child):not(:last-child) {
+        display: none;
+    }
+}
