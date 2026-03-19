@@ -57,3 +57,106 @@
 .product-img-hover:hover {
     transform: scale(1.1);
 }
+
+/* Ép tất cả ảnh trong mô tả không được vượt quá chiều rộng của Card */
+.product-description img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
+    margin: 15px auto;
+    border-radius: 8px;
+}
+
+/* Đảm bảo nội dung chữ cũng không bị tràn nếu là 1 chuỗi dài */
+.product-description {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+/* Khung chứa nội dung mô tả */
+.description-wrapper {
+    position: relative;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+    max-height: 500px;
+}
+
+/* Lớp phủ mờ dần khi nội dung quá dài */
+.description-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    pointer-events: none;
+}
+
+/* Khi đã mở rộng thì ẩn lớp phủ mờ */
+.description-wrapper.expanded {
+    max-height: none;
+}
+
+.description-wrapper.expanded .description-gradient {
+    display: none;
+}
+
+/* Tùy chỉnh khoảng cách cho Modal hiển thị thông tin cấu hình sản phẩm */
+#fullSpecsModal .modal-dialog {
+    max-width: 800px;
+    margin: 1.75rem auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Bo góc và đổ bóng cho hiện đại */
+#fullSpecsModal .modal-content {
+    border-radius: 15px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Giới hạn chiều cao và cho phép cuộn nội dung bên trong */
+#fullSpecsModal .modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 25px;
+}
+
+/* Tùy chỉnh thanh cuộn cho đẹp (Webkit) */
+#fullSpecsModal .modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+#fullSpecsModal .modal-body::-webkit-scrollbar-thumb {
+    background-color: #dee2e6;
+    border-radius: 10px;
+}
+
+/* Hiệu ứng trượt slider ảnh trong product detail */
+#mainImage {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Lớp phụ để kích hoạt hiệu ứng khi đổi ảnh */
+.changing {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+/* Tùy chỉnh nút mũi tên cho chuyên nghiệp */
+.nav-btn {
+    opacity: 0;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.8) !important;
+}
+
+.position-relative:hover .nav-btn {
+    opacity: 1;
+}
+
+.nav-btn:hover {
+    background: #dc3545 !important;
+    color: white !important;
+}

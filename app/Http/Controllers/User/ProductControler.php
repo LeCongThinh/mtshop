@@ -12,8 +12,12 @@ class ProductControler extends Controller
 {
     public function showProductDetail($slug)
     {
-        $product = Product::where('slug', $slug)->firstOrFail();
-        return view("user.products.product-detail", compact('product'));
+        // Eager loading: load data theo relation được định nghĩa trong model
+        // Nạp toàn bộ specs và images để dùng cho Modal hiển thị thông tin chi tiết cấu hình
+        $product = Product::with(['specs', 'images'])->where('slug', $slug)->firstOrFail();
+        // Biến tạm, chỉ hiển thị 9 dòng thông tin
+        $specs = $product->specs()->take(9)->get();
+        return view("user.products.product-detail", compact('product', 'specs'));
     }
 
 }

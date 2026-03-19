@@ -34,8 +34,8 @@
     </footer>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="{{ asset("user-assets/js/scripts.js") }}"></script>
+    <!-- JS load images, specs in product detail -->
+    <script src="{{ asset("user-assets/js/handle-product-detail.js") }}"></script>
 </body>
 
 </html>

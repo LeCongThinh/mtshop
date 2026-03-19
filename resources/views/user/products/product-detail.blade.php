@@ -14,33 +14,53 @@
             <div class="card stretch stretch-full mb-3">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6 mb-4">
+                        <div class="col-md-6 mb-3">
                             <div class="card border-0 shadow-sm p-3">
-                                <!-- Thumbnail sản phẩm -->
-                                <div class="main-image-container mb-3 text-center">
-                                    <img src="https://via.placeholder.com/500x500" id="mainImage"
-                                        class="img-fluid rounded shadow-sm" alt="Sản phẩm chính">
+                                <div class="position-relative">
+                                    <div class="main-image-container text-center"
+                                        style="height: 350px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #f8f9fa; border-radius: 10px;">
+                                        <img src="{{ asset('storage/' . $product->thumbnail) }}" id="mainImage"
+                                            class="img-fluid" style="max-height: 100%; object-fit: contain;" alt="Sản phẩm">
+                                    </div>
+
+                                    <button
+                                        class="btn nav-btn shadow-sm position-absolute top-50 start-0 translate-middle-y rounded-circle"
+                                        onclick="prevImage()" style="width: 40px; height: 40px; z-index: 10;">
+                                        <i class="bi bi-chevron-left"></i>
+                                    </button>
+
+                                    <button
+                                        class="btn nav-btn shadow-sm position-absolute top-50 end-0 translate-middle-y rounded-circle"
+                                        onclick="nextImage()" style="width: 40px; height: 40px; z-index: 10;">
+                                        <i class="bi bi-chevron-right"></i>
+                                    </button>
                                 </div>
-                                <!-- Danh sách ảnh sản phẩm -->
-                                <div class="d-flex justify-content-center gap-2 overflow-auto">
-                                    <img src="https://via.placeholder.com/500x500" class="img-thumbnail thumb-img active"
-                                        style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-                                    <img src="https://via.placeholder.com/500x600" class="img-thumbnail thumb-img"
-                                        style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-                                    <img src="https://via.placeholder.com/600x500" class="img-thumbnail thumb-img"
-                                        style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-                                    <img src="https://via.placeholder.com/400x400" class="img-thumbnail thumb-img"
-                                        style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
+                                <div class="d-flex justify-content-center gap-2 overflow-auto pb-2" id="thumbGallery">
+                                    @foreach($product->images as $index => $img)
+                                        <img src="{{ asset('storage/' . $img->image) }}" class="img-thumbnail thumb-img"
+                                            style="width: 65px; height: 65px; object-fit: cover; cursor: pointer;"
+                                            onclick="changeImage(this, {{ $index + 1 }})">
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-6 mt-3">
-                            <h4 class="fw-bold mb-2">iPhone 15 Pro Max 256GB</h4>
+                            <h4 class="fw-bold mb-2">{{ $product->name }}</h4>
                             <div class="mb-3">
-                                <span class="text-danger fs-2 fw-bold me-2">29.990.000đ</span>
-                                <span class="text-muted text-decoration-line-through fs-5">34.990.000đ</span>
-                                <span class="badge border border-danger text-danger ms-2">-15%</span>
+                                <!-- Có khuyến mãi -->
+                                @if($product->sale_price > 0)
+                                    <span
+                                        class="text-danger fs-2 fw-bold me-2">{{ number_format($product->sale_price, 0, ',', '.') }}đ</span>
+                                    <span
+                                        class="text-muted text-decoration-line-through fs-5">{{ number_format($product->price, 0, ',', '.') }}đ</span>
+                                    <span
+                                        class="badge border border-danger text-danger ms-2">-{{ round((($product->price - $product->sale_price) / $product->price) * 100) }}%</span>
+                                @else
+                                    <!-- không  khuyến mãi -->
+                                    <span
+                                        class="text-danger fs-2 fw-bold me-2">{{ number_format($product->price, 0, ',', '.') }}đ</span>
+                                @endif
                             </div>
 
                             <div class="mb-2">
@@ -65,7 +85,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -73,14 +92,18 @@
                 <div class="col-lg-8">
                     <div class="card border-0 shadow-sm p-4">
                         <h4 class="fw-bold mb-4 border-bottom pb-2">Mô tả sản phẩm</h4>
-                        <div class="product-description">
-                            <p>Đây là khu vực hiển thị nội dung chi tiết về sản phẩm của bạn. Bạn có thể sử dụng các thẻ
-                                HTML như <strong>bold</strong>, <em>italic</em> hoặc danh sách để làm nổi bật tính năng.
-                            </p>
-                            <p>iPhone 15 Pro Max sở hữu khung viền Titan siêu bền, chip A17 Pro mạnh mẽ nhất thế giới
-                                smartphone hiện nay...</p>
-                            <img src="https://via.placeholder.com/800x400" class="img-fluid rounded my-3"
-                                alt="Banner sản phẩm">
+
+                        <div id="descWrapper" class="description-wrapper">
+                            <div class="product-description">
+                                {!! $product->description !!}
+                            </div>
+                            <div id="descGradient" class="description-gradient"></div>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <button id="btnToggleDesc" class="btn btn-outline-primary btn-sm px-4">
+                                Đọc tiếp bài viết <i class="bi bi-chevron-down ms-1"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -90,57 +113,33 @@
                         <h4 class="fw-bold mb-4 border-bottom pb-2">Thông số kỹ thuật</h4>
                         <table class="table table-striped table-sm">
                             <tbody>
-                                <tr>
-                                    <td class="text-muted" style="width: 40%;">Màn hình</td>
-                                    <td class="fw-medium">6.7 inch, OLED</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-muted">Chipset</td>
-                                    <td class="fw-medium">Apple A17 Pro 6 nhân</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-muted">RAM</td>
-                                    <td class="fw-medium">8 GB</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-muted">Bộ nhớ trong</td>
-                                    <td class="fw-medium">256 GB</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-muted">Pin</td>
-                                    <td class="fw-medium">4,422 mAh</td>
-                                </tr>
+                                <!-- kiểm tra thông số kỹ thuật có rỗng không -->
+                                @if($specs->isNotempty())
+                                    @foreach ($specs as $spec)
+                                        <tr>
+                                            <td class="text-muted" style="width: 40%;">{{ $spec->spec_key }}</td>
+                                            <td class="fw-medium">{{ $spec->spec_value }}</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="2" class="text-center text-muted py-4">
+                                            <i class="bi bi-info-circle me-2"></i>Thông số đang được cập nhật
+                                        </td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
-                        <button class="btn btn-outline-secondary btn-sm w-100 mt-2" data-bs-toggle="modal"
-                            data-bs-target="#specModal">
-                            Xem cấu hình chi tiết
-                        </button>
+                        @if($spec->count() > 9)
+                            <button class="btn btn-outline-secondary btn-sm w-100 mt-3 shadow-sm" data-bs-toggle="modal"
+                                data-bs-target="#fullSpecsModal">
+                                <i class="bi bi- megaphone me-1"></i> Xem tất cả cấu hình
+                            </button>
+                        @endif
                     </div>
                 </div>
             </div>
-
-            <style>
-                .thumb-img:hover,
-                .thumb-img.active {
-                    border-color: #0d6efd !important;
-                    border-width: 2px;
-                }
-
-                .product-description p {
-                    line-height: 1.8;
-                }
-            </style>
-
-            <script>
-                function changeImage(element) {
-                    // Đổi ảnh chính
-                    document.getElementById('mainImage').src = element.src;
-                    // Xử lý class active cho ảnh nhỏ
-                    document.querySelectorAll('.thumb-img').forEach(img => img.classList.remove('active'));
-                    element.classList.add('active');
-                }
-            </script>
         </div>
     </section>
+    @include("user.products.show-specs")
 @endsection

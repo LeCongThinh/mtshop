@@ -17,19 +17,28 @@
                         <div class="card-body p-3 text-start">
                             <!-- Tên sản phẩm -->
                             <h6 class="fw-bold mb-2"> {{ $product->name }} </h6>
-                            <!-- Giá khuyến mãi -->
-                            <div class="text-danger fw-bold">
-                                {{ number_format($product->sale_price, 0, ',', '.') }} đ
-                            </div>
-                            <!-- Giá bán -->
-                            <div class="d-flex align-items-center gap-2">
-                                <div class="text-muted small text-decoration-line-through">
+                            <!-- Trường hợp có khuyến mãi -->
+                            @if($product->sale_price > 0)
+                                <!-- Giá khuyến mãi -->
+                                <div class="text-danger fw-bold">
+                                    {{ number_format($product->sale_price, 0, ',', '.') }} đ
+                                </div>
+                                <!-- Giá bán -->
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-muted small text-decoration-line-through">
+                                        {{ number_format($product->price, 0, ',', '.') }} đ
+                                    </div>
+                                    <div class="badge border border-danger text-danger fw-bold">
+                                        -{{ round((($product->price - $product->sale_price) / $product->price) * 100) }}%
+                                    </div>
+                                </div>
+                            @else
+                                <!-- không có khuyến mãi -->
+                                <div class="text-danger fw-bold fs-2 mb-3">
                                     {{ number_format($product->price, 0, ',', '.') }} đ
                                 </div>
-                                <div class="badge border border-danger text-danger fw-bold">
-                                    -{{ round((($product->price - $product->sale_price) / $product->price) * 100) }}%
-                                </div>
-                            </div>
+                            @endif
+
                         </div>
                     </a>
 
