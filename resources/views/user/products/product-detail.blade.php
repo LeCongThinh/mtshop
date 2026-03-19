@@ -47,6 +47,13 @@
 
                         <div class="col-md-6 mt-3">
                             <h4 class="fw-bold mb-2">{{ $product->name }}</h4>
+                            <div class="mt-2">
+                                <span class="text-warning">
+                                    <i class="bi bi-star-fill"></i> 4.8
+                                </span>
+                                <span class="text-muted">(120 đánh giá)</span>
+                                <span class="ms-3 text-success">Đã bán 500+</span>
+                            </div>
                             <div class="mb-3">
                                 <!-- Có khuyến mãi -->
                                 @if($product->sale_price > 0)
@@ -72,16 +79,58 @@
                                     </span>
                                 </button>
                             </div>
+                            
 
-                            <div class="card bg-light border-0">
-                                <div class="card-body">
-                                    <h6 class="fw-bold"><i class="bi bi-truck me-2"></i>Chính sách ưu đãi</h6>
-                                    <ul class="small mb-0 list-unstyled">
-                                        <li>✅ Miễn phí vận chuyển toàn quốc.</li>
-                                        <li>✅ Bảo hành chính hãng 24 tháng.</li>
-                                        <li>✅ Hỗ trợ đổi mới trong 7 ngày.</li>
-                                    </ul>
+                            <div class="row g-2 mt-2">
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center p-2 border rounded shadow-sm h-100">
+                                        <i class="bi bi-shield-check text-primary fs-4 me-2"></i>
+                                        <span class="small lh-sm">Bảo hành chính hãng 12 tháng</span>
+                                    </div>
                                 </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center p-2 border rounded shadow-sm h-100">
+                                        <i class="bi bi-arrow-left-right text-primary fs-4 me-2"></i>
+                                        <span class="small lh-sm">Lỗi là đổi mới trong 30 ngày</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center p-2 border rounded shadow-sm h-100">
+                                        <i class="bi bi-truck text-primary fs-4 me-2"></i>
+                                        <span class="small lh-sm">Miễn phí giao hàng toàn quốc</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center p-2 border rounded shadow-sm h-100">
+                                        <i class="bi bi-headset text-primary fs-4 me-2"></i>
+                                        <span class="small lh-sm">Hỗ trợ kỹ thuật 24/7 chuyên nghiệp</span>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div class="product-info-mini p-3 bg-light rounded-3 border-0">
+                                <ul class="list-unstyled mb-0 shadow-none">
+                                    <li class="d-flex justify-content-between mb-2 pb-2 border-bottom">
+                                        <span class="text-secondary"><i class="bi bi-tag me-2"></i>Thương hiệu</span>
+                                        <span
+                                            class="fw-bold text-dark">{{ $product->brand->name ?? 'Đang cập nhật' }}</span>
+                                    </li>
+                                    <li class="d-flex justify-content-between mb-2 pb-2 border-bottom">
+                                        <span class="text-secondary"><i class="bi bi-grid me-2"></i>Danh mục</span>
+                                        <span
+                                            class="fw-bold text-dark text-uppercase small">{{ $product->category->name ?? 'Laptop' }}</span>
+                                    </li>
+                                    <li class="d-flex justify-content-between align-items-center">
+                                        <span class="text-secondary"><i class="bi bi-box-seam me-2"></i>Tình trạng sản phẩm</span>
+                                        @if($product->stock > 0)
+                                            <span class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i>Còn
+                                                hàng</span>
+                                        @else
+                                            <span class="text-danger fw-bold"><i class="bi bi-x-circle-fill me-1"></i>Hết
+                                                hàng</span>
+                                        @endif
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>

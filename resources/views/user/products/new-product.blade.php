@@ -48,10 +48,10 @@
                         </a>
                         <div class="d-flex align-items-center mt-2 mb-1">
                             <span class="text-warning me-2">
-                                <span class="fw-semibold small">0.0</span>
+                                <span class="fw-semibold small">4.8</span>
                                 <i class="bi bi-star-fill"></i>
                             </span>
-                            <span class="text-muted small">(0 đánh giá)</span>
+                            <span class="text-muted small">(120 đánh giá)</span>
                         </div>
                     </div>
                 </div>
