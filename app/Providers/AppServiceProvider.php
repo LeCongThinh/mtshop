@@ -29,8 +29,7 @@ class AppServiceProvider extends ServiceProvider
                     'children' => function ($query) {
                         $query->where('status', 'active');
                     }
-                ])
-                ->get();
+                ])->get();
             $view->with('categories', $categories);
         });
     }

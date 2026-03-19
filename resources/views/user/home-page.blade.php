@@ -5,7 +5,6 @@
     @include("user.layouts.slider")
     <!-- Section sản phẩm bán chạy -->
     <section class="py-4" style="background-color:#e9ecef;">
-
         <div class="container">
             <!-- Sản phẩm mới -->
             @include("user.products.new-product")

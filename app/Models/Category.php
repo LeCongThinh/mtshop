@@ -34,7 +34,7 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id');
     }
 
-    //Category này thuộc vào category khác thông qua parent_id
+    //Category con thuộc vào category cha thông qua parent_id
     public function parent()
     {
         return $this->belongsTo(Category::class, "parent_id");

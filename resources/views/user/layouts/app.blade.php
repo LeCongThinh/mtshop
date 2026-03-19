@@ -18,7 +18,7 @@
 
 <body class="d-flex flex-column min-vh-100">
     <!-- Header-->
-    <!-- Chia sẻ biến $categories cho tất cả các file blade nằm trong thư mục 'user'.
+    <!-- Sử dụng view composer chia sẻ biến $categories cho tất cả các file blade nằm trong thư mục 'user'.
      Cấu hình trong hàm boot AppServiceProvider -->
     @include("user.layouts.header")
 
