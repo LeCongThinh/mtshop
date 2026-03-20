@@ -122,13 +122,13 @@
                                 @enderror
                             </div>
 
-                            <!-- Chọn hãng sản xuất -->
+                            <!-- Chọn loại sản phẩm -->
                             <div class="col-md-6 mb-3">
-                                <label for="brand_id" class="form-label">Hãng sản xuất <span
+                                <label for="brand_id" class="form-label">Phân loại <span
                                         class="text-danger">*</span></label>
                                 <select class="form-select @error('brand_id') is-invalid @enderror" id="brand_id"
                                     name="brand_id" data-select2-selector="default">
-                                    <option value="">Chọn hãng sản xuất</option>
+                                    <option value="">Phân loại sản phẩm t</option>
                                     @foreach($brands as $brand)
                                         <option value="{{ $brand->id }}" {{ $product->brand_id == $brand->id ? 'selected' : '' }}>
                                             {{ $brand->name }}

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
-@section('web-title', 'MTShop - Cập nhật hãng sản xuất')
-@section('header-title', 'Cập nhật hãng sản xuất')
+@section('web-title', 'MTShop - Cập nhật loại sản phẩm')
+@section('header-title', 'Cập nhật loại sản phẩm')
 @section('content')
     <div class="row">
         <div class="col-xl-6">
@@ -14,16 +14,16 @@
                     </script>
                 @endif
                 <div class="card-header">
-                    <h5>Cập nhật hãng sãn xuất</h5>
+                    <h5>Cập nhật loại sản phẩm</h5>
                 </div>
                 <div class="card-body">
                     <form action="{{ route("admin.brands.update", $brands->id) }}" method="post">
                         @csrf
                         @method('PUT')
                         <div class="mb-4">
-                            <label class="form-label">Tên hãng <span class="text-danger">*</span></label>
+                            <label class="form-label">Tên loại <span class="text-danger">*</span></label>
                             <input type="text" name="brandName" value="{{ old('brandName', $brands->name) }}"
-                                class="form-control @error('brandName') is-invalid @enderror" placeholder="Nhập tên hãng...">
+                                class="form-control @error('brandName') is-invalid @enderror" placeholder="Nhập tên loại sản phẩm...">
                             @error('brandName')
                                 <div class="invalid-feedback">
                                     {{ $message }}

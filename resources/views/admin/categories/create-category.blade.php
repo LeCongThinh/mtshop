@@ -45,16 +45,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <div class="card-header">
-                    <h5>Thêm mới hãng sãn xuất</h5>
+                    <h5>Thêm loại sản phẩm</h5>
                 </div>
                 <div class="card-body">
                     <form id="brandForm" action="{{ route("admin.brands.store") }}">
                         @csrf
                         <div class="mb-4">
-                            <label class="form-label">Tên hãng <span class="text-danger">*</span></label>
-                            <input type="text" name="brandName" class="form-control" placeholder="Nhập tên hãng...">
+                            <label class="form-label">Tên loại <span class="text-danger">*</span></label>
+                            <input type="text" name="brandName" class="form-control" placeholder="Nhập tên loại sản phẩm...">
                         </div>
-                        <button type="submit" id="add_row" class="btn btn-md btn-primary">Thêm hãng sản xuất</button>
+                        <button type="submit" id="add_row" class="btn btn-md btn-primary">Thêm loại sản phẩm</button>
                     </form>
                 </div>
             </div>

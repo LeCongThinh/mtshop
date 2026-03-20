@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
-@section('web-title', 'MTShop - Danh sách danh mục & hãng sản xuất')
-@section('header-title', 'Danh sách danh mục & hãng sản xuất')
+@section('web-title', 'MTShop - Danh sách danh mục & loại sản phẩm')
+@section('header-title', 'Danh sách danh mục & loại sản phẩm')
 @section('content')
     <div class="row">
         <!-- Thông báo lỗi -->
@@ -103,14 +103,14 @@
         <div class="col-xxl-5">
             <div class="card stretch stretch-full">
                 <div class="card-header">
-                    <h5 class="card-title">Danh sách hãng sản xuất</h5>
+                    <h5 class="card-title">Danh sách loại sản phẩm</h5>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-hover mb-0" id="paymentList">
                             <thead>
                                 <tr>
-                                    <th>Tên hãng</th>
+                                    <th>Tên loại</th>
                                     <th>Slug</th>
                                     <th class="text-end">Trạng thái</th>
                                     <th class="text-end">Hoạt động</th>

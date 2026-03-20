@@ -27,7 +27,7 @@
                                 <tr>
                                     <th>Ảnh sản phẩm</th>
                                     <th>Tên sản phẩm</th>
-                                    <th>Tên hãng</th>
+                                    <th>Tên loại</th>
                                     <th>Giá bán</th>
                                     <th>Giá khuyến mãi</th>
                                     <th>Số lượng tồn kho</th>

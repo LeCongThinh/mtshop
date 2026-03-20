@@ -26,17 +26,17 @@
                 <li class="nxl-item nxl-hasmenu" {{ request()->routeIs("admin.categories") ? "active nxl-trigger" : "" }}">
                     <a href="javascript:void(0);" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-send"></i></span>
-                        <span class="nxl-mtext">Quản lý danh mục & hãng</span><span class="nxl-arrow"><i
+                        <span class="nxl-mtext">Quản lý danh mục & loại</span><span class="nxl-arrow"><i
                                 class="feather-chevron-right"></i></span>
                     </a>
                     <ul class="nxl-submenu">
                         <li class="nxl-item"><a
                                 class="nxl-link {{ request()->routeIs("admin.categories") ? "active" : "" }}"
-                                href="{{ route("admin.categories") }}">Danh sách danh mục & hãng</a>
+                                href="{{ route("admin.categories") }}">Danh sách danh mục & loại</a>
                         </li>
                         <li class="nxl-item"><a
                                 class="nxl-link {{ request()->routeIs("admin.categories.create") ? "active" : "" }}"
-                                href="{{ route("admin.categories.create") }}">Thêm mới danh mục & hãng</a>
+                                href="{{ route("admin.categories.create") }}">Thêm mới danh mục & loại</a>
                         </li>
                     </ul>
                 </li>
