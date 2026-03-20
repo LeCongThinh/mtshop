@@ -29,6 +29,8 @@ use App\Http\Controllers\Admin\CategoryController;
 ### User ###
 // Trang chủ
 Route::get("/", [HomeController::class, "home"])->name("home.index");
+// Xem tất cả sản phẩm mới
+Route::get("products/all", [UserProductController::class, "showAllProducts"])->name("all-products");
 // Trang chi tiết sản phẩm
 Route::get("products/{slug}", [UserProductController::class, "showProductDetail"])->name("home.product-detail");
 // Xem tất cả bài viết

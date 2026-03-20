@@ -21,7 +21,7 @@ class HomeController extends Controller
                 }
             ])->get();
         // Lấy danh sách sản phẩm mới
-        $products = Product::get();
+        $products = Product::latest()->get();
         // Lấy danh sách tin tức công nghệ
         $posts = Post::latest()->get();
         return view("user.home-page", compact("categories", "products", "posts"));

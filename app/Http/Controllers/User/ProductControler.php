@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class ProductControler extends Controller
 {
+    public function showAllProducts()
+    {
+        $products = Product::where('status', 'active')->latest()->paginate(5);
+        return view('user.products.all-product', compact('products'));
+    }
     public function showProductDetail($slug)
     {
         // Eager loading: load data theo relation được định nghĩa trong model
