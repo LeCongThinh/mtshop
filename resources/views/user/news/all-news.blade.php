@@ -10,10 +10,19 @@
                 </li>
                 <li class="breadcrumb-item ">Tất cả bài viết</li>
             </ul>
-            <div class="text-center mb-5">
-                <h3 class="fw-bold text-uppercase">Tin công nghệ mới nhất</h3>
-                <p class="text-muted">Cập nhật những thông tin công nghệ và thủ thuật hữu ích nhất.</p>
-                <hr class="mx-auto" style="width: 50px; border: 2px solid #0d6efd; opacity: 1;">
+            <div class="card border-0 shadow-sm mb-3 rounded-4 overflow-hidden">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="border-start border-4 border-primary ps-3 py-1">
+                            <h4 class="fw-bolder mb-1 text-dark text-uppercase letter-spacing-1">
+                                Tin tức công nghệ mới nhất
+                            </h4>
+                            <p class="text-muted mb-0 small fw-medium">
+                                Cập nhật những thông tin và thủ thuật mới nhất hàng ngày
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 @forelse($posts as $item)
