@@ -13,10 +13,7 @@ return [
     |
     */
 
-    'previous' => '&laquo; Trước',
-    'next' => 'Sau &raquo;',
-    'showing' => 'Hiển thị',
-    'to' => 'đến',
-    'of' => 'trên tổng số',
-    'results' => 'kết quả',
+    'previous' => '&laquo; Previous',
+    'next' => 'Next &raquo;',
+
 ];

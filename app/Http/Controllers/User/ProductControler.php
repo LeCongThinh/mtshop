@@ -12,7 +12,7 @@ class ProductControler extends Controller
 {
     public function showAllProducts()
     {
-        $products = Product::where('status', 'active')->latest()->paginate(5);
+        $products = Product::where('status', 'active')->latest()->paginate(10);
         return view('user.products.all-product', compact('products'));
     }
     public function showProductDetail($slug)

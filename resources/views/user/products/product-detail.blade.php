@@ -8,7 +8,8 @@
                 <li class="breadcrumb-item"><a href="{{ route('home.index') }}" class="text-decoration-none fw-semibold">
                         <i class="bi bi-house-door-fill me-1"></i>Trang chủ</a>
                 </li>
-                <li class="breadcrumb-item ">{{ $product->category->parent->name }}</li>
+                <li class="breadcrumb-item "><a href="{{ route("category.product", $product->category->parent->slug) }}"
+                        class="text-decoration-none fw-semibold">{{ $product->category->parent->name }}</a></li>
                 <li class="breadcrumb-item active">{{$product->name}}</li>
             </ul>
             <div class="card stretch stretch-full mb-3">
@@ -78,7 +79,7 @@
                                     </span>
                                 </button>
                             </div>
-                            
+
 
                             <div class="row g-2 mt-2">
                                 <div class="col-6">
@@ -106,7 +107,7 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <div class="product-info-mini p-3 bg-light rounded-3 border-0">
                                 <ul class="list-unstyled mb-0 shadow-none">
                                     <li class="d-flex justify-content-between mb-2 pb-2 border-bottom">
@@ -120,7 +121,8 @@
                                             class="fw-bold text-secondary text-uppercase small">{{ $product->category->name ?? 'Đang cập nhật' }}</span>
                                     </li>
                                     <li class="d-flex justify-content-between align-items-center">
-                                        <span class="text-secondary"><i class="bi bi-box-seam me-2"></i>Tình trạng sản phẩm</span>
+                                        <span class="text-secondary"><i class="bi bi-box-seam me-2"></i>Tình trạng sản
+                                            phẩm</span>
                                         @if($product->stock > 0)
                                             <span class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i>Còn
                                                 hàng</span>

@@ -1,5 +1,5 @@
 @extends('user.layouts.app')
-@section('web-title', 'Tất cả sản phẩm mới - MTShop.com')
+@section('web-title', $category->name . ' - MTShop.com')
 @section('content')
     <section class="py-4" style="background-color:#e9ecef;">
         <div class="container">
@@ -8,15 +8,17 @@
                 <li class="breadcrumb-item"><a href="{{ route('home.index') }}" class="text-decoration-none fw-semibold">
                         <i class="bi bi-house-door-fill me-1"></i>Trang chủ</a>
                 </li>
-                <li class="breadcrumb-item ">Tất cả sản phẩm mới</li>
+                <li class="breadcrumb-item ">{{ $category->name }}</li>
             </ul>
             <div class="card border-0 shadow-sm rounded-4 mb-4">
-                <div class="card-body p-4">
+                <div class="card-body p-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
                     <div class="border-start border-4 border-primary ps-3">
-                        <h4 class="fw-bolder mb-1 text-uppercase">Danh sách sản phẩm</h4>
-                        <p class="text-muted mb-0 small">Khám phá những thiết bị công nghệ mới nhất tại MTShop</p>
+                        <h4 class="fw-bolder mb-0 text-uppercase">{{ $category->name }}</h4>
+                        <p class="text-muted mb-0 small">Khám phá {{ $products->total() }} sản phẩm công nghệ mới nhất</p>
                     </div>
+
                 </div>
+
             </div>
             <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3">
                 @forelse($products as $product)

@@ -17,7 +17,8 @@
                         <!-- Load danh mục sản phẩm -->
                         @foreach ($categories as $category)
                             <li class="dropdown-submenu position-relative">
-                                <a class="dropdown-item dropdown-toggle" href="#">
+                                <a class="dropdown-item dropdown-toggle"
+                                    href="{{ route('category.product', $category->slug) }}">
                                     {{ $category->name }}
                                 </a>
                                 <!-- Ktra danh mục cha có thẻ con thì mới có thẻ ul -->

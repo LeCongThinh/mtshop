@@ -33,6 +33,8 @@ Route::get("/", [HomeController::class, "home"])->name("home.index");
 Route::get("products/all", [UserProductController::class, "showAllProducts"])->name("all-products");
 // Trang chi tiết sản phẩm
 Route::get("products/{slug}", [UserProductController::class, "showProductDetail"])->name("home.product-detail");
+// Trang sản phẩm theo danh mục chính
+Route::get("category/{slug}", [HomeController::class, 'getProductByCategory'])->name('category.product');
 // Xem tất cả bài viết
 Route::get("blogs/all", [UserPostController::class, "showAllPosts"])->name("all-news");
 //Trang chi tiết bài viết
