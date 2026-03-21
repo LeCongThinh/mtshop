@@ -37,6 +37,8 @@ Route::get("products/{slug}", [UserProductController::class, "showProductDetail"
 Route::get("category/{slug}", [HomeController::class, 'getProductByCategory'])->name('category.product');
 // Trang sản phẩm theo danh mục con
 Route::get("subcategory/{slug}", [HomeController::class, "getProductBySubcategory"])->name("subcategory.product");
+// Lọc sản phẩm theo Category và Brand
+Route::get("category/{category_slug}/{brand_slug}", [HomeController::class, "getProductByCategoryAndBrand"])->name("category.brand.product");
 // Xem tất cả bài viết
 Route::get("blogs/all", [UserPostController::class, "showAllPosts"])->name("all-news");
 //Trang chi tiết bài viết

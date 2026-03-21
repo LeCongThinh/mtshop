@@ -7,7 +7,7 @@ use App\Models\Post;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
-
+use App\Models\Brand;
 
 class HomeController extends Controller
 {
@@ -21,7 +21,7 @@ class HomeController extends Controller
                 }
             ])->get();
         // Lấy danh sách sản phẩm mới
-        $products = Product::latest()->get();
+        $products = Product::where('status', 'active')->latest()->get();
         // Lấy danh sách tin tức công nghệ
         $posts = Post::latest()->get();
         return view("user.home-page", compact("categories", "products", "posts"));
@@ -31,16 +31,41 @@ class HomeController extends Controller
     {
         // Tìm danh mục cha kèm theo các danh mục con (chỉ lấy cột ID của con để nhẹ máy)
         $category = Category::with('children')->where('slug', $slug)->where('status', 'active')->whereNull('parent_id')->firstOrFail();
+
         // Gom ID của các danh mục con và danh mục cha vào 1 mảng. Vì sản phẩm được lấy theo id danh mục con
         $categoryIds = $category->children->pluck('id')->prepend($category->id);
-        $products = Product::whereIn('category_id', $categoryIds)->latest()->paginate(10);
-        return view("user.products.product-by-category", compact('category', 'products'));
+
+        // Lấy danh sách các Brand có sản phẩm thuộc danh mục này
+        $brands = Brand::whereHas('products', function ($query) use ($categoryIds) {
+            $query->whereIn('category_id', $categoryIds);
+        })->get();
+
+        $products = Product::whereIn('category_id', $categoryIds)->where('status', 'active')->latest()->paginate(10);
+        return view("user.products.product-by-category", compact('category', 'products', 'brands'));
     }
 
     public function getProductBySubcategory($slug)
     {
         $subcategory = Category::with('parent')->where('slug', $slug)->where('status', 'active')->whereNotNull('parent_id')->firstOrFail();
-        $products = Product::where('category_id', $subcategory->id)->latest()->paginate(10);
+        $products = Product::where('category_id', $subcategory->id)->where('status', 'active')->latest()->paginate(10);
         return view("user.products.product-by-subcategory", compact('subcategory', 'products'));
+    }
+
+    public function getProductByCategoryAndBrand($category_slug, $brand_slug)
+    {
+        $category = Category::where('slug', $category_slug)->where('status', 'active')->firstOrFail();
+        $brand = Brand::where('slug', $brand_slug)->where('status', 'active')->firstOrFail();
+        $categoryIds = $category->children()->pluck('id')->prepend($category->id);
+
+        // Lấy danh sách các Brand trong cùng danh mục này để hiển thị
+        $brands = Brand::whereHas('products', function ($query) use ($categoryIds) {
+            $query->whereIn('category_id', $categoryIds);
+        })->get();
+
+        // Truy vấn sản phẩm thuộc các danh mục và thuộc brand
+        $products = Product::whereIn('category_id', $categoryIds)->where('brand_id', $brand->id)
+            ->where('status', 'active')->latest()->paginate(10);
+
+        return view("user.products.product-by-category", compact('category', 'products', 'brands', 'brand'));
     }
 }

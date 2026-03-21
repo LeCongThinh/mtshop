@@ -27,4 +27,10 @@ class Brand extends Model
             default => ['class' => 'badge bg-soft-success text-success', 'text' => 'Hoạt động'],
         };
     }
+
+    // Một thương hiệu có nhiều sản phẩm
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'brand_id');
+    }
 }

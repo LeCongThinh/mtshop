@@ -215,3 +215,42 @@
         display: none;
     }
 }
+
+/* Thanh cuộn ngang mượt mà */
+.scroll-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Nút mặc định: Viền mảnh, màu sắc nhẹ nhàng */
+.btn-filter {
+    display: inline-block;
+    padding: 7px 15px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: none;
+}
+
+/* Nút active: tô đậm, nổi bật hẳn lên */
+.btn-filter.active {
+    color: #fff !important;
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    font-weight: 700;
+    box-shadow: 0 3px 6px rgba(13, 110, 253, 0.2);
+}
+
+.flex-nowrap {
+    flex-wrap: nowrap !important;
+}

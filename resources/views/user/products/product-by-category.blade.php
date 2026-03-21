@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     @if($category->children->count() > 0)
-                        <div class="d-flex align-items-center gap-3 flex-wrap">
+                        <div class="d-flex align-items-center gap-3 mb-3 flex-wrap">
                             <span class="text-secondary small fw-bold text-uppercase filter-label"
                                 style="letter-spacing: 0.5px;">Dòng máy:</span>
                             <div class="d-flex gap-2 flex-wrap">
@@ -32,6 +32,26 @@
                                         {{ $child->name }}
                                     </a>
                                 @endforeach
+                            </div>
+                        </div>
+                    @endif
+                    @if($brands->count() > 0)
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="text-secondary small fw-bold text-uppercase"
+                                style="min-width: 70px; font-size: 0.75rem;">Phân loại:</span>
+                            <div class="scroll-container">
+                                <div class="d-flex gap-2 flex-nowrap">
+                                    <a href="{{ route('category.product', $category->slug) }}"
+                                        class="btn-filter {{ !isset($brand) ? 'active' : '' }}">
+                                        Tất cả
+                                    </a>
+                                    @foreach($brands as $item)
+                                        <a href="{{ route('category.brand.product', [$category->slug, $item->slug]) }}"
+                                            class="btn-filter {{ (isset($brand) && $brand->id == $item->id) ? 'active' : '' }}">
+                                            {{ $item->name }}
+                                        </a>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     @endif
