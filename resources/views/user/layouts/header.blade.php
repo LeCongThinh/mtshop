@@ -13,7 +13,6 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">Danh mục</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-
                         <!-- Load danh mục sản phẩm -->
                         @foreach ($categories as $category)
                             <li class="dropdown-submenu position-relative">
@@ -25,7 +24,9 @@
                                 @if($category->children->isNotEmpty())
                                     <ul class="dropdown-menu">
                                         @foreach ($category->children as $child)
-                                            <li><a class="dropdown-item" href="#">{{ $child->name }}</a></li>
+                                            <li><a class="dropdown-item"
+                                                    href="{{ route("subcategory.product", $child->slug) }}">{{ $child->name }}</a>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 @endif

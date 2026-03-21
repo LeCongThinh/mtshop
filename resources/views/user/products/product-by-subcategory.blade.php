@@ -1,5 +1,5 @@
 @extends('user.layouts.app')
-@section('web-title', $category->name . ' - MTShop.com')
+@section('web-title', $subcategory->name . ' - MTShop.com')
 @section('content')
     <section class="py-4" style="background-color:#e9ecef;">
         <div class="container">
@@ -8,33 +8,20 @@
                 <li class="breadcrumb-item"><a href="{{ route('home.index') }}" class="text-decoration-none fw-semibold">
                         <i class="bi bi-house-door-fill me-1"></i>Trang chủ</a>
                 </li>
-                <li class="breadcrumb-item ">{{ $category->name }}</li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('category.product', $subcategory->parent->slug) }}"
+                        class="text-decoration-none fw-semibold">
+                        {{ $subcategory->parent->name }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item ">{{ $subcategory->name }}</li>
             </ul>
-            <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden bg-white">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 border-bottom pb-2 mb-3">
-                        <div class="border-start border-4 border-primary ps-3">
-                            <h4 class="fw-bolder mb-1 text-uppercase text-dark">{{ $category->name }}</h4>
-                            <p class="text-muted mb-0 small">
-                                <i class="bi bi-tag-fill me-1"></i> Khám phá {{ $products->total() }} sản phẩm công nghệ mới
-                                nhất
-                            </p>
-                        </div>
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <div class="border-start border-4 border-primary ps-3">
+                        <h4 class="fw-bolder mb-0 text-uppercase">{{ $subcategory->name }}</h4>
+                        <p class="text-muted mb-0 small">Khám phá {{ $products->total() }} sản phẩm công nghệ mới nhất</p>
                     </div>
-                    @if($category->children->count() > 0)
-                        <div class="d-flex align-items-center gap-3 flex-wrap">
-                            <span class="text-secondary small fw-bold text-uppercase filter-label"
-                                style="letter-spacing: 0.5px;">Dòng máy:</span>
-                            <div class="d-flex gap-2 flex-wrap">
-                                @foreach($category->children as $child)
-                                    <a href="{{ route('subcategory.product', $child->slug) }}"
-                                        class="btn btn-outline-primary btn-sm px-3 fw-semibold shadow-sm custom-btn-outline transition-all rounded-3">
-                                        {{ $child->name }}
-                                    </a>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
                 </div>
             </div>
             <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3">
