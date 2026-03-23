@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\User\PostController as UserPostController;
 use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\AuthUserController;
 use App\Http\Controllers\User\ProductControler as UserProductController;
 use App\Http\Controllers\User\CartController;
 use App\Models\Category;
@@ -59,12 +60,17 @@ Route::delete('cart/{productId}', [CartController::class, 'remove'])->name('cart
 
 
 
-//Đăng nhập
-// Route::get('/login', [UserController::class, 'showLogin'])->name('login');
+//View đăng nhập
+Route::get('/login', [AuthUserController::class, 'showLoginForm'])->name('login');
+//Xử lý đăng nhập
+Route::post('/login', [AuthUserController::class, 'login']);
+
 
 Route::middleware(["auth"])->group(function () {
 
     // Trang đặt hàng yêu cầu user phải đăng nhập
+    // Đăng xuất
+    Route::post('/logout', [AuthUserController::class, 'logout'])->name('logout');
 
 });
 

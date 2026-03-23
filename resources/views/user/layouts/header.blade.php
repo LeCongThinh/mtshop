@@ -52,17 +52,30 @@
                         </span>
                     </div>
                 </a>
-
-                {{-- Đăng nhập / Avatar --}}
+                {{-- Đăng nhập --}}
                 @auth
-                    <a href="#" class="auth-btn-modern">
-                        <div class="auth-icon-wrapper">
-                            <i class="bi bi-person-circle"></i>
-                        </div>
-                        <span class="auth-text">{{ Auth::user()->name }}</span>
-                    </a>
+                    <div class="dropdown">
+                        <a href="#" class="auth-btn-modern dropdown-toggle" data-bs-toggle="dropdown">
+                            <div class="auth-icon-wrapper">
+                                <i class="bi bi-person-check-fill"></i>
+                            </div>
+                            <span class="auth-text">{{ Auth::user()->name }}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Hồ sơ cá nhân</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item text-danger">Đăng xuất</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                 @else
-                    <a href="#" class="auth-btn-modern">
+                    <a href="#" class="auth-btn-modern" data-bs-toggle="modal" data-bs-target="#loginModal">
                         <div class="auth-icon-wrapper">
                             <i class="bi bi-person-circle"></i>
                         </div>
@@ -73,3 +86,4 @@
         </div>
     </div>
 </nav>
+@include("user.auth.login")
