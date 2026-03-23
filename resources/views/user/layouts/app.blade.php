@@ -21,6 +21,7 @@
             addUrl: "{{ route('cart.add') }}",
             updateUrl: "/cart/",
             removeUrl: "/cart/",
+            cartUrl: "{{ route('cart.index') }}",
         };
     </script>
 </head>
@@ -49,6 +50,9 @@
     <script src="{{ asset("user-assets/js/handle-product-detail.js") }}"></script>
     <!-- Thêm sp vào giỏ hàng -->
     <script src="{{ asset("user-assets/js/product-to-cart.js") }}"></script>
+    <!-- Cập nhật/xóa thông tin giỏ hàng -->
+    <script src="{{ asset("user-assets/js/handle-cart-detail.js") }}"></script>
+
     {{-- Cho phép các trang con nhúng JS riêng qua @push('scripts') --}}
     @stack('scripts')
 </body>

@@ -51,18 +51,37 @@ class CartController extends Controller
         $request->validate([
             'quantity' => 'required|integer|min:0',
         ]);
-
+        // Thực hiện cập nhật trong Service
         $this->cartService->update($productId, (int) $request->quantity);
-
-        return back()->with('success', 'Đã cập nhật giỏ hàng!');
+        // Tính thành tiền sản phẩm trong giỏ hàng vừa cập nhật
+        $items = $this->cartService->getItems();
+        $currentProductSubtotal = 0;
+        foreach ($items as $item) {
+            if ($item['product']->id == $productId) {
+                $currentProductSubtotal = $item['product']->price * $item['quantity'];
+                break;
+            }
+        }
+        return response()->json([
+            'success' => true,
+            'new_quantity' => $request->quantity,
+            'subtotal' => number_format($currentProductSubtotal, 0, ',', '.') . 'đ',
+            'total' => number_format($this->cartService->getTotalPrice(), 0, ',', '.') . 'đ',
+            'cart_count' => $this->cartService->count()
+        ]);
     }
 
     // Xóa sản phẩm khỏi giỏ hàng
     public function remove(int $productId)
     {
+        // xóa trong Service
         $this->cartService->remove($productId);
-
-        return back()->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng!');
+        return response()->json([
+            'success' => true,
+            'total' => number_format($this->cartService->getTotalPrice(), 0, ',', '.') . 'đ',
+            'cart_count' => $this->cartService->count(),
+            'message' => 'Đã xóa sản phẩm khỏi giỏ hàng!'
+        ]);
     }
 
     // Trang đặt hàng - yêu cầu đăng nhập

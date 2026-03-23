@@ -71,7 +71,7 @@
                             </div>
 
                             <div class="mb-2">
-                                <button class="btn btn-danger fw-bold shadow-sm"
+                                <button class="btn btn-danger fw-bold shadow-sm btn-buy-now" data-id="{{ $product->id }}"
                                     style="padding-left: 60px; padding-right: 60px; min-width: 280px;" type="button">
                                     <span class="fs-5 d-block">MUA NGAY</span>
                                     <span class="d-block fw-normal opacity-75" style="font-size: 0.75rem;">

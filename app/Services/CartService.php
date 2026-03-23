@@ -77,6 +77,15 @@ class CartService
         return array_sum(array_column($cart, 'quantity'));
     }
 
+    // Tính tỏng tiền trong giỏ hàng
+    public function getTotalPrice(): float
+    {
+        $items = $this->getItems(); // Hàm getItems bạn đã viết sẵn
+        return array_reduce($items, function ($carry, $item) {
+            return $carry + ($item['product']->price * $item['quantity']);
+        }, 0);
+    }
+
     // merge session vào DB sau khi người dùng đăng nhập
     public function mergeSessionToDatabase(): void
     {
@@ -106,7 +115,7 @@ class CartService
     }
 
     // Hàm lưu trữ giỏ hàng tạm thời vào bộ nhớ session của trình duyệt.
-    private function addToSession(int $productId, int $quantity): void
+    public function addToSession(int $productId, int $quantity): void
     {
         $cart = Session::get(self::SESSION_KEY, []);
         // ktra sp đã có trong giỏ hàng chưa. Nếu có thì công dồn vào sl cũ, ko có thì thêm mới
@@ -117,7 +126,7 @@ class CartService
         Session::put(self::SESSION_KEY, $cart);
     }
 
-    private function addToDatabase(int $productId, int $quantity): void
+    public function addToDatabase(int $productId, int $quantity): void
     {
         $existing = Cart::where('user_id', Auth::id())
             ->where('product_id', $productId)->first();
@@ -132,7 +141,7 @@ class CartService
     }
 
     //  Lấy data từ session giỏ hàng và load lên giao diện chi tiết giỏ hàng
-    private function getFromSession(): array
+    public function getFromSession(): array
     {
         // Lấy mảng giỏ hàng hiện tại từ session
         $cart = Session::get(self::SESSION_KEY, []);
@@ -159,7 +168,7 @@ class CartService
     }
 
     //  Lấy data từ db giỏ hàng và load lên giao diện chi tiết giỏ hàng
-    private function getFromDatabase(): array
+    public function getFromDatabase(): array
     {
         // lấy thông tin sản phẩm tương ứng từ bảng products thông qua mối quan hệ product() trong Model Cart.
         // map qua danh sách kết quả và định dạng lại mảng data

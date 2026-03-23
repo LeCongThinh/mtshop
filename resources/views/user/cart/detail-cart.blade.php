@@ -1,12 +1,9 @@
-{{-- resources/views/cart/index.blade.php --}}
 @extends('user.layouts.app')
 @section('web-title', 'Giỏ hàng của bạn - MTShop.com')
 
 @section('content')
     <section class="py-4" style="background-color:#e9ecef; min-height: 80vh;">
         <div class="container">
-
-            {{-- Breadcrumb --}}
             <ul class="breadcrumb ms-2 mb-3">
                 <li class="breadcrumb-item">
                     <a href="{{ route('home.index') }}" class="text-decoration-none fw-semibold">
@@ -15,8 +12,6 @@
                 </li>
                 <li class="breadcrumb-item active">Giỏ hàng</li>
             </ul>
-
-            {{-- Tiêu đề --}}
             <div class="card border-0 shadow-sm rounded-4 mb-4">
                 <div class="card-body p-4">
                     <div class="border-start border-4 border-primary ps-3">
@@ -59,83 +54,81 @@
                                         </thead>
                                         <tbody>
                                             @foreach($items as $item)
-                                                                        @php
-                                                                            $price = $item['product']->sale_price > 0
-                                                                                ? $item['product']->sale_price
-                                                                                : $item['product']->price;
-                                                                            $subtotal = $price * $item['quantity'];
-                                                                        @endphp
-                                                                        <tr class="cart-row border-top" data-id="{{ $item['product']->id }}">
+                                                @php
+                                                    $price = $item['product']->sale_price > 0
+                                                        ? $item['product']->sale_price
+                                                        : $item['product']->price;
+                                                    $subtotal = $price * $item['quantity'];
+                                                @endphp
+                                                <tr class="cart-row border-top" data-id="{{ $item['product']->id }}">
 
-                                                                            {{-- Ảnh + tên --}}
-                                                                            <td class="ps-4 py-3">
-                                                                                <div class="d-flex align-items-center gap-3">
-                                                                                    <img src="{{ $item['product']->thumbnail
-                                                ? asset('storage/' . $item['product']->thumbnail)
-                                                : asset('assets/images/avatar/undefined.png') }}"
-                                                                                        style="width:70px; height:70px; object-fit:contain;"
-                                                                                        class="rounded-3 border p-1 bg-white"
-                                                                                        alt="{{ $item['product']->name }}">
-                                                                                    <div>
-                                                                                        <a href="{{ route('home.product-detail', $item['product']->slug) }}"
-                                                                                            class="text-decoration-none text-dark fw-semibold line-clamp-2"
-                                                                                            style="font-size: 0.9rem;">
-                                                                                            {{ $item['product']->name }}
-                                                                                        </a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </td>
+                                                    {{-- Ảnh + tên --}}
+                                                    <td class="ps-4 py-3">
+                                                        <div class="d-flex align-items-center gap-3">
+                                                            <img src="{{ $item['product']->thumbnail ? asset('storage/' . $item['product']->thumbnail) : asset('assets/images/avatar/undefined.png') }}"
+                                                                style="width:70px; height:70px; object-fit:contain;"
+                                                                class="rounded-3 border p-1 bg-white"
+                                                                alt="{{ $item['product']->name }}">
+                                                            <div>
+                                                                <a href="{{ route('home.product-detail', $item['product']->slug) }}"
+                                                                    class="text-decoration-none text-dark fw-semibold line-clamp-2"
+                                                                    style="font-size: 0.9rem;">
+                                                                    {{ $item['product']->name }}
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
-                                                                            {{-- Đơn giá --}}
-                                                                            <td class="text-center">
-                                                                                <span class="text-danger fw-semibold">
-                                                                                    {{ number_format($price, 0, ',', '.') }}đ
-                                                                                </span>
-                                                                                @if($item['product']->sale_price > 0)
-                                                                                    <br>
-                                                                                    <small class="text-muted text-decoration-line-through">
-                                                                                        {{ number_format($item['product']->price, 0, ',', '.') }}đ
-                                                                                    </small>
-                                                                                @endif
-                                                                            </td>
+                                                    {{-- Đơn giá --}}
+                                                    <td class="text-center">
+                                                        <span class="text-danger fw-semibold">
+                                                            {{ number_format($price, 0, ',', '.') }}đ
+                                                        </span>
+                                                        @if($item['product']->sale_price > 0)
+                                                            <br>
+                                                            <small class="text-muted text-decoration-line-through">
+                                                                {{ number_format($item['product']->price, 0, ',', '.') }}đ
+                                                            </small>
+                                                        @endif
+                                                    </td>
 
-                                                                            {{-- Số lượng --}}
-                                                                            <td class="text-center">
-                                                                                <div class="d-flex align-items-center justify-content-center gap-1">
-                                                                                    <button class="btn btn-outline-secondary btn-sm btn-qty"
-                                                                                        data-action="minus" data-id="{{ $item['product']->id }}"
-                                                                                        style="width:30px; height:30px; padding:0;">
-                                                                                        <i class="bi bi-dash"></i>
-                                                                                    </button>
+                                                    {{-- Số lượng --}}
+                                                    <td class="text-center">
+                                                        <div class="d-flex align-items-center justify-content-center gap-1">
+                                                            <button class="btn btn-outline-secondary btn-sm btn-qty"
+                                                                data-action="minus" data-id="{{ $item['product']->id }}"
+                                                                style="width:30px; height:30px; padding:0;">
+                                                                <i class="bi bi-dash"></i>
+                                                            </button>
 
-                                                                                    <input type="number"
-                                                                                        class="form-control form-control-sm text-center qty-input"
-                                                                                        value="{{ $item['quantity'] }}" min="1" max="99"
-                                                                                        data-id="{{ $item['product']->id }}" style="width:50px;">
+                                                            <input type="number"
+                                                                class="form-control form-control-sm text-center qty-input"
+                                                                value="{{ $item['quantity'] }}" min="1" max="99"
+                                                                data-id="{{ $item['product']->id }}" style="width:50px;">
 
-                                                                                    <button class="btn btn-outline-secondary btn-sm btn-qty"
-                                                                                        data-action="plus" data-id="{{ $item['product']->id }}"
-                                                                                        style="width:30px; height:30px; padding:0;">
-                                                                                        <i class="bi bi-plus"></i>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </td>
+                                                            <button class="btn btn-outline-secondary btn-sm btn-qty"
+                                                                data-action="plus" data-id="{{ $item['product']->id }}"
+                                                                style="width:30px; height:30px; padding:0;">
+                                                                <i class="bi bi-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
 
-                                                                            {{-- Thành tiền --}}
-                                                                            <td class="text-center">
-                                                                                <span class="fw-bold text-danger subtotal" data-price="{{ $price }}">
-                                                                                    {{ number_format($subtotal, 0, ',', '.') }}đ
-                                                                                </span>
-                                                                            </td>
+                                                    {{-- Thành tiền --}}
+                                                    <td class="text-center">
+                                                        <span class="fw-bold text-danger subtotal" data-price="{{ $price }}">
+                                                            {{ number_format($subtotal, 0, ',', '.') }}đ
+                                                        </span>
+                                                    </td>
 
-                                                                            {{-- Xóa --}}
-                                                                            <td class="text-center pe-3">
-                                                                                <button class="btn btn-sm btn-outline-danger btn-remove"
-                                                                                    data-id="{{ $item['product']->id }}" title="Xóa sản phẩm">
-                                                                                    <i class="bi bi-trash3"></i>
-                                                                                </button>
-                                                                            </td>
-                                                                        </tr>
+                                                    {{-- Xóa --}}
+                                                    <td class="text-center pe-3">
+                                                        <button class="btn btn-sm btn-outline-danger btn-remove"
+                                                            data-id="{{ $item['product']->id }}" title="Xóa sản phẩm">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -190,136 +183,8 @@
                         </div>
                     </div>
 
-                </div>
+                </div>  
             @endif
         </div>
     </section>
-
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-
-                // ── CẬP NHẬT TỔNG TIỀN TRÊN GIAO DIỆN ──────────────────
-                function recalcTotal() {
-                    let total = 0;
-                    document.querySelectorAll('.cart-row').forEach(row => {
-                        const qty = parseInt(row.querySelector('.qty-input').value) || 0;
-                        const price = parseFloat(row.querySelector('.subtotal').dataset.price) || 0;
-                        const subtotal = qty * price;
-
-                        row.querySelector('.subtotal').textContent =
-                            subtotal.toLocaleString('vi-VN') + 'đ';
-                        total += subtotal;
-                    });
-
-                    const formatted = total.toLocaleString('vi-VN') + 'đ';
-                    document.getElementById('summary-subtotal').textContent = formatted;
-                    document.getElementById('summary-total').textContent = formatted;
-
-                    // Cập nhật badge giỏ hàng trên navbar
-                    let totalQty = 0;
-                    document.querySelectorAll('.qty-input').forEach(i => totalQty += parseInt(i.value) || 0);
-                    const badge = document.getElementById('cart-count');
-                    if (badge) badge.textContent = totalQty;
-                }
-
-                // ── NÚT TĂNG / GIẢM SỐ LƯỢNG ───────────────────────────
-                document.querySelectorAll('.btn-qty').forEach(btn => {
-                    btn.addEventListener('click', function () {
-                        const productId = this.dataset.id;
-                        const action = this.dataset.action;
-                        const row = document.querySelector(`.cart-row[data-id="${productId}"]`);
-                        const input = row.querySelector('.qty-input');
-                        let qty = parseInt(input.value) || 1;
-
-                        if (action === 'plus') qty = Math.min(qty + 1, 99);
-                        if (action === 'minus') qty = Math.max(qty - 1, 1);
-
-                        input.value = qty;
-                        updateCart(productId, qty);
-                    });
-                });
-
-                // ── NHẬP TAY SỐ LƯỢNG ──────────────────────────────────
-                document.querySelectorAll('.qty-input').forEach(input => {
-                    input.addEventListener('change', function () {
-                        let qty = parseInt(this.value) || 1;
-                        qty = Math.max(1, Math.min(qty, 99));
-                        this.value = qty;
-                        updateCart(this.dataset.id, qty);
-                    });
-                });
-
-                // ── GỌI API CẬP NHẬT ───────────────────────────────────
-                function updateCart(productId, quantity) {
-                    fetch(`/cart/${productId}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': csrfToken,
-                            'Accept': 'application/json',
-                            'X-HTTP-Method-Override': 'PATCH',
-                        },
-                        body: JSON.stringify({ quantity }),
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.success) recalcTotal();
-                        })
-                        .catch(() => showToast('Cập nhật thất bại!', 'danger'));
-                }
-
-                // ── XÓA SẢN PHẨM ───────────────────────────────────────
-                document.querySelectorAll('.btn-remove').forEach(btn => {
-                    btn.addEventListener('click', function () {
-                        const productId = this.dataset.id;
-
-                        if (!confirm('Bạn có chắc muốn xóa sản phẩm này?')) return;
-
-                        fetch(`/cart/${productId}`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': csrfToken,
-                                'Accept': 'application/json',
-                                'X-HTTP-Method-Override': 'DELETE',
-                            },
-                        })
-                            .then(res => res.json())
-                            .then(data => {
-                                if (data.success) {
-                                    const row = document.querySelector(`.cart-row[data-id="${productId}"]`);
-                                    row.style.transition = 'opacity 0.3s';
-                                    row.style.opacity = '0';
-                                    setTimeout(() => {
-                                        row.remove();
-                                        recalcTotal();
-
-                                        // Nếu xóa hết thì reload để hiện trạng thái trống
-                                        if (!document.querySelector('.cart-row')) {
-                                            location.reload();
-                                        }
-                                    }, 300);
-                                }
-                            })
-                            .catch(() => showToast('Xóa thất bại!', 'danger'));
-                    });
-                });
-
-                // ── TOAST THÔNG BÁO ─────────────────────────────────────
-                function showToast(message, type = 'success') {
-                    const toast = document.createElement('div');
-                    toast.className = `toast-notify toast-${type}`;
-                    toast.textContent = message;
-                    document.body.appendChild(toast);
-                    setTimeout(() => toast.classList.add('show'), 10);
-                    setTimeout(() => {
-                        toast.classList.remove('show');
-                        setTimeout(() => toast.remove(), 300);
-                    }, 3000);
-                }
-            });
-        </script>
-    @endpush
 @endsection
