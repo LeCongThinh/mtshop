@@ -64,6 +64,10 @@ Route::delete('cart/{productId}', [CartController::class, 'remove'])->name('cart
 Route::get('/login', [AuthUserController::class, 'showLoginForm'])->name('login');
 //Xử lý đăng nhập
 Route::post('/login', [AuthUserController::class, 'login']);
+//View đăng ký
+Route::get('/register', [AuthUserController::class, 'showRegisterForm'])->name('register');
+//Xử lý đăng ký
+Route::post('/register', [AuthUserController::class, 'register']);
 
 
 Route::middleware(["auth"])->group(function () {

@@ -63,14 +63,35 @@
                         class="btn btn-outline-light border w-100 py-2 d-flex align-items-center justify-content-center gap-2 text-dark small fw-semibold rounded-3 btn-social">
                         <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" width="16"> Google
                     </button>
-                    
+
                 </div>
 
                 <div class="text-center">
                     <span class="small text-secondary">Chưa có tài khoản tại MTShop?</span>
-                    <a href="#" class="small fw-bold text-primary text-decoration-none ms-1">Tạo tài khoản</a>
+                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#registerModal"
+                        class="small fw-bold text-primary text-decoration-none ms-1">
+                        Tạo tài khoản
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@include('user.auth.register')
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+            // Khi nhấn vào link "Tạo tài khoản" hoặc các nút có data-bs-target
+            $('[data-bs-target]').on('click', function () {
+                // Lấy instance của modal đang mở và ẩn nó đi đúng cách
+                const currentModalEl = $(this).closest('.modal')[0];
+                if (currentModalEl) {
+                    const modalInstance = bootstrap.Modal.getInstance(currentModalEl);
+                    if (modalInstance) {
+                        modalInstance.hide();
+                    }
+                }
+            });
+        });
+    </script>
+@endpush
