@@ -70,9 +70,9 @@
                             </a>
 
                             <div class="card-footer p-2 border-0 bg-transparent text-center mt-auto">
-                                <a class="btn btn-outline-primary btn-sm w-100">
-                                    Thêm vào giỏ hàng
-                                </a>
+                                <button class="btn btn-outline-primary btn-sm w-100 btn-add-cart" data-id="{{ $product->id }}">
+                                    <i class="bi bi-cart-plus me-1"></i> Thêm vào giỏ hàng
+                                </button>
                                 <div class="d-flex align-items-center mt-2 mb-1 justify-content-start">
                                     <span class="text-warning me-2">
                                         <span class="fw-semibold small">4.8</span>

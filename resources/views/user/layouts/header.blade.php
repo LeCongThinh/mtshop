@@ -43,18 +43,32 @@
                 </div>
             </form>
             <div class="d-flex align-items-center gap-2">
-
-                <!-- Giỏ hàng-->
-                <button class="btn btn-outline-danger">
-                    <i class="bi bi-cart-fill me-1"></i>
-                    Giỏ hàng
-                    <span class="badge bg-danger text-white ms-1 rounded-pill">0</span>
-                </button>
-
-                <!-- Đăng nhập-->
-                <a href="#" class="btn btn-outline-primary">
-                    <i class="bi bi-person"></i> Đăng nhập
+                {{-- Nút giỏ hàng --}}
+                <a href="{{ route('cart.index') }}" class="btn cart-btn-mini">
+                    <div class="cart-icon-wrapper">
+                        <i class="bi bi-cart3"></i>
+                        <span class="cart-badge" id="cart-count">
+                            {{ app(\App\Services\CartService::class)->count() }}
+                        </span>
+                    </div>
                 </a>
+
+                {{-- Đăng nhập / Avatar --}}
+                @auth
+                    <a href="#" class="auth-btn-modern">
+                        <div class="auth-icon-wrapper">
+                            <i class="bi bi-person-circle"></i>
+                        </div>
+                        <span class="auth-text">{{ Auth::user()->name }}</span>
+                    </a>
+                @else
+                    <a href="#" class="auth-btn-modern">
+                        <div class="auth-icon-wrapper">
+                            <i class="bi bi-person-circle"></i>
+                        </div>
+                        <span class="auth-text">Đăng nhập</span>
+                    </a>
+                @endauth
             </div>
         </div>
     </div>

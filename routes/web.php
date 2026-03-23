@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\User\PostController as UserPostController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\ProductControler as UserProductController;
+use App\Http\Controllers\User\CartController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
@@ -33,16 +34,27 @@ Route::get("/", [HomeController::class, "home"])->name("home.index");
 Route::get("products/all", [UserProductController::class, "showAllProducts"])->name("all-products");
 // Trang chi tiết sản phẩm
 Route::get("products/{slug}", [UserProductController::class, "showProductDetail"])->name("home.product-detail");
+// Xem tất cả bài viết
+Route::get("blogs/all", [UserPostController::class, "showAllPosts"])->name("all-news");
+//Trang chi tiết bài viết
+Route::get("blogs/{slug}", [UserPostController::class, "showPostDetail"])->name("home.news-detail");
 // Trang sản phẩm theo danh mục chính
 Route::get("category/{slug}", [HomeController::class, 'getProductByCategory'])->name('category.product');
 // Trang sản phẩm theo danh mục con
 Route::get("subcategory/{slug}", [HomeController::class, "getProductBySubcategory"])->name("subcategory.product");
 // Lọc sản phẩm theo Category và Brand
 Route::get("category/{category_slug}/{brand_slug}", [HomeController::class, "getProductByCategoryAndBrand"])->name("category.brand.product");
-// Xem tất cả bài viết
-Route::get("blogs/all", [UserPostController::class, "showAllPosts"])->name("all-news");
-//Trang chi tiết bài viết
-Route::get("blogs/{slug}", [UserPostController::class, "showPostDetail"])->name("home.news-detail");
+// Trang chi tiết giỏ hàng
+Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+// Đặt hàng, yêu cầu người dùng đăng nhập
+Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+// Thêm sản phẩm vào giỏ hàng
+Route::post('cart/add', [CartController::class, 'add'])->name('cart.add');
+// Cập nhật số lượng sản phẩm trong giỏ hàng
+Route::patch('cart/{productId}', [CartController::class, 'update'])->name('cart.update');
+// Xóa sản phẩm khỏi giỏ hàng
+Route::delete('cart/{productId}', [CartController::class, 'remove'])->name('cart.remove');
+
 
 
 

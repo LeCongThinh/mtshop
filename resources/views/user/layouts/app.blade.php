@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="author" content="" />
     <title>@yield('web-title', 'MTShop - Chuyên cung cấp các dòng máy tính, laptop')</title>
     <!-- Favicon-->
@@ -14,6 +15,14 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{ asset("user-assets/css/styles.css") }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset("user-assets/css/app.css") }}">
+    {{-- Truyền route và csrf sang file JS riêng --}}
+    <script>
+        window.CART = {
+            addUrl: "{{ route('cart.add') }}",
+            updateUrl: "/cart/",
+            removeUrl: "/cart/",
+        };
+    </script>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -21,6 +30,8 @@
     <!-- Sử dụng view composer chia sẻ biến $categories cho tất cả các file blade nằm trong thư mục 'user'.
      Cấu hình trong hàm boot AppServiceProvider -->
     @include("user.layouts.header")
+
+    <!-- Slider ở trang home-page.blade.php -->
 
     <main class="flex-fill">
         @yield('content')
@@ -36,6 +47,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- JS load images, specs in product detail -->
     <script src="{{ asset("user-assets/js/handle-product-detail.js") }}"></script>
+    <!-- Thêm sp vào giỏ hàng -->
+    <script src="{{ asset("user-assets/js/product-to-cart.js") }}"></script>
+    {{-- Cho phép các trang con nhúng JS riêng qua @push('scripts') --}}
+    @stack('scripts')
 </body>
 
 </html>
