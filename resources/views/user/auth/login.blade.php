@@ -16,12 +16,13 @@
                     <h4 class="fw-bold text-dark mb-1" id="loginModalLabel">MTShop Xin Chào!</h4>
                     <p class="text-muted small">Vui lòng đăng nhập để tiếp tục mua sắm</p>
                 </div>
-                <div id="loginAlert" class="alert alert-dismissible fade d-none m-0 mb-3" role="alert">
-                    <span class="alert-text"></span>
-                    <button type="button" class="btn-close shadow-none" id="btnClsAlert"></button>
-                </div>
-                <form action="{{ route('login') }}" method="POST" class="auth-form">
+
+                <form action="{{ route('login') }}" method="POST" class="loginForm">
                     @csrf
+                    <div id="loginAlert" class="alert alert-dismissible fade d-none m-0 mb-3" role="alert">
+                        <span class="alert-text"></span>
+                        <button type="button" class="btn-close shadow-none" id="btnClsAlert"></button>
+                    </div>
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-dark">Email</label>
                         <div class="input-group custom-input-group">
@@ -85,6 +86,7 @@
     <script src="{{ asset('assets/js/admin/admin-alert.js') }}"></script>
     <script>
         $(document).ready(function () {
+
             // Xử lý thông báo đăng ký thành công từ sessionStorage
             const msg = sessionStorage.getItem('register_success');
             if (msg) {
@@ -112,17 +114,21 @@
                 }
             });
             // Xử lý đăng nhập
-            // Xử lý nút đóng thủ công
+
             $(document).on('click', '#btnClsAlert', function () {
                 $('#loginAlert').addClass('d-none').removeClass('show');
             });
+            $('#loginAlert').addClass('d-none').removeClass('show');
+            $('#loginAlert').find('.alert-text').text('');
 
-            $('.auth-form').on('submit', function (e) {
+            $('.loginForm').on('submit', function (e) {
                 e.preventDefault();
 
-                // 1. Mỗi khi nhấn nút Đăng nhập: Ẩn Alert cũ đi để chuẩn bị hiện cái mới
-                const $alert = $('#loginAlert');
-                $alert.addClass('d-none').removeClass('show alert-danger alert-success');
+               const $alert = $('#loginAlert');
+        
+        // 3. Xóa nội dung cũ NGAY KHI BẤM NÚT để chuẩn bị hiện lỗi mới của riêng Login
+        $alert.addClass('d-none').removeClass('show alert-danger alert-success');
+        $alert.find('.alert-text').text('');
 
                 $.ajax({
                     url: $(this).attr('action'),

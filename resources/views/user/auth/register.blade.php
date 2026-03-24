@@ -21,8 +21,7 @@
                     @csrf
                     <div id="registerAlert" class="alert alert-dismissible fade d-none m-0 mb-3" role="alert">
                         <span class="alert-text"></span>
-                        <button type="button" class="btn-close shadow-none" data-bs-dismiss="alert"
-                            aria-label="Close"></button>
+                        <button type="button" class="btn-close shadow-none" id="btnClsRegAlert"></button>
                     </div>
 
                     <div class="mb-3">
@@ -34,7 +33,7 @@
                             <input type="text" name="name" class="form-control border-start-0 ps-0"
                                 placeholder="Nhập họ tên...">
                         </div>
-                        <div class="error-name text-danger error-message mt-1"></div>
+                        <span class="text-danger small error-message error-name"></span>
                     </div>
 
                     <div class="mb-3">
@@ -46,7 +45,7 @@
                             <input type="tel" name="phone" class="form-control border-start-0 ps-0"
                                 placeholder="Nhập số điện thoại...">
                         </div>
-                        <div class="error-phone text-danger error-message mt-1"></div>
+                        <span class="text-danger small error-message error-phone"></span>
                     </div>
 
                     <div class="mb-3">
@@ -58,7 +57,7 @@
                             <input type="email" name="email" class="form-control border-start-0 ps-0"
                                 placeholder="Nhập email...">
                         </div>
-                        <div class="error-email text-danger error-message mt-1"></div>
+                        <span class="text-danger small error-message error-email"></span>
                     </div>
 
                     <div class="mb-3">
@@ -70,7 +69,7 @@
                             <input type="password" name="password" class="form-control border-start-0 ps-0"
                                 placeholder="Nhập mật khẩu...">
                         </div>
-                        <div class="error-password text-danger error-message mt-1"></div>
+                        <span class="text-danger small error-message error-password"></span>
                     </div>
 
                     <div class="mb-3">
@@ -110,12 +109,14 @@
             $('#registerForm').on('submit', function (e) {
                 e.preventDefault();
                 let form = $(this);
+                let $regAlert = $('#registerAlert');
                 let btn = $('#btnRegister');
                 let spinner = btn.find('.spinner-border');
-
-                // Reset trạng thái UI cũ
-                $('.error-message').text('');
-                $('.form-control').removeClass('is-invalid');
+                // Reset trạng thái Alert của riêng Register
+                $regAlert.addClass('d-none').removeClass('show');
+                $regAlert.find('.alert-text').text('');
+                form.find('.error-message').text('');
+                form.find('.form-control').removeClass('is-invalid');
                 btn.prop('disabled', true);
                 spinner.removeClass('d-none');
                 $.ajax({
@@ -137,11 +138,11 @@
                         if (xhr.status === 422) {
                             let errors = xhr.responseJSON.errors;
                             $.each(errors, function (key, value) {
-                                $('[name="' + key + '"]').addClass('is-invalid');
-                                $('.error-' + key).text(value[0]);
+                                // Chỉ tìm input và span error BÊN TRONG form này
+                                form.find('[name="' + key + '"]').addClass('is-invalid');
+                                form.find('.error-' + key).text(value[0]);
                             });
                         } else {
-                            let errorMsg = xhr.responseJSON.message || "Đã có lỗi xảy ra!";
                             showAlert("registerAlert", errorMsg, "danger", 5000);
                         }
                     }
