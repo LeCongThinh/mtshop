@@ -53,6 +53,8 @@
     <script src="{{ asset("user-assets/js/product-to-cart.js") }}"></script>
     <!-- Cập nhật/xóa thông tin giỏ hàng -->
     <script src="{{ asset("user-assets/js/handle-cart-detail.js") }}"></script>
+    <script src="{{ asset("assets/js/admin/admin-alert.js") }}"></script>
+
 
     {{-- Cho phép các trang con nhúng JS riêng qua @push('scripts') --}}
     @stack('scripts')

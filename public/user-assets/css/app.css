@@ -377,3 +377,32 @@
 .toast-danger {
     background: #dc3545;
 }
+
+/* Làm đỏ toàn bộ group bao gồm cả icon khi có lỗi */
+.custom-input-group:has(.is-invalid) {
+    border-color: #dc3545 !important;
+}
+
+.custom-input-group:has(.is-invalid) .input-group-text {
+    color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+
+/* Xóa bỏ icon cảnh báo mặc định của Bootstrap để không đè lên icon của bạn */
+.custom-input-group .form-control.is-invalid {
+    background-image: none;
+    border-color: #dc3545;
+}
+
+/* Hiệu ứng focus đồng nhất */
+.custom-input-group:focus-within {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.error-message {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+

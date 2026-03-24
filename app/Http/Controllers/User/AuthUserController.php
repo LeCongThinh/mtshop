@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Services\CartService;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use App\Http\Requests\RegisterUserRequest;
 
 class AuthUserController extends Controller
 {
@@ -50,33 +52,29 @@ class AuthUserController extends Controller
         return view('user.auth.register');
     }
     // Xử lý đăng ký
-    public function register(Request $request)
+    public function register(RegisterUserRequest $request)
     {
-        // 1. Validate
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ], [
-            'email.unique' => 'Email này đã tồn tại trên hệ thống.',
-            'password.confirmed' => 'Mật khẩu xác nhận không khớp.'
-        ]);
-
-        // 2. Tạo User (Mặc định là customer)
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'customer',
-        ]);
-
-        // Tự động đăng nhập
-        Auth::login($user);
-
-        // 4. Đồng bộ giỏ hàng ngay lập tức
-        $this->cartService->mergeSessionToDatabase();
-
-        return redirect()->intended('/')->with('success', 'Đăng ký thành viên MTShop thành công!');
+        try {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'password' => Hash::make($request->password),
+                'role' => 'customer',
+                'avatar' => 'storage/avatars/blank_user.png',
+            ]);
+            Auth::login($user);
+            return response()->json([
+                'success' => true,
+                'message' => 'Chào mừng ' . $user->name . ' đã đăng ký thành công tài khoản MTShop! Đang chuyển hướng...'
+            ]);
+        } catch (\Exception $e) {
+            Log::error("Lỗi đăng ký User: " . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Đã có lỗi xảy ra. Vui lòng thử lại sau.'
+            ], 500);
+        }
     }
 
     // Đăng xuất

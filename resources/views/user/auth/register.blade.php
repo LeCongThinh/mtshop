@@ -17,51 +17,76 @@
                     <p class="text-muted small">Trở thành thành viên của MTShop ngay hôm nay</p>
                 </div>
 
-                <form action="{{ route('register') }}" method="POST" class="auth-form">
+                <form id="registerForm" action="{{ route('register') }}" method="POST" class="auth-form" novalidate>
                     @csrf
+                    <div id="registerAlert" class="alert alert-dismissible fade d-none m-0 mb-3" role="alert">
+                        <span class="alert-text"></span>
+                        <button type="button" class="btn-close shadow-none" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-dark">Họ và Tên</label>
-                        <div class="input-group custom-input-group">
+                        <div class="input-group custom-input-group shadow-sm">
                             <span class="input-group-text border-end-0 bg-transparent">
                                 <i class="bi bi-person text-secondary"></i>
                             </span>
                             <input type="text" name="name" class="form-control border-start-0 ps-0"
-                                placeholder="Nhập họ tên..." required>
+                                placeholder="Nhập họ tên...">
                         </div>
+                        <div class="error-name text-danger error-message mt-1"></div>
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-dark">Số điện thoại</label>
-                        <div class="input-group custom-input-group">
+                        <div class="input-group custom-input-group shadow-sm">
                             <span class="input-group-text border-end-0 bg-transparent">
                                 <i class="bi bi-phone text-secondary"></i>
                             </span>
                             <input type="tel" name="phone" class="form-control border-start-0 ps-0"
-                                placeholder="Nhập số điện thoại..." required>
+                                placeholder="Nhập số điện thoại...">
                         </div>
+                        <div class="error-phone text-danger error-message mt-1"></div>
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-dark">Email</label>
-                        <div class="input-group custom-input-group">
+                        <div class="input-group custom-input-group shadow-sm">
                             <span class="input-group-text border-end-0 bg-transparent">
                                 <i class="bi bi-envelope text-secondary"></i>
                             </span>
                             <input type="email" name="email" class="form-control border-start-0 ps-0"
-                                placeholder="Nhập email..." required>
+                                placeholder="Nhập email...">
                         </div>
+                        <div class="error-email text-danger error-message mt-1"></div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-dark">Mật khẩu</label>
-                        <div class="input-group custom-input-group">
+                        <div class="input-group custom-input-group shadow-sm">
                             <span class="input-group-text border-end-0 bg-transparent">
                                 <i class="bi bi-key text-secondary"></i>
                             </span>
                             <input type="password" name="password" class="form-control border-start-0 ps-0"
-                                placeholder="Nhập mật khẩu..." required>
+                                placeholder="Nhập mật khẩu...">
+                        </div>
+                        <div class="error-password text-danger error-message mt-1"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-dark">Xác nhận mật khẩu</label>
+                        <div class="input-group custom-input-group shadow-sm">
+                            <span class="input-group-text border-end-0 bg-transparent">
+                                <i class="bi bi-check2-circle text-secondary"></i>
+                            </span>
+                            <input type="password" name="password_confirmation" class="form-control border-start-0 ps-0"
+                                placeholder="Nhập lại mật khẩu...">
                         </div>
                     </div>
-                    <button type="submit"
-                        class="btn btn-primary w-100 fw-bold py-2-5 rounded-3 btn-tech-gradient shadow-sm">
+
+                    <button type="submit" id="btnRegister"
+                        class="btn btn-primary w-100 fw-bold py-2-5 rounded-3 btn-tech-gradient shadow-sm mt-2">
+                        <span class="spinner-border spinner-border-sm d-none" role="status"></span>
                         ĐĂNG KÝ TÀI KHOẢN
                     </button>
                 </form>
@@ -75,3 +100,58 @@
         </div>
     </div>
 </div>
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('user-assets/css/user-alert.css') }}">
+@endpush
+@push('scripts')
+    <script src="{{ asset('assets/js/admin/admin-alert.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#registerForm').on('submit', function (e) {
+                e.preventDefault();
+                let form = $(this);
+                let btn = $('#btnRegister');
+                let spinner = btn.find('.spinner-border');
+
+                // Reset trạng thái UI cũ
+                $('.error-message').text('');
+                $('.form-control').removeClass('is-invalid');
+                btn.prop('disabled', true);
+                spinner.removeClass('d-none');
+                $.ajax({
+                    url: form.attr('action'),
+                    method: 'POST',
+                    data: form.serialize(),
+                    success: function (response) {
+                        btn.prop('disabled', false);
+                        spinner.addClass('d-none');
+                        if (response.success) {
+                            // gọi hàm từ file assets/js/admin/admin-alert.js
+                            showAlert("registerAlert", response.message, "success", 5000);
+                            form[0].reset();
+                            setTimeout(() => {
+                                let modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+                                if (modal) modal.hide();
+                            }, 4500);
+                        }
+                    },
+                    error: function (xhr) {
+                        btn.prop('disabled', false);
+                        spinner.addClass('d-none');
+
+                        if (xhr.status === 422) {
+                            let errors = xhr.responseJSON.errors;
+                            $.each(errors, function (key, value) {
+                                $('[name="' + key + '"]').addClass('is-invalid');
+                                $('.error-' + key).text(value[0]);
+                            });
+                        } else {
+                            let errorMsg = xhr.responseJSON.message || "Đã có lỗi xảy ra!";
+                            showAlert("registerAlert", errorMsg, "danger", 5000);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
