@@ -101,7 +101,7 @@
     </div>
 </div>
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('user-assets/css/user-alert.css') }}">
+    <link rel="stylesheet" href="{{ asset('user-assets/css/app.css') }}">
 @endpush
 @push('scripts')
     <script src="{{ asset('assets/js/admin/admin-alert.js') }}"></script>
@@ -126,13 +126,8 @@
                         btn.prop('disabled', false);
                         spinner.addClass('d-none');
                         if (response.success) {
-                            // gọi hàm từ file assets/js/admin/admin-alert.js
-                            showAlert("registerAlert", response.message, "success", 5000);
-                            form[0].reset();
-                            setTimeout(() => {
-                                let modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
-                                if (modal) modal.hide();
-                            }, 4500);
+                            sessionStorage.setItem('register_success', response.message);
+                            window.location.href = "{{ url('/') }}";
                         }
                     },
                     error: function (xhr) {

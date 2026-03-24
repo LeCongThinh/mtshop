@@ -2,64 +2,64 @@ document.addEventListener("DOMContentLoaded", function () {
     const wrapper = document.getElementById('descWrapper');
     const btn = document.getElementById('btnToggleDesc');
     const gradient = document.getElementById('descGradient');
-    if (wrapper.scrollHeight <= 500) {
-        btn.style.display = 'none';
-        gradient.style.display = 'none';
-    }
-    btn.addEventListener('click', function () {
-        const isExpanded = wrapper.classList.contains('expanded');
-        if (isExpanded) {
-            // Đang mở -> Thu gọn lại
-            wrapper.classList.remove('expanded');
-            wrapper.style.maxHeight = "400px";
-            btn.innerHTML = 'Đọc tiếp bài viết <i class="bi bi-chevron-down ms-1"></i>';
-            // Cuộn mượt lên đầu phần mô tả
-            wrapper.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            // Đang đóng -> Mở rộng ra
-            wrapper.classList.add('expanded');
-            wrapper.style.maxHeight = wrapper.scrollHeight + "px";
-            btn.innerHTML = 'Thu gọn bài viết <i class="bi bi-chevron-up ms-1"></i>';
+
+    // CHỈ CHẠY NẾU CÁC PHẦN TỬ NÀY TỒN TẠI (Trang chi tiết sản phẩm)
+    if (wrapper && btn && gradient) {
+        if (wrapper.scrollHeight <= 500) {
+            btn.style.display = 'none';
+            gradient.style.display = 'none';
         }
-    });
+
+        btn.addEventListener('click', function () {
+            const isExpanded = wrapper.classList.contains('expanded');
+            if (isExpanded) {
+                wrapper.classList.remove('expanded');
+                wrapper.style.maxHeight = "400px";
+                btn.innerHTML = 'Đọc tiếp bài viết <i class="bi bi-chevron-down ms-1"></i>';
+                wrapper.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                wrapper.classList.add('expanded');
+                wrapper.style.maxHeight = wrapper.scrollHeight + "px";
+                btn.innerHTML = 'Thu gọn bài viết <i class="bi bi-chevron-up ms-1"></i>';
+            }
+        });
+    }
 });
-// Animation cho danh sách ảnh
-let currentIndex = 0;
-const thumbs = document.querySelectorAll('.thumb-img');
+
+// Animation cho danh sách ảnh - Cũng cần kiểm tra mainImage
 const mainImage = document.getElementById('mainImage');
+const thumbs = document.querySelectorAll('.thumb-img');
 
-function changeImage(element, index) {
-    currentIndex = index;
-    mainImage.src = element.src;
-    thumbs.forEach(img => img.classList.remove('border-danger'));
-    element.classList.add('border-danger');
-}
+if (mainImage && thumbs.length > 0) {
+    let currentIndex = 0;
 
-function nextImage() {
-    currentIndex++;
-    if (currentIndex >= thumbs.length) {
-        currentIndex = 0; // Quay lại ảnh đầu tiên
-    }
-    updateSlider();
-}
-
-function prevImage() {
-    currentIndex--;
-    if (currentIndex < 0) {
-        currentIndex = thumbs.length - 1; // Nhảy xuống ảnh cuối cùng
-    }
-    updateSlider();
-}
-
-function updateSlider() {
-    const targetThumb = thumbs[currentIndex];
-    const mainImg = document.getElementById('mainImage');
-    mainImg.classList.add('changing');
-    setTimeout(() => {
-        mainImg.src = targetThumb.src;
+    window.changeImage = function(element, index) {
+        currentIndex = index;
+        mainImage.src = element.src;
         thumbs.forEach(img => img.classList.remove('border-danger'));
-        targetThumb.classList.add('border-danger');
-        targetThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        mainImg.classList.remove('changing');
-    }, 300);
+        element.classList.add('border-danger');
+    }
+
+    window.updateSlider = function() {
+        const targetThumb = thumbs[currentIndex];
+        mainImage.classList.add('changing');
+        setTimeout(() => {
+            mainImage.src = targetThumb.src;
+            thumbs.forEach(img => img.classList.remove('border-danger'));
+            targetThumb.classList.add('border-danger');
+            targetThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            mainImage.classList.remove('changing');
+        }, 300);
+    }
+
+    // Định nghĩa thêm next/prev nếu bạn dùng nút bấm
+    window.nextImage = function() {
+        currentIndex = (currentIndex + 1) % thumbs.length;
+        updateSlider();
+    }
+
+    window.prevImage = function() {
+        currentIndex = (currentIndex - 1 + thumbs.length) % thumbs.length;
+        updateSlider();
+    }
 }

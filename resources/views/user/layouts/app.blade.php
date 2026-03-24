@@ -11,6 +11,7 @@
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="{{ asset("assets/images/laptopshop.png") }}" />
     <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{ asset("user-assets/css/styles.css") }}" rel="stylesheet" />
@@ -47,6 +48,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- JS load images, specs in product detail -->
     <script src="{{ asset("user-assets/js/handle-product-detail.js") }}"></script>
     <!-- Thêm sp vào giỏ hàng -->

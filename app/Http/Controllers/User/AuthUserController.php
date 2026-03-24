@@ -32,19 +32,36 @@ class AuthUserController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-        if (Auth::attempt($credentials, $request->remember)) {
-            $request->session()->regenerate();
-            // ĐỒNG BỘ GIỎ HÀNG
-            $this->cartService->mergeSessionToDatabase();
-            // Chuyển hướng dựa trên Role (Nếu là admin thì vào trang quản trị)
-            if (Auth::user()->role === 'admin') {
-                return redirect()->route('admin.dashboard');
+
+        // 1. Kiểm tra xem Email/Password có đúng trong DB không (Chưa đăng nhập)
+        if (Auth::validate($credentials)) {
+            $user = \App\Models\User::where('email', $credentials['email'])->first();
+
+            // ko cho adin đăng nhập ở form này
+            if ($user->role !== 'customer') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Thông tin đăng nhập không chính xác.'
+                ], 422);
             }
-            return redirect()->intended('/')->with('success', 'Chào mừng bạn quay trở lại!');
+            // Nếu là customer cho phép đăng nhập
+            if (Auth::attempt($credentials, $request->remember)) {
+                $request->session()->regenerate();
+
+                if (isset($this->cartService)) {
+                    $this->cartService->mergeSessionToDatabase();
+                }
+                return response()->json([
+                    'success' => true,
+                    'redirect' => url('/'),
+                    'message' => 'Chào mừng bạn quay trở lại!'
+                ]);
+            }
         }
-        return back()->withErrors([
-            'email' => 'Thông tin đăng nhập không chính xác.',
-        ])->onlyInput('email');
+        return response()->json([
+            'success' => false,
+            'message' => 'Thông tin đăng nhập không chính xác.'
+        ], 422);
     }
     // View đăng ký
     public function showRegisterForm()
@@ -63,10 +80,9 @@ class AuthUserController extends Controller
                 'role' => 'customer',
                 'avatar' => 'storage/avatars/blank_user.png',
             ]);
-            Auth::login($user);
             return response()->json([
                 'success' => true,
-                'message' => 'Chào mừng ' . $user->name . ' đã đăng ký thành công tài khoản MTShop! Đang chuyển hướng...'
+                'message' => 'Đăng ký tài khoản MTShop thành công. Vui lòng đăng nhập để tiếp tục mua sắm!'
             ]);
         } catch (\Exception $e) {
             Log::error("Lỗi đăng ký User: " . $e->getMessage());

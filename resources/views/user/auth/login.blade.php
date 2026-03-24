@@ -16,7 +16,10 @@
                     <h4 class="fw-bold text-dark mb-1" id="loginModalLabel">MTShop Xin Chào!</h4>
                     <p class="text-muted small">Vui lòng đăng nhập để tiếp tục mua sắm</p>
                 </div>
-
+                <div id="loginAlert" class="alert alert-dismissible fade d-none m-0 mb-3" role="alert">
+                    <span class="alert-text"></span>
+                    <button type="button" class="btn-close shadow-none" id="btnClsAlert"></button>
+                </div>
                 <form action="{{ route('login') }}" method="POST" class="auth-form">
                     @csrf
                     <div class="mb-3">
@@ -30,7 +33,7 @@
                         </div>
                     </div>
 
-                    <div class="mb-2">
+                    <div class="mb-4">
                         <label class="form-label small fw-bold text-dark">Mật khẩu</label>
                         <div class="input-group custom-input-group">
                             <span class="input-group-text border-end-0 bg-transparent">
@@ -41,9 +44,9 @@
                         </div>
                     </div>
 
-                    <div class="text-end mt-2 mb-3">
+                    <!-- <div class="text-end mt-2 mb-3">
                         <a href="#" class="text-primary text-decoration-none small fw-semibold">Quên mật khẩu?</a>
-                    </div>
+                    </div> -->
 
                     <button type="submit"
                         class="btn btn-primary w-100 fw-bold py-2-5 rounded-3 btn-tech-gradient shadow-sm">
@@ -51,7 +54,7 @@
                     </button>
                 </form>
 
-                <div class="position-relative my-4 text-center">
+                <!-- <div class="position-relative my-4 text-center">
                     <hr class="text-light-emphasis">
                     <span
                         class="position-absolute top-50 start-50 translate-middle bg-white px-3 small text-secondary">Hoặc
@@ -64,9 +67,9 @@
                         <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" width="16"> Google
                     </button>
 
-                </div>
+                </div> -->
 
-                <div class="text-center">
+                <div class="text-center mt-3">
                     <span class="small text-secondary">Chưa có tài khoản tại MTShop?</span>
                     <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#registerModal"
                         class="small fw-bold text-primary text-decoration-none ms-1">
@@ -79,18 +82,71 @@
 </div>
 @include('user.auth.register')
 @push('scripts')
+    <script src="{{ asset('assets/js/admin/admin-alert.js') }}"></script>
     <script>
         $(document).ready(function () {
-            // Khi nhấn vào link "Tạo tài khoản" hoặc các nút có data-bs-target
+            // Xử lý thông báo đăng ký thành công từ sessionStorage
+            const msg = sessionStorage.getItem('register_success');
+            if (msg) {
+                const loginModalEl = document.getElementById('loginModal');
+                if (loginModalEl) {
+                    const loginModal = new bootstrap.Modal(loginModalEl);
+                    loginModal.show();
+                    loginModalEl.addEventListener('shown.bs.modal', function () {
+                        if (typeof showAlert === "function") {
+                            showAlert("loginAlert", msg, "success", 8000);
+                        }
+                        sessionStorage.removeItem('register_success');
+                    }, { once: true });
+                }
+            }
+            // Chuyển đến trang đk tk
             $('[data-bs-target]').on('click', function () {
-                // Lấy instance của modal đang mở và ẩn nó đi đúng cách
-                const currentModalEl = $(this).closest('.modal')[0];
-                if (currentModalEl) {
-                    const modalInstance = bootstrap.Modal.getInstance(currentModalEl);
+                const target = $(this).attr('data-bs-target');
+                const currentModal = $(this).closest('.modal');
+                if (currentModal.length > 0 && target !== '#' + currentModal.attr('id')) {
+                    const modalInstance = bootstrap.Modal.getInstance(currentModal[0]);
                     if (modalInstance) {
                         modalInstance.hide();
                     }
                 }
+            });
+            // Xử lý đăng nhập
+            // Xử lý nút đóng thủ công
+            $(document).on('click', '#btnClsAlert', function () {
+                $('#loginAlert').addClass('d-none').removeClass('show');
+            });
+
+            $('.auth-form').on('submit', function (e) {
+                e.preventDefault();
+
+                // 1. Mỗi khi nhấn nút Đăng nhập: Ẩn Alert cũ đi để chuẩn bị hiện cái mới
+                const $alert = $('#loginAlert');
+                $alert.addClass('d-none').removeClass('show alert-danger alert-success');
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        if (response.success) {
+                            window.location.href = response.redirect;
+                        }
+                    },
+                    error: function (xhr) {
+                        // 2. Lấy nội dung lỗi
+                        const errorMsg = xhr.responseJSON ? xhr.responseJSON.message : 'Thông tin không chính xác.';
+
+                        // 3. Hiển thị lại Alert thủ công mà không dùng admin-alert.js
+                        $alert.find('.alert-text').text(errorMsg);
+                        $alert.addClass('alert-danger show').removeClass('d-none');
+
+                        // 4. (Tùy chọn) Tự động ẩn sau 5 giây nếu không muốn nó nằm đó mãi
+                        setTimeout(() => {
+                            $alert.addClass('d-none').removeClass('show');
+                        }, 5000);
+                    }
+                });
             });
         });
     </script>
