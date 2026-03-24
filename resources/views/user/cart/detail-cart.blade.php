@@ -1,6 +1,5 @@
 @extends('user.layouts.app')
 @section('web-title', 'Giỏ hàng của bạn - MTShop.com')
-
 @section('content')
     <section class="py-4" style="background-color:#e9ecef; min-height: 80vh;">
         <div class="container">
@@ -167,23 +166,24 @@
                                         {{ number_format($total, 0, ',', '.') }}đ
                                     </span>
                                 </div>
-
-                                <a href="{{ route('cart.checkout') }}" class="btn btn-primary w-100 py-2">
-                                    <i class="bi bi-bag-check me-1"></i> Đặt hàng
-                                </a>
-
+                                @auth
+                                    <!-- Đã đăng nhập, nhấn nút đặt hàng sẽ chuyển đến view chi tiết đơn hàng -->
+                                    <a href="{{ route('user.checkout') }}" class="btn btn-primary w-100 py-2">
+                                        <i class="bi bi-bag-check me-1"></i> Đặt hàng
+                                    </a>
+                                @endauth
                                 @guest
-                                    <p class="text-muted small text-center mt-3 mb-0">
-                                        <i class="bi bi-info-circle me-1"></i>
-                                        Bạn cần <a href="#">đăng nhập</a>
-                                        để hoàn tất đặt hàng
-                                    </p>
+                                    <!-- Yêu cầu người dùng đăng nhập, mới được mua sp -->
+                                    <button type="button" class="btn btn-primary w-100 py-2 fw-bold" data-bs-toggle="modal"
+                                        data-bs-target="#loginModal">
+                                        <i class="bi bi-bag-check me-1"></i> Đặt hàng
+                                    </button>
                                 @endguest
                             </div>
                         </div>
                     </div>
 
-                </div>  
+                </div>
             @endif
         </div>
     </section>

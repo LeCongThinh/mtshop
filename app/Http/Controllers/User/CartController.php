@@ -17,7 +17,6 @@ class CartController extends Controller
     public function index()
     {
         $items = $this->cartService->getItems();
-
         $total = collect($items)->sum(
             fn($i) => $i['product']->price * $i['quantity']
         );
@@ -85,25 +84,5 @@ class CartController extends Controller
     }
 
     // Trang đặt hàng - yêu cầu đăng nhập
-    public function checkout()
-    {
-        if (!Auth::check()) {
-            return redirect()->route('login')
-                ->with('info', 'Vui lòng đăng nhập để đặt hàng.');
-        }
-
-        $items = $this->cartService->getItems();
-
-        // Giỏ hàng trống thì quay lại trang giỏ hàng
-        if (empty($items)) {
-            return redirect()->route('cart.index')
-                ->with('warning', 'Giỏ hàng của bạn đang trống!');
-        }
-
-        $total = collect($items)->sum(
-            fn($i) => $i['product']->price * $i['quantity']
-        );
-
-        return view('cart.checkout', compact('items', 'total'));
-    }
+    
 }

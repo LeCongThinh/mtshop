@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
+use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\PostController as UserPostController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\AuthUserController;
@@ -47,18 +48,12 @@ Route::get("subcategory/{slug}", [HomeController::class, "getProductBySubcategor
 Route::get("category/{category_slug}/{brand_slug}", [HomeController::class, "getProductByCategoryAndBrand"])->name("category.brand.product");
 // Trang chi tiết giỏ hàng
 Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-// Đặt hàng, yêu cầu người dùng đăng nhập
-Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 // Thêm sản phẩm vào giỏ hàng
 Route::post('cart/add', [CartController::class, 'add'])->name('cart.add');
 // Cập nhật số lượng sản phẩm trong giỏ hàng
 Route::patch('cart/{productId}', [CartController::class, 'update'])->name('cart.update');
 // Xóa sản phẩm khỏi giỏ hàng
 Route::delete('cart/{productId}', [CartController::class, 'remove'])->name('cart.remove');
-
-
-
-
 
 //View đăng nhập
 Route::get('/login', [AuthUserController::class, 'showLoginForm'])->name('login');
@@ -73,6 +68,10 @@ Route::post('/register', [AuthUserController::class, 'register']);
 Route::middleware(["auth"])->group(function () {
 
     // Trang đặt hàng yêu cầu user phải đăng nhập
+    // View chi tiết đơn hàng
+    Route::get("checkout",[CheckoutController::class, 'checkout'])->name('user.checkout');
+    // Xử lý đơn hàng
+    Route::post('/checkout/process', [CheckoutController::class, 'processCheckout'])->name('user.process.checout');
     // Đăng xuất
     Route::post('/logout', [AuthUserController::class, 'logout'])->name('logout');
 

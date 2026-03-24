@@ -86,7 +86,6 @@
     <script src="{{ asset('assets/js/admin/admin-alert.js') }}"></script>
     <script>
         $(document).ready(function () {
-
             // Xử lý thông báo đăng ký thành công từ sessionStorage
             const msg = sessionStorage.getItem('register_success');
             if (msg) {
@@ -114,22 +113,17 @@
                 }
             });
             // Xử lý đăng nhập
-
             $(document).on('click', '#btnClsAlert', function () {
                 $('#loginAlert').addClass('d-none').removeClass('show');
             });
             $('#loginAlert').addClass('d-none').removeClass('show');
             $('#loginAlert').find('.alert-text').text('');
-
             $('.loginForm').on('submit', function (e) {
                 e.preventDefault();
-
-               const $alert = $('#loginAlert');
-        
-        // 3. Xóa nội dung cũ NGAY KHI BẤM NÚT để chuẩn bị hiện lỗi mới của riêng Login
-        $alert.addClass('d-none').removeClass('show alert-danger alert-success');
-        $alert.find('.alert-text').text('');
-
+                const $alert = $('#loginAlert');
+                // Xóa nội dung cũ
+                $alert.addClass('d-none').removeClass('show alert-danger alert-success');
+                $alert.find('.alert-text').text('');
                 $.ajax({
                     url: $(this).attr('action'),
                     type: 'POST',
@@ -140,14 +134,10 @@
                         }
                     },
                     error: function (xhr) {
-                        // 2. Lấy nội dung lỗi
+                        // Lấy nội dung lỗi
                         const errorMsg = xhr.responseJSON ? xhr.responseJSON.message : 'Thông tin không chính xác.';
-
-                        // 3. Hiển thị lại Alert thủ công mà không dùng admin-alert.js
                         $alert.find('.alert-text').text(errorMsg);
                         $alert.addClass('alert-danger show').removeClass('d-none');
-
-                        // 4. (Tùy chọn) Tự động ẩn sau 5 giây nếu không muốn nó nằm đó mãi
                         setTimeout(() => {
                             $alert.addClass('d-none').removeClass('show');
                         }, 5000);
