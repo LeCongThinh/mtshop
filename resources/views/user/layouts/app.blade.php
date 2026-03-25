@@ -36,6 +36,19 @@
     <!-- Slider ở trang home-page.blade.php -->
 
     <main class="flex-fill">
+        <div class="position-fixed top-0 end-0 p-3" style="z-index: 9999; margin-top: 10px;">
+            <div id="mainAlert" class="alert d-none alert-dismissible fade show shadow-lg border-0 py-3" role="alert"
+                style="min-width: 320px; max-width: 600px; border-radius: 12px; min-height: 60px; display: flex; align-items: center;">
+
+                <div class="d-flex align-items-center w-100">
+                    <div class="pe-4">
+                        <span class="alert-text fw-bold" style="font-size: 0.95rem; line-height: 1.5;"></span>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%);"></button>
+            </div>
+        </div>
         @yield('content')
     </main>
 

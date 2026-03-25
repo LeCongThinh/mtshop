@@ -4,6 +4,29 @@
     <section class="py-4" style="background-color:#e9ecef; min-height: 80vh;">
         <div class="container py-2">
             <div class="row g-4">
+                @if(session('error'))
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            showAlert("mainAlert", "{!! session('error') !!}", "danger");
+                        });
+                    </script>
+                @endif
+
+                @if(session('success'))
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            showAlert("mainAlert", "{!! session('success') !!}", "success");
+                        });
+                    </script>
+                @endif
+
+                @if(session('info'))
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            showAlert("mainAlert", "{!! session('info') !!}", "info");
+                        });
+                    </script>
+                @endif
                 <div class="col-lg-7">
                     <div class="card checkout-card shadow-sm">
                         <div class="card-header bg-white py-3 border-0 mt-2">
@@ -12,15 +35,20 @@
                             </h5>
                         </div>
                         <div class="card-body px-4 pb-4">
-                            <form id="orderForm" action="#" method="POST">
+                            <form id="orderForm" action="{{ route('user.process.checout') }}" method="POST">
                                 @csrf
+                                <input type="hidden" name="payment_method" id="selectedPaymentMethod" value="cod">
                                 <div class="mb-2">
                                     <label class="form-label fw-semibold small">Họ và tên người nhận</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light border-end-0"><i
                                                 class="bi bi-person text-muted"></i></span>
-                                        <input type="text" name="name" class="form-control border-start-0"
-                                            value="{{ $user->name }}" required placeholder="VD: Nguyễn Văn A">
+                                        <input type="text" name="name"
+                                            class="form-control border-start-0 @error('name') is-invalid @enderror"
+                                            value="{{ old('name', $user->name) }}" placeholder="VD: Nguyễn Văn A">
+                                        @error('name')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -30,8 +58,13 @@
                                         <div class="input-group">
                                             <span class="input-group-text bg-light border-end-0"><i
                                                     class="bi bi-telephone text-muted"></i></span>
-                                            <input type="text" name="phone" class="form-control border-start-0"
-                                                value="{{ $user->phone }}" required placeholder="09xx xxx xxx">
+                                            <input type="text" name="phone"
+                                                class="form-control border-start-0 @error('phone') is-invalid @enderror"
+                                                value="{{ old('phone', $user->phone) }}" required
+                                                placeholder="09xx xxx xxx">
+                                            @error('phone')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -50,15 +83,22 @@
                                     <div class="input-group">
                                         <span class="input-group-text bg-light border-end-0"><i
                                                 class="bi bi-geo-alt text-muted"></i></span>
-                                        <textarea name="address" class="form-control border-start-0" rows="3" required
-                                            placeholder="Số nhà, tên đường, Phường/Xã, Quận/Huyện...">{{ $user->address }}</textarea>
+                                        <textarea name="address" rows="3"
+                                            class="form-control border-start-0 @error('address') is-invalid @enderror"
+                                            placeholder="Số nhà, tên đường, Phường/Xã, Quận/Huyện...">{{ old('address', $user->address) }}</textarea>
+                                        @error('address')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="mb-0">
                                     <label class="form-label fw-semibold small">Ghi chú giao hàng</label>
-                                    <textarea name="note" class="form-control" rows="2"
-                                        placeholder="VD: Giao giờ hành chính, gọi trước khi đến..."></textarea>
+                                    <textarea name="note" rows="2" class="form-control @error('note') is-invalid @enderror"
+                                        placeholder="VD: Giao giờ hành chính, gọi trước khi đến...">{{ old('note') }}</textarea>
+                                    @error('note')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </form>
                         </div>
@@ -196,96 +236,12 @@
             </div>
         </div>
     </section>
-    <style>
-        :root {
-            --mt-primary: #9ca8ce;
-            --mt-bg: #f8f9fa;
-        }
-
-        body {
-            background-color: var(--mt-bg);
-        }
-
-        .checkout-card {
-            border: none;
-            border-radius: 10px;
-            transition: transform 0.2s ease;
-        }
-
-        .form-control,
-        .form-select {
-            border-radius: 8px;
-            padding: 12px 16px;
-            border: 1px solid #e0e0e0;
-            background-color: #fff;
-        }
-
-        .form-control:focus {
-            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
-            border-color: var(--mt-primary);
-        }
-
-        .product-img {
-            width: 70px;
-            height: 70px;
-            object-fit: cover;
-            border-radius: 12px;
-        }
-
-        .sticky-summary {
-            position: sticky;
-            top: 20px;
-        }
-
-        .btn-confirm {
-            background: linear-gradient(45deg, #0d6efd, #004dc7);
-            border: none;
-            border-radius: 12px;
-            padding: 16px;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-        }
-
-        .btn-confirm:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.3);
-        }
-
-        .step-badge {
-            width: 30px;
-            height: 30px;
-            background: var(--mt-primary);
-            color: white;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            margin-right: 10px;
-            font-size: 0.9rem;
-        }
-
-        .payment-option {
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 2px solid #f1f1f1;
-        }
-
-        .payment-option:hover {
-            background-color: #f8f9fa;
-            border-color: #dee2e6;
-        }
-
-        /* Khi radio được check, thẻ label bao ngoài sẽ đổi màu */
-        .payment-check:checked+.payment-label {
-            background-color: #f0f7ff !important;
-            border-color: #0d6efd !important;
-        }
-
-        .payment-logo {
-            width: 30px;
-            height: 30px;
-            object-fit: contain;
-            border-radius: 6px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('user-assets/css/form-checkout.css') }}">
+    <script>
+        document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                document.getElementById('selectedPaymentMethod').value = this.value;
+            });
+        });
+    </script>
 @endsection

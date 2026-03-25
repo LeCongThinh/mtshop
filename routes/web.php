@@ -11,6 +11,8 @@ use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\AuthUserController;
 use App\Http\Controllers\User\ProductControler as UserProductController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\OrderStatusController;
+
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
@@ -69,9 +71,13 @@ Route::middleware(["auth"])->group(function () {
 
     // Trang đặt hàng yêu cầu user phải đăng nhập
     // View chi tiết đơn hàng
-    Route::get("checkout",[CheckoutController::class, 'checkout'])->name('user.checkout');
+    Route::get("checkout", [CheckoutController::class, 'checkout'])->name('user.checkout');
     // Xử lý đơn hàng
     Route::post('/checkout/process', [CheckoutController::class, 'processCheckout'])->name('user.process.checout');
+
+
+    // Trang thanh toán thành công
+    Route::get('/checkout/success/{order_code}', [OrderStatusController::class, 'index'])->name('checkout.success');
     // Đăng xuất
     Route::post('/logout', [AuthUserController::class, 'logout'])->name('logout');
 
