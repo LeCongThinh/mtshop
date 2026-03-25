@@ -4,29 +4,20 @@
     <section class="py-4" style="background-color:#e9ecef; min-height: 80vh;">
         <div class="container py-2">
             <div class="row g-4">
-                @if(session('error'))
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function () {
-                            showAlert("mainAlert", "{!! session('error') !!}", "danger");
-                        });
-                    </script>
-                @endif
-
-                @if(session('success'))
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function () {
-                            showAlert("mainAlert", "{!! session('success') !!}", "success");
-                        });
-                    </script>
-                @endif
-
-                @if(session('info'))
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function () {
-                            showAlert("mainAlert", "{!! session('info') !!}", "info");
-                        });
-                    </script>
-                @endif
+                @foreach (['error' => 'danger', 'success' => 'success', 'info' => 'info'] as $key => $type)
+                    @if(session($key))
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                const message = {!! json_encode(session($key)) !!};
+                                if (typeof showAlert === "function") {
+                                    showAlert("mainAlert", message, "{{ $type }}");
+                                } else {
+                                    console.error("Hệ thống bị gián đoạn");
+                                }
+                            });
+                        </script>
+                    @endif
+                @endforeach
                 <div class="col-lg-7">
                     <div class="card checkout-card shadow-sm">
                         <div class="card-header bg-white py-3 border-0 mt-2">

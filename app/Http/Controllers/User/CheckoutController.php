@@ -40,11 +40,13 @@ class CheckoutController extends Controller
         }
         // ktra số lượng tồn kho
         foreach ($cartItems as $item) {
-            if ($item->product->stock <= 0) {
-                return back()->with('error', "Sản phẩm '{$item->product->name}' đã hết hàng!");
+            $stock = (int) $item->product->stock;
+            $quantity = (int) $item->quantity;
+            if ($stock <= 0) {
+                return redirect()->back()->with('error', "Sản phẩm '{$item->product->name}' đã hết hàng!");
             }
-            if ($item->product->stock < $item->quantity) {
-                return back()->with('error', "Sản phẩm '{$item->product->name}' chỉ còn {$item->product->stock} sản phẩm trong kho!");
+            if ($stock < $quantity) {
+                return redirect()->back()->with('error', "Sản phẩm '{$item->product->name}' chỉ còn {$stock} món!")->withInput();
             }
         }
         $paymentMethod = $request->payment_method ?? 'cod';
