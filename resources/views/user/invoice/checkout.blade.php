@@ -35,7 +35,7 @@
                             </h5>
                         </div>
                         <div class="card-body px-4 pb-4">
-                            <form id="orderForm" action="{{ route('user.process.checout') }}" method="POST">
+                            <form id="orderForm" action="{{ route('user.process.checkout') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="payment_method" id="selectedPaymentMethod" value="cod">
                                 <div class="mb-2">

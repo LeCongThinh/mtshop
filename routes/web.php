@@ -48,6 +48,7 @@ Route::get("category/{slug}", [HomeController::class, 'getProductByCategory'])->
 Route::get("subcategory/{slug}", [HomeController::class, "getProductBySubcategory"])->name("subcategory.product");
 // Lọc sản phẩm theo Category và Brand
 Route::get("category/{category_slug}/{brand_slug}", [HomeController::class, "getProductByCategoryAndBrand"])->name("category.brand.product");
+
 // Trang chi tiết giỏ hàng
 Route::get('cart', [CartController::class, 'index'])->name('cart.index');
 // Thêm sản phẩm vào giỏ hàng
@@ -66,6 +67,7 @@ Route::get('/register', [AuthUserController::class, 'showRegisterForm'])->name('
 //Xử lý đăng ký
 Route::post('/register', [AuthUserController::class, 'register']);
 
+Route::get('/payment/vnpay/callback', [CheckoutController::class, 'vnpayCallback'])->name('vnpay.callback');
 
 Route::middleware(["auth"])->group(function () {
 
@@ -73,11 +75,10 @@ Route::middleware(["auth"])->group(function () {
     // View chi tiết đơn hàng
     Route::get("checkout", [CheckoutController::class, 'checkout'])->name('user.checkout');
     // Xử lý đơn hàng
-    Route::post('/checkout/process', [CheckoutController::class, 'processCheckout'])->name('user.process.checout');
-
-
+    Route::post('/checkout/process', [CheckoutController::class, 'processCheckout'])->name('user.process.checkout');
     // Trang thanh toán thành công
     Route::get('/checkout/success/{order_code}', [OrderStatusController::class, 'index'])->name('checkout.success');
+
     // Đăng xuất
     Route::post('/logout', [AuthUserController::class, 'logout'])->name('logout');
 

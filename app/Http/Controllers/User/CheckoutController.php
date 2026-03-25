@@ -144,24 +144,79 @@ class CheckoutController extends Controller
     {
         DB::beginTransaction();
         try {
-            // Tạo đơn hàng trước với payment_status = pending
-            // Chỉ xóa giỏ hàng & trừ tồn kho sau khi VNPAY callback thành công
+            // Tạo đơn hàng với trạng thái 'pending'
             $order = $this->createOrder($request, $user, $cartItems, 'vnpay');
 
-            // Lưu order_id vào session để dùng lại khi callback
-            session(['pending_vnpay_order_id' => $order->id]);
+            // Tạo chi tiết đơn hàng và trừ tồn kho để giữ hàng
+            $this->createOrderDetails($order, $cartItems);
 
             DB::commit();
 
-            // TODO: Tích hợp VNPAY Payment Gateway
-            // $vnpayUrl = $this->vnpayService->createPaymentUrl($order);
-            // return redirect()->away($vnpayUrl);
+            // Gọi Service tạo URL
+            $vnpayService = new \App\Services\VNPayService();
+            $paymentUrl = $vnpayService->createPaymentUrl($order);
 
-            return back()->with('info', 'Tính năng thanh toán VNPAY đang được phát triển!');
+            return redirect()->away($paymentUrl);
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Đặt hàng thất bại, vui lòng thử lại! ' . $e->getMessage());
+            return back()->with('error', 'Lỗi khởi tạo thanh toán: ' . $e->getMessage());
+        }
+    }
+
+    public function vnpayCallback(Request $request)
+    {
+        $vnpayService = new \App\Services\VNPayService();
+        $vnpData = $request->all();
+        // Xác thực chữ ký
+        if (!$vnpayService->verifyCallback($vnpData)) {
+            return redirect()->route('cart.index')->with('error', 'Chữ ký thanh toán không hợp lệ!');
+        }
+        $orderCode = $vnpData['vnp_TxnRef'];
+        $responseCode = $vnpData['vnp_ResponseCode'];
+        $transactionId = $vnpData['vnp_TransactionNo'];
+
+        $order = Order::where('order_code', $orderCode)->first();
+        if (!$order) {
+            return redirect()->route('cart.index')->with('error', 'Không tìm thấy đơn hàng!');
+        }
+
+        // Kiểm tra trạng thái thanh toán từ VNPAY. 00 thanh toán thành công
+        if ($responseCode === '00') {
+            DB::beginTransaction();
+            try {
+                $order->update([
+                    'payment_status' => 'paid',
+                    'transaction_id' => $transactionId,
+                    'status' => 'confirmed',
+                ]);
+
+                // Xóa giỏ hàng của user
+                Cart::where('user_id', $order->user_id)->delete();
+
+                DB::commit();
+
+                return redirect()->route('checkout.success', ['order_code' => $order->order_code])->with('success', 'Thanh toán thành công!');
+
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return redirect()->route('cart.index')->with('error', 'Lỗi cập nhật đơn hàng: ' . $e->getMessage());
+            }
+        } else {
+            // Thanh toán thất bại hoặc khách hủy, hoàn trả lại tồn kho vì bước handleVNPay đã trừ đi
+            $this->restoreStock($order);
+
+            $order->update(['payment_status' => 'failed', 'status' => 'canceled']);
+
+            return redirect()->route('cart.index')->with('error', 'Thanh toán không thành công. Mã lỗi: ' . $responseCode);
+        }
+    }
+
+    // Hàm hỗ trợ hoàn tồn kho nếu cần
+    private function restoreStock($order)
+    {
+        foreach ($order->orderDetails as $detail) {
+            $detail->product->increment('stock', $detail->quantity);
         }
     }
 }
