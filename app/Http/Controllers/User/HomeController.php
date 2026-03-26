@@ -22,14 +22,18 @@ class HomeController extends Controller
                     $query->where('status', 'active');
                 }
             ])->get();
+            
         // Lấy danh sách sản phẩm mới
         $products = Product::where('status', 'active')->latest()->get();
+
         // Lấy danh sách tin tức công nghệ
         $posts = Post::latest()->get();
 
+        // Gọi sản phẩm bán chạy theo 3 danh mục chính: PC, Laptop, Màn hình
         $bestSellingPCs = $this->getTopSellingByCategory('pc');
         $bestSellingLaptops = $this->getTopSellingByCategory('laptop');
         $bestSellingMonitors = $this->getTopSellingByCategory('man-hinh');
+
         return view("user.home-page", compact("categories", "products", "posts", 'bestSellingPCs', 'bestSellingLaptops', 'bestSellingMonitors'));
     }
 
@@ -78,6 +82,8 @@ class HomeController extends Controller
     // Lấy sản phẩm bán chạy
     private function getTopSellingByCategory($slug, $limit = 20)
     {
+        // Sản phẩm bán chạy: nhóm product_id trong bảng order_datils sau đó cộng dồn quantity có cùng product_id, để lọc sản phẩm có số lượng bán ra nhiều nhất
+        // Sắp xếp sản phẩm giảm dần theo số lượng bán ra
         return Product::query()->whereHas('category', function ($query) use ($slug) {
             $query->where('slug', $slug)->orWhereHas('parent', function ($q) use ($slug) {
                 $q->where('slug', $slug);

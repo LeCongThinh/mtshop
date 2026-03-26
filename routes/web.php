@@ -36,6 +36,9 @@ use App\Http\Controllers\Admin\CategoryController;
 Route::get("/", [HomeController::class, "home"])->name("home.index");
 // Xem tất cả sản phẩm mới
 Route::get("products/all", [UserProductController::class, "showAllProducts"])->name("all-products");
+// Xem tất cả sản phẩm PC bán chạy nhất
+Route::get("best-selling-pc/all", [UserProductController::class, "showAllBestSellingPCs"])->name("best-selling-pc");
+
 // Trang chi tiết sản phẩm
 Route::get("products/{slug}", [UserProductController::class, "showProductDetail"])->name("home.product-detail");
 // Xem tất cả bài viết
