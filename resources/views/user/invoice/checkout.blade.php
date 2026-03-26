@@ -118,7 +118,7 @@
                                 </label>
                             </div>
 
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <input class="form-check-input d-none payment-check" type="radio" name="payment_method"
                                     id="method_momo" value="momo">
                                 <label
@@ -133,7 +133,7 @@
                                         <div class="text-muted small">Thanh toán qua ứng dụng MoMo bằng mã QR</div>
                                     </div>
                                 </label>
-                            </div>
+                            </div> -->
 
                             <div class="mb-0">
                                 <input class="form-check-input d-none payment-check" type="radio" name="payment_method"

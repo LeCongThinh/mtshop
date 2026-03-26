@@ -33,34 +33,26 @@ class AuthUserController extends Controller
             'password' => ['required'],
         ]);
 
-        // 1. Kiểm tra xem Email/Password có đúng trong DB không (Chưa đăng nhập)
-        if (Auth::validate($credentials)) {
-            $user = \App\Models\User::where('email', $credentials['email'])->first();
+        // Thêm điều kiện role ngay trong attempt. Chỉ cho user đăng nhập
+        $credentialsWithRole = array_merge($credentials, ['role' => 'customer']);
 
-            // ko cho adin đăng nhập ở form này
-            if ($user->role !== 'customer') {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Thông tin đăng nhập không chính xác.'
-                ], 422);
-            }
-            // Nếu là customer cho phép đăng nhập
-            if (Auth::attempt($credentials, $request->remember)) {
-                $request->session()->regenerate();
+        if (Auth::attempt($credentialsWithRole, false)) {
+            $request->session()->regenerate();
 
-                if (isset($this->cartService)) {
-                    $this->cartService->mergeSessionToDatabase();
-                }
-                return response()->json([
-                    'success' => true,
-                    'redirect' => url('/'),
-                    'message' => 'Chào mừng bạn quay trở lại!'
-                ]);
+            if (isset($this->cartService)) {
+                $this->cartService->mergeSessionToDatabase();
             }
+
+            return response()->json([
+                'success' => true,
+                'redirect' => url('/'),
+                'message' => 'Chào mừng bạn quay trở lại!'
+            ]);
         }
+
         return response()->json([
             'success' => false,
-            'message' => 'Thông tin đăng nhập không chính xác.'
+            'message' => 'Thông tin đăng nhập không chính xác hoặc bạn không có quyền truy cập.'
         ], 422);
     }
     // View đăng ký

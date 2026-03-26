@@ -49,6 +49,11 @@
                     style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%);"></button>
             </div>
         </div>
+
+        <div id="loginAlertApp"
+            style="position: fixed; top: 50px; right: 5px; z-index: 10000; width: 100%; max-width: 480px; pointer-events: none;">
+        </div>
+
         @yield('content')
     </main>
 
@@ -69,7 +74,7 @@
     <!-- Cập nhật/xóa thông tin giỏ hàng -->
     <script src="{{ asset("user-assets/js/handle-cart-detail.js") }}"></script>
     <script src="{{ asset("assets/js/admin/admin-alert.js") }}"></script>
-
+    <script src="{{ asset('user-assets/js/alert-login.js') }}"></script>
 
     {{-- Cho phép các trang con nhúng JS riêng qua @push('scripts') --}}
     @stack('scripts')

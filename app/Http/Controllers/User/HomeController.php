@@ -8,6 +8,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\OrderDetail;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -24,7 +26,11 @@ class HomeController extends Controller
         $products = Product::where('status', 'active')->latest()->get();
         // Lấy danh sách tin tức công nghệ
         $posts = Post::latest()->get();
-        return view("user.home-page", compact("categories", "products", "posts"));
+
+        $bestSellingPCs = $this->getTopSellingByCategory('pc');
+        $bestSellingLaptops = $this->getTopSellingByCategory('laptop');
+        $bestSellingMonitors = $this->getTopSellingByCategory('man-hinh');
+        return view("user.home-page", compact("categories", "products", "posts", 'bestSellingPCs', 'bestSellingLaptops', 'bestSellingMonitors'));
     }
 
     public function getProductByCategory($slug)
@@ -68,4 +74,21 @@ class HomeController extends Controller
 
         return view("user.products.product-by-category", compact('category', 'products', 'brands', 'brand'));
     }
+
+    // Lấy sản phẩm bán chạy
+    private function getTopSellingByCategory($slug, $limit = 20)
+    {
+        return Product::query()->whereHas('category', function ($query) use ($slug) {
+            $query->where('slug', $slug)->orWhereHas('parent', function ($q) use ($slug) {
+                $q->where('slug', $slug);
+            });
+        })->withCount([
+                    'orderDetails as total_sold' => function ($query) {
+                        $query->select(DB::raw('sum(quantity)'))->whereHas('order', function ($q) {
+                            $q->where('payment_status', 'paid');
+                        });
+                    }
+                ])->orderByDesc('total_sold')->take($limit)->get();
+    }
+
 }

@@ -130,6 +130,10 @@
                     data: $(this).serialize(),
                     success: function (response) {
                         if (response.success) {
+                            // Lưu thông báo vào bộ nhớ tạm của trình duyệt
+                            sessionStorage.setItem('login_success_msg', response.message);
+
+                            // Sau đó mới chuyển hướng
                             window.location.href = response.redirect;
                         }
                     },
