@@ -40,6 +40,8 @@ Route::get("products/all", [UserProductController::class, "showAllProducts"])->n
 Route::get("best-selling-pc/all", [UserProductController::class, "showAllBestSellingPCs"])->name("best-selling-pc");
 // Xem tất cả sản phẩm Laptop bán chạy nhất
 Route::get("best-selling-laptop/all", [UserProductController::class, "showAllBestSellingLaptops"])->name("best-selling-laptop");
+// Xem tất cả sản phẩm màn hình bán chạy nhất
+Route::get("best-selling-monitor/all", [UserProductController::class, "showAllBestSellingMonitors"])->name("best-selling-monitor");
 
 
 // Trang chi tiết sản phẩm
