@@ -36,10 +36,17 @@
                 </li>
             </ul>
             <!-- Tìm kiếm-->
-            <form class="d-flex flex-grow-1 justify-content-center my-3 my-lg-0 px-lg-5">
+            <form action="{{ route('products.search') }}" method="GET" class="d-flex flex-grow-1 justify-content-center my-3 my-lg-0 px-lg-5 position-relative">
                 <div class="position-relative w-100" style="max-width:500px;">
                     <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-                    <input class="form-control ps-5" type="search" name="keyword" placeholder="Bạn cần tìm gì...">
+
+                    <input class="form-control ps-5" type="search" id="search-input" name="keyword"
+                        placeholder="Bạn cần tìm gì..." autocomplete="off" value="{{ request('keyword') }}">
+
+                    <!-- Vùng hiển thị kết quả tìm kiếm -->
+                    <div id="search-results" class="position-absolute bg-white w-100 shadow-sm rounded-bottom d-none"
+                        style="z-index: 1050; top: 100%; max-height: 400px; overflow-y: auto;">
+                    </div>
                 </div>
             </form>
             <div class="d-flex align-items-center gap-2">
@@ -87,3 +94,63 @@
     </div>
 </nav>
 @include("user.auth.login")
+<style>
+    .search-item:hover {
+        background-color: #f8f9fa;
+    }
+
+    #search-results::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    #search-results::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 10px;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+
+        searchInput.addEventListener('input', function () {
+            let keyword = this.value;
+
+            if (keyword.length < 2) {
+                searchResults.classList.add('d-none');
+                return;
+            }
+            const storageUrl = "{{ asset('storage') }}";
+            fetch(`/api/search-products?keyword=${keyword}`)
+                .then(response => response.json())
+                .then(data => {
+                    let html = '';
+                    if (data.length > 0) {
+                        data.forEach(product => {
+                            html += `
+                            <a href="/products/${product.slug}" class="d-flex align-items-center p-2 text-decoration-none border-bottom search-item">
+                                <img src="${storageUrl}/${product.thumbnail}" style="width: 50px; height: 50px; object-fit: cover;" class="me-3 rounded">
+                                <div>
+                                    <div class="text-dark fw-bold small">${product.name}</div>
+                                    <div class="text-danger small">${new Intl.NumberFormat('vi-VN').format(product.price)}đ</div>
+                                </div>
+                            </a>
+                        `;
+                        });
+                        searchResults.innerHTML = html;
+                        searchResults.classList.remove('d-none');
+                    } else {
+                        searchResults.innerHTML = '<div class="p-3 text-muted small">Không tìm thấy sản phẩm...</div>';
+                        searchResults.classList.remove('d-none');
+                    }
+                });
+        });
+
+        // Đóng kết quả khi click ra ngoài
+        document.addEventListener('click', function (e) {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.classList.add('d-none');
+            }
+        });
+    });
+</script>

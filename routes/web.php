@@ -12,7 +12,7 @@ use App\Http\Controllers\User\AuthUserController;
 use App\Http\Controllers\User\ProductControler as UserProductController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\OrderStatusController;
-
+use App\Http\Controllers\User\SearchController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
@@ -75,6 +75,13 @@ Route::get('/register', [AuthUserController::class, 'showRegisterForm'])->name('
 //Xử lý đăng ký
 Route::post('/register', [AuthUserController::class, 'register']);
 
+// Live search sản phẩm
+Route::get('/api/search-products', [SearchController::class, 'liveSearch'])->name('api.search');
+
+// Tìm kiếm sản phẩm
+Route::get('/search', [SearchController::class, 'search'])->name('products.search');
+
+// Call back trả về kq giao dịch
 Route::get('/payment/vnpay/callback', [CheckoutController::class, 'vnpayCallback'])->name('vnpay.callback');
 
 Route::middleware(["auth"])->group(function () {
