@@ -1,5 +1,5 @@
 @extends('user.layouts.app')
-@section('web-title', 'Tất cả PC bán chạy - MTShop.com')
+@section('web-title', 'Tất cả laptop bán chạy - MTShop.com')
 @section('content')
     <section class="py-4" style="background-color:#e9ecef;">
         <div class="container">
@@ -8,12 +8,12 @@
                 <li class="breadcrumb-item"><a href="{{ route('home.index') }}" class="text-decoration-none fw-semibold">
                         <i class="bi bi-house-door-fill me-1"></i>Trang chủ</a>
                 </li>
-                <li class="breadcrumb-item ">PC bán chạy nhất</li>
+                <li class="breadcrumb-item ">Laptop bán chạy nhất</li>
             </ul>
             <div class="card border-0 shadow-sm rounded-4 mb-4">
                 <div class="card-body p-4">
                     <div class="border-start border-4 border-primary ps-3">
-                        <h4 class="fw-bolder mb-1 text-uppercase">Danh sách PC bán chạy</h4>
+                        <h4 class="fw-bolder mb-1 text-uppercase">Danh sách laptop bán chạy</h4>
                         <p class="text-muted mb-0 small">Khám phá những thiết bị công nghệ mới nhất tại MTShop</p>
                     </div>
                 </div>

@@ -41,7 +41,25 @@ class ProductControler extends Controller
     }
 
     // View xem tất cả sản phẩm Laptop bán chạy
+    public function showAllBestSellingLaptops()
+    {
+        $slug = 'laptop';
+        // lấy ra sp có trạng thái hoạt động là active và thuộc danh mục cha và con
+        $products = Product::query()->where('status', 'active')
+            ->whereHas('category', function ($query) use ($slug) {
+                $query->where('slug', $slug)->orWhereHas('parent', function ($q) use ($slug) {
+                    $q->where('slug', $slug);
+                });
+            })->withCount([
+                    'orderDetails as total_sold' => function ($query) {
+                        $query->select(DB::raw('sum(quantity)'))->whereHas('order', function ($q) {
+                            $q->where('payment_status', 'paid');
+                        });
+                    }
+                ])->orderByDesc('total_sold')->paginate(10);
 
+        return view('user.products.best-selling-laptop', compact('products'));
+    }
 
     // View xem tất cả sản phẩm Màn Hình bán chạy
 

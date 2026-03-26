@@ -38,6 +38,9 @@ Route::get("/", [HomeController::class, "home"])->name("home.index");
 Route::get("products/all", [UserProductController::class, "showAllProducts"])->name("all-products");
 // Xem tất cả sản phẩm PC bán chạy nhất
 Route::get("best-selling-pc/all", [UserProductController::class, "showAllBestSellingPCs"])->name("best-selling-pc");
+// Xem tất cả sản phẩm Laptop bán chạy nhất
+Route::get("best-selling-laptop/all", [UserProductController::class, "showAllBestSellingLaptops"])->name("best-selling-laptop");
+
 
 // Trang chi tiết sản phẩm
 Route::get("products/{slug}", [UserProductController::class, "showProductDetail"])->name("home.product-detail");
