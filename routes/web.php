@@ -199,7 +199,10 @@ Route::prefix("admin")->group(function () {
         #Trang quản lý đơn hàng
         // Danh sách đơn hàng
         Route::get("orders", [OrderController::class, "index"])->name("admin.orders");
-        
+        // Xem thông tin đơn hàng
+        Route::get("orders/{id}/show", [OrderController::class, "show"])->name("admin.orders.show");
+
+
 
     });
 });

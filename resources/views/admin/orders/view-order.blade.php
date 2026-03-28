@@ -63,8 +63,8 @@
                                         </td>
                                         <td>
                                             <div class="hstack gap-2 justify-content-end">
-                                                <a href="javascript:void(0)" class="avatar-text avatar-md btn-show-product"
-                                                    data-url="#">
+                                                <a href="javascript:void(0)" class="avatar-text avatar-md btn-show-order"
+                                                    data-url="{{ route('admin.orders.show', $order->id) }}">
                                                     <i class="feather feather-eye"></i>
                                                 </a>
 
@@ -75,8 +75,7 @@
                                                     </a>
                                                     <ul class="dropdown-menu">
                                                         @if($order->trashed())
-                                                            <form action="#"
-                                                                method="post">
+                                                            <form action="#" method="post">
                                                                 @csrf
                                                                 @method("PATCH")
                                                                 <button type="submit"
@@ -87,16 +86,14 @@
                                                             </form>
                                                         @else
                                                             <li>
-                                                                <a class="dropdown-item"
-                                                                    href="#">
+                                                                <a class="dropdown-item" href="#">
                                                                     <i class="feather feather-edit-3 me-3"></i>
                                                                     <span>Cập nhật</span>
                                                                 </a>
                                                             </li>
                                                             <li class="dropdown-divider"></li>
                                                             <li>
-                                                                <form action="#"
-                                                                    method="post">
+                                                                <form action="#" method="post">
                                                                     @csrf
                                                                     @method("DELETE")
                                                                     <button type="submit"
@@ -111,7 +108,6 @@
                                                 </div>
                                             </div>
                                         </td>
-
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -121,4 +117,8 @@
             </div>
         </div>
     </div>
+    @include("admin.orders.show-order")
 @endsection
+@push('scripts')
+    <script src="{{ asset('assets/js/admin/show-order-info.js') }}"></script>
+@endpush

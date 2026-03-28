@@ -95,6 +95,7 @@
     <script src="{{ asset("assets/js/admin/admin-alert.js") }}"></script>
     <!-- Js thư viện hiển thị alert dialog thông tin sản phẩm -->
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    @stack('scripts')
 </body>
 
 </html>

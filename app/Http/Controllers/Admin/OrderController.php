@@ -8,9 +8,7 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Hiển thị danh sách đơn hàng
     public function index()
     {
         $orders = Order::withTrashed()->latest()->get();
@@ -33,12 +31,17 @@ class OrderController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Xem thông tin đơn hàng
+    public function show($id)
     {
-        //
+        $order = Order::withTrashed()->with('orderDetails')->findOrFail($id);
+        $data = $order->toArray();
+        $data['payment_label'] = $order->payment_label;
+        $data['status_label'] = $order->status_label;
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
     }
 
     /**

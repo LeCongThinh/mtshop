@@ -25,6 +25,11 @@ class Order extends Model
         'total_amount',
     ];
 
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class, 'order_id');
+    }
+
     public function getPaymentLabelAttribute()
     {
         if ($this->trashed()) {
