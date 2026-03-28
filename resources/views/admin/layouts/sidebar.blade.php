@@ -79,14 +79,16 @@
                 </li>
 
                 <!-- Quản lý đơn hàng -->
-                <li class="nxl-item nxl-hasmenu">
+                <li class="nxl-item nxl-hasmenu {{ request()->routeIs("admin.orders") ? "active nxl-trigger" : "" }}">
                     <a href="javascript:void(0);" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-dollar-sign"></i></span>
                         <span class="nxl-mtext">Quản lý đơn hàng</span><span class="nxl-arrow"><i
                                 class="feather-chevron-right"></i></span>
                     </a>
                     <ul class="nxl-submenu">
-                        <li class="nxl-item"><a class="nxl-link" href="payment.html">Danh sách đơn hàng</a></li>
+                        <li class="nxl-item"><a
+                                class="nxl-link {{ request()->routeIs("admin.products") ? "active" : "" }}"
+                                href="{{ route("admin.orders") }}">Danh sách đơn hàng</a></li>
                         <li class="nxl-item"><a class="nxl-link" href="invoice-create.html">Thêm mới đơn hàng</a>
                         </li>
                     </ul>

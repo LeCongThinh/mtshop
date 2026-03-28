@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\User\CheckoutController;
@@ -194,5 +195,11 @@ Route::prefix("admin")->group(function () {
         Route::delete("posts/{id}", [AdminPostController::class, "destroy"])->name("admin.posts.destroy");
         //Khôi phục bài viết
         Route::patch("posts/{id}", [AdminPostController::class, "restore"])->name("admin.posts.restore");
+
+        #Trang quản lý đơn hàng
+        // Danh sách đơn hàng
+        Route::get("orders", [OrderController::class, "index"])->name("admin.orders");
+        
+
     });
 });

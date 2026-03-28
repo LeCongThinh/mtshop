@@ -36,6 +36,7 @@ return new class extends Migration {
 
             // Tổng tiền đơn hàng
             $table->decimal('total_amount', 15, 2);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
